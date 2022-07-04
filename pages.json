@@ -1,0 +1,68 @@
+{
+	"pages": [{
+		"path": "pages/register/start",
+		"style": {
+			// "navigationBarTitleText": "启动页",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
+		"path": "pages/register/register",
+		"style": {
+			// "navigationBarTitleText": "注册",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
+		"path": "pages/register/login",
+		"style": {
+			// "navigationBarTitleText": "登入",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
+		"path": "pages/index/administration",
+		"style": {
+			// "navigationBarTitleText": "TIKTOK administration",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
+		"path": "pages/index/switch",
+		"style": {
+			// "navigationBarTitleText": "Select the TIKTOK account",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
+		"path": "pages/index/index",
+		"style": {
+			// "navigationBarTitleText": "uni-app",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
+		"path": "pages/index/dataRanking",
+		"style": {
+			// "navigationBarTitleText": "Data ranking",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	}],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"background": "#efeff4"
+		}
+	}
+}
