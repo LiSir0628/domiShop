@@ -19,16 +19,23 @@
 				<view class="sortText">All of them</view>
 				<image class="arrowDown" src="../../static/images/rank/icon07.png"></image>
 			</view>
+			<view class="sort" v-if="cindex != 2" @click="goSwitch">
+				<view class="sortText">Membership ranking</view>
+				<image class="arrowDown" src="../../static/images/rank/icon07.png"></image>
+			</view>
 		</view>
 		
-		<view class="merRankList">
+		<view class="merRankList" v-if="cindex == 0">
 			<view class="merRank" :class="{'merRankActive': merIndex == index}" v-for="item,index in merRankList" @click="merIndexChoose(index)">
 				<view class="userMsg">
 					<view>
 						<image class="rankLogo" src="../../static/images/rank/icon01.png" v-if="index == 0"></image>
 						<image class="rankLogo" src="../../static/images/rank/icon02.png" v-else-if="index == 1"></image>
-						<image class="rankLogo" src="../../static/images/rank/icon03.png" v-else-if="index == 2"></image>
-						<image class="rankLogo" src="../../static/images/rank/icon04.png" v-else-if="index == 3"></image>
+						<image class="rankLogo" src="../../static/images/rank/icon03.png" v-else-if="index == 2"></image>		
+						<view v-else>
+							<image class="rankLogo" src="../../static/images/rank/icon04.png"></image>
+							<view class="rankText">{{index+1}}</view>
+						</view>
 					</view>
 					<image class="photo" :src="item.image"></image>
 				</view>
@@ -53,6 +60,76 @@
 				</view>
 			</view>
 		</view>
+		<view class="merRankList" v-else-if="cindex == 1">
+			<view class="merRank merRankAccount" :class="{'merRankActive': merIndex == index}" v-for="item,index in merRankList" @click="merIndexChoose(index)">
+				<view class="userMsg userMsgAccount">
+					<view>
+						<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon01.png" v-if="index == 0"></image>
+						<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon02.png" v-else-if="index == 1"></image>
+						<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon03.png" v-else-if="index == 2"></image>
+						<view v-else>
+							<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon04.png"></image>
+							<view class="rankText rankTextAccount">{{index+1}}</view>
+						</view>
+					</view>
+					<image class="photo circular" :src="item.image"></image>
+				</view>
+				<view class="accountRight">
+					<view class="accountTop">
+						<view class="spTitle">
+							<view>Account Name</view>
+							<view class="ID">ID:15494965</view>
+						</view>
+						<view class="accountName">name</view>
+					</view>
+					<view class="accountBottom">
+						<view class="sales">
+							<image class="salesLogo" src="../../static/images/rank/icon08.png"></image>
+							<view>Cumulative sales: ${{item.cumulativeSales}}</view>
+						</view>
+						<view class="commission">
+							<image class="commissionLogo" src="../../static/images/rank/icon06.png"></image>
+							<view>Accumulated Commission: ${{item.accumulatedCommission}}</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="merRankList" v-else-if="cindex == 2">
+			<view class="membershipAccount" :class="{'merRankActive': merIndex == index}" v-for="item,index in merRankList" @click="merIndexChoose(index)">
+				<view class="userMsg userMsgAccount">
+					<view>
+						<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon01.png" v-if="index == 0"></image>
+						<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon02.png" v-else-if="index == 1"></image>
+						<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon03.png" v-else-if="index == 2"></image>
+						<view v-else>
+							<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon04.png"></image>
+							<view class="rankText rankTextAccount">{{index+1}}</view>
+						</view>
+					</view>
+					<image class="photo circular" :src="item.image"></image>
+				</view>
+				<view class="membershipRight">
+					<view class="merRankTop">
+						<view class="spTitle">{{item.title}}</view>
+						<view class="profit">
+							<view class="cumulative">Cumulative sales: ${{item.unitPrice}}</view>
+							<!-- <view class="ratio">Commission ratio: {{item.commissionRatio}}%</view> -->
+						</view>
+					</view>
+					<view class="membershipBottom">
+						<view class="bindAccount">
+							Immediate subordinate: 
+							<text class="numStyle">5</text>
+						</view>
+						<view class="bindAccount">
+							Bind the account: 
+							<text class="numStyle">10</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>	
 				
 		<view>
 			<!-- 普通弹窗 -->
@@ -144,6 +221,11 @@
 					accumulatedCommission: '12215466'
 				}]
 			}
+		},
+		onLoad(option) {
+			//如果参数有值，渠道入口-请求
+			//如果首页、分类特殊值有值-请求（不与上方同时触发）
+			if(option.style) this.cindex = option.style
 		},
 		created() {
 			
@@ -291,19 +373,36 @@
 		padding: 0 14rpx 0 34rpx;
 		box-sizing: border-box;
 		display: flex;
-		margin-bottom: 30rpx;
+		margin-bottom: 20rpx;
 	}
-	.merRankActive{
+	.merRankAccount{
 		width: 690rpx;
-		height: 215rpx;
+		height: 162rpx;
+		padding: 0 14rpx 0 34rpx;
+	}
+	.membershipAccount{
+		width: 690rpx;
+		min-height: 163rpx;
+		background: #FFFFFF;
+		border: 2rpx solid #CECECE;
+		border-radius: 10rpx;
+		padding: 0 14rpx 0 34rpx;
+		box-sizing: border-box;
+		display: flex;
+		margin-bottom: 20rpx;
+	}
+	/* .merRankActive{
 		background: rgba(255, 116, 54, 0.08);
 		border: 2rpx solid #FF7436;
 		border-radius: 10rpx;
-	}	.userMsg{
+	} */	.userMsg{
 		width: 88rpx;
 		position: relative;
 		padding: 66rpx 0 61rpx;
 		margin-right: 30rpx;
+	}
+	.userMsgAccount{
+		padding: 40rpx 0 34rpx;
 	}	.rankLogo{
 		width: 36rpx;
 		height: 36rpx;
@@ -312,12 +411,35 @@
 		left: -18rpx;
 		z-index: 1;
 		display: block;
-	}	.photo{
+	}
+	.rankLogoAccount{
+		top: 33rpx;
+		left: 0rpx;
+	}
+	
+	.rankText{
+		font-size: 14rpx;
+		font-family: DIN;
+		font-weight: bold;
+		color: #999999;
+		position: absolute;
+		top: 45rpx;
+		left: -6rpx;
+		z-index: 2;
+	}
+	.rankTextAccount{
+		top: 32rpx;
+		left: 13rpx;
+	}
+		.photo{
 		width: 88rpx;
 		height: 88rpx;
 		background: #28A897;
 		border-radius: 8rpx;
 		display: block;
+	}
+	.circular{
+		border-radius: 50%;
 	}
 	.merRankRight{
 		width: 518rpx;
@@ -327,11 +449,44 @@
 	.merRankTop{
 		
 	}
+	.accountRight{
+		width: 518rpx;
+		line-height: normal;
+		padding: 26rpx 0 28rpx;
+	}
+	.accountTop{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.membershipRight{
+		width: 518rpx;
+		line-height: normal;
+		padding: 16rpx 0 0;
+	}
+	.membershipTop{
+		
+	}
 	.spTitle{
 		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #0B0B0B;
+		display: flex;
+		align-items: center;
+	}
+	.ID{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #999999;
+		margin-left: 20rpx;
+	}
+	.accountName{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #666666;
 	}	.profit{
 		display: flex;
 		align-items: center;
@@ -361,8 +516,43 @@
 		font-weight: 400;
 		color: #FF7436;
 		text-align: center;
+	}
+	.cumulative{
+		width: 326rpx;
+		height: 40rpx;
+		line-height: 40rpx;
+		background: rgba(255, 166, 54, 0.1);
+		border-radius: 20px;
+		
+		font-size: 22rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FF7436;
+		text-align: center;
+
 	}	.merRankBottom{
 		margin-top: 24rpx;
+	}
+	.accountBottom{
+		margin-top: 14rpx;
+	}
+	.membershipBottom{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #333333;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		margin: 0 0 14rpx;
+	}
+	.bindAccount{
+		margin-top: 14rpx;
+	}
+	.numStyle{
+		font-weight: bold;
+		margin-left: 4rpx;
 	}	.sales{
 		display: flex;
 		align-items: center;

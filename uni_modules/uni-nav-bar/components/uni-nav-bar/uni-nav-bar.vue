@@ -298,6 +298,8 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 12px;
+		font-family: Arial;
+		font-weight: bold;
 		overflow: hidden;
 		// box-sizing: border-box;
 	}

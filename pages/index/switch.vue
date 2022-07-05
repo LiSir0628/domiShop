@@ -30,6 +30,10 @@
 			return {
 				current: 1,
 				lists: [{
+					id: '0',
+					photo: '../../static/images/home/icon03.png',
+					name: 'All of them'
+				},{
 					id: '1',
 					photo: '../../static/images/home/photo.png',
 					name: 'zhanghaomingcheng'
@@ -91,11 +95,11 @@
 	.searchLogo {
 		width: 32rpx;
 		height: 32rpx;
-		margin: 0 10rpx 0 20rpx;
+		margin: 0 10rpx 0 40rpx;
 	}
 
 	.searchText {
-		width: 600rpx;
+		width: 580rpx;
 		height: 80rpx;
 		font-size: 24rpx;
 		font-family: Arial;
@@ -114,7 +118,7 @@
 		width: 670rpx;
 		height: 148rpx;
 		background: #FFFFFF;
-		border-bottom: 2rpx solid #CECECE;
+		border-bottom: 2rpx solid rgba(206,206,206,0.4);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;

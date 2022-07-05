@@ -15,7 +15,10 @@
 <style lang="scss">
 	/*每个页面公共css */
 	@import '@/uni_modules/uni-scss/index.scss';
-	
+	@font-face {
+		font-family: Arial;
+		src: url(static/ARIAL.TTF)
+	}
 	.uni-navbar__header{
 		padding: 0 30rpx !important;
 	}

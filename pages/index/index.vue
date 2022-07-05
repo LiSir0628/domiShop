@@ -81,7 +81,7 @@
 		</view>
 
 		<view class="rankModular">
-			<view class="merchandise" v-for="item,index in rankList">
+			<view class="merchandise" v-for="item,index in rankList" @click="goData(index)">
 				<view class="merchandiseTop">
 					<image class="merchandiseLogo" :src="item.image"></image>
 					<image class="arrowRight" src="../../static/images/home/icon05.png"></image>
@@ -301,7 +301,15 @@
 					this.$refs.popup.close()
 				}
 			},
-			
+			goData(id){
+				let style = "";
+				if(id == 0) style = 0
+				if(id == 1) style = 1
+				if(id == 2) style = 2
+				uni.navigateTo({
+					url: './dataRanking?style=' + style
+				});
+			},
 			goSwitch() {
 				uni.navigateTo({
 					url: './switch'
@@ -702,7 +710,7 @@
 	.suspensionLogo {
 		width: 56rpx;
 		height: 56rpx;
-		margin: 0 8rpx 0 20rpx;
+		margin: 0 10rpx 0 13rpx;
 	}
 
 	.suspensionText {

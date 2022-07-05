@@ -195,10 +195,10 @@
 		box-sizing: border-box;
 		margin: 0 auto 30rpx auto;
 	}
-	.active{
+	/* .active{
 		background: rgba(255, 116, 54, 0.08);
 		border: 2rpx solid #FF7436;
-	}
+	} */
 	.userPhoto{
 		width: 88rpx;
 		height: 88rpx;
@@ -215,7 +215,7 @@
 	.btn{
 		width: 670rpx;
 		height: 80rpx;
-		background: #FFAE8A;
+		background: #FF7436;
 		border-radius: 8rpx;
 		font-size: 24rpx;
 		font-family: Arial;
