@@ -310,7 +310,7 @@
 		position: absolute;
 		top: 48rpx;
 		left: -18rpx;
-		z-index: 1001;
+		z-index: 1;
 		display: block;
 	}	.photo{
 		width: 88rpx;
