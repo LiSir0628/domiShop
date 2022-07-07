@@ -190,7 +190,7 @@
 				<image class="navLogo" src="../../static/images/home/icon07.png"></image>
 				<view class="navActiveText">Order form</view>
 			</view>
-			<view class="bottomNav">
+			<view class="bottomNav" @click="goOptions">
 				<image class="navLogo" src="../../static/images/home/icon08.png"></image>
 				<view class="navText">Options</view>
 			</view>
@@ -261,6 +261,10 @@
 				orderState: 'Full state',
 			}
 		},
+		onReachBottom() {
+			//上拉加载，请求记得限制。
+			console.log("首页触底了,加载一下")
+		},
 		mounted() {
 			// this.$refs.popup.open("bottom")
 		},
@@ -320,6 +324,11 @@
 					url: './administration'
 				});
 			},
+			goOptions() {
+				uni.navigateTo({
+					url: './../product/options'
+				});
+			}
 		}
 	}
 </script>

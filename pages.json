@@ -45,7 +45,8 @@
 			// "navigationBarTitleText": "uni-app",
 			"app-plus": {
 				"titleNView": false
-			}
+			},
+			"onReachBottomDistance": 100
 		}
 	},{
 		"path": "pages/index/dataRanking",
@@ -61,7 +62,8 @@
 			// "navigationBarTitleText": "选品页",
 			"app-plus": {
 				"titleNView": false
-			}
+			},
+			"onReachBottomDistance": 100
 		}
 	}],
 	"globalStyle": {

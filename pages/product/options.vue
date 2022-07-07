@@ -73,7 +73,7 @@
 		</view>
 		
 		<view class="bottomNavigation">
-			<view class="bottomNav">
+			<view class="bottomNav" @click="goIndex">
 				<!-- <image class="navLogo" src="../../static/images/home/icon06.png"></image> -->
 				<image class="navLogo" src="../../static/images/product/icon01.png"></image>
 				<view class="navText">Order form</view>
@@ -180,6 +180,10 @@
 		onLoad(option) {
 
 		},
+		onReachBottom() {
+			//上拉加载，请求记得限制。
+			console.log("选品页触底了,加载一下")
+		},
 		mounted() {
 			window.onscroll = (()=>{
 				var scroll = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
@@ -256,6 +260,11 @@
 			scrollTab(e) {
 				
 			},
+			goIndex() {
+				uni.navigateTo({
+					url: './../index/index'
+				});
+			}
 			
 		}
 	}
