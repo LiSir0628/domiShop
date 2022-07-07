@@ -55,6 +55,14 @@
 				"titleNView": false
 			}
 		}
+	},{
+		"path": "pages/product/options",
+		"style": {
+			// "navigationBarTitleText": "选品页",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

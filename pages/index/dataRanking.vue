@@ -41,7 +41,7 @@
 				</view>
 				<view class="merRankRight">
 					<view class="merRankTop">
-						<view class="spTitle">{{item.title}}</view>
+						<view class="spTitle ellip">{{item.title}}</view>
 						<view class="profit">
 							<view class="price">Unit Price: ${{item.unitPrice}}</view>
 							<view class="ratio">Commission ratio: {{item.commissionRatio}}%</view>
@@ -111,7 +111,7 @@
 				</view>
 				<view class="membershipRight">
 					<view class="merRankTop">
-						<view class="spTitle">{{item.title}}</view>
+						<view class="spTitle ellip">{{item.title}}</view>
 						<view class="profit">
 							<view class="cumulative">Cumulative sales: ${{item.unitPrice}}</view>
 							<!-- <view class="ratio">Commission ratio: {{item.commissionRatio}}%</view> -->
@@ -474,6 +474,14 @@
 		color: #0B0B0B;
 		display: flex;
 		align-items: center;
+	}
+	.ellip{
+		overflow: hidden;
+		white-space: nowrap; 
+		word-wrap: normal;  
+		text-overflow: ellipsis;
+		-o-text-overflow:ellipsis;
+		display: inherit;
 	}
 	.ID{
 		font-size: 24rpx;
