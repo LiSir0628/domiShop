@@ -65,6 +65,14 @@
 			},
 			"onReachBottomDistance": 100
 		}
+	},{
+		"path": "pages/product/detail",
+		"style": {
+			// "navigationBarTitleText": "商品详情页",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

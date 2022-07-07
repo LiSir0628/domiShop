@@ -45,7 +45,7 @@
 			</scroll-view>
 		</view>
 		<view class="productList" :class="{productListHeight: isShowTabHeight}">
-			<view class="product" v-for="item,index in productList">
+			<view class="product" v-for="item,index in productList" @click="goDetail(index)">
 				<image class="productLogo" :src="item.image"></image>
 				<view class="productMsg">
 					<view class="productTitle">{{item.title}}</view>
@@ -160,19 +160,19 @@
 					id: 1,
 					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
 				},{
-					id: 1,
+					id: 2,
 					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
 				},{
-					id: 1,
+					id: 3,
 					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
 				},{
-					id: 1,
+					id: 4,
 					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
 				},{
-					id: 1,
+					id: 5,
 					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
 				},{
-					id: 1,
+					id: 6,
 					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
 				}]
 			}
@@ -198,6 +198,11 @@
 			})
 		},
 		methods: {
+			goDetail(index) {
+				uni.navigateTo({
+					url: './detail?id=' + this.productList[index].id
+				});
+			},
 			search() {
 				console.log(this.searchText)
 			},
