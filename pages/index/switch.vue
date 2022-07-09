@@ -28,7 +28,7 @@
 	export default {
 		data() {
 			return {
-				current: 1,
+				current: 0,
 				lists: [{
 					id: '0',
 					photo: '../../static/images/home/icon03.png',
@@ -40,13 +40,21 @@
 				}, {
 					id: '2',
 					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
+					name: 'Micky'
 				}],
 				searchText: "",
 			}
 		},
 		onLoad(option) {
 
+		},
+		created() {
+			for(let i in this.lists){
+				if(this.lists[i].id == this.$store.state.accountId){
+					this.current = parseInt(i)
+					break
+				}
+			}
 		},
 		methods: {
 			back() {
@@ -61,7 +69,14 @@
 			choose(index) {
 				if (this.current == index) return
 				this.current = index
-				console.log(this.current)
+				
+				//还需要管理一个 账号id
+				this.$store.commit('editAccountName', this.lists[index])
+				console.log(this.$store.state.accountName)
+				console.log(this.$store.state.accountId)
+				
+				//选择完成 返回
+				window.history.go(-1)
 			}
 		}
 	}

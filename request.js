@@ -1,4 +1,5 @@
-let baseURL='https://fish.mini.zhishukongjian.com/';
+// let baseURL='https://fish.mini.zhishukongjian.com/';
+let baseURL = 'https://user.mini.zhishukongjian.com/';
 
 function myRequest(options){
 	let headers={}

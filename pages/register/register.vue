@@ -46,8 +46,6 @@
 		},
 		methods: {
 			getCode(){
-				this.openTimer()
-				return
 				if(!this.account){
 					uni.showModal({
 						title: 'TIP',

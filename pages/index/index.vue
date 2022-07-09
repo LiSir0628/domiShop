@@ -96,7 +96,7 @@
 				<image class="arrowDown" src="../../static/images/home/icon12.png"></image>
 			</view>
 			<view class="sort" @click="goSwitch">
-				<view class="sortText">All of them</view>
+				<view class="sortText">{{accountName}}</view>
 				<image class="arrowDown" src="../../static/images/home/icon12.png"></image>
 			</view>
 		</view>
@@ -165,6 +165,10 @@
 					<view class="name">zhanghaomingcheng</view>
 				</view>
 			</view>
+			<!-- <view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon01.png"></image>
+				<view class="noDataText">It’s empty</view>
+			</view> -->
 		</view>
 
 		<view class="suspension" @click="goAdministration">
@@ -259,6 +263,8 @@
 				citem: 0,
 				prepareState: 'Full state',
 				orderState: 'Full state',
+				
+				accountName: 'All of them'
 			}
 		},
 		onReachBottom() {
@@ -267,6 +273,15 @@
 		},
 		mounted() {
 			// this.$refs.popup.open("bottom")
+			// 返回不触发，进行触发
+		},
+		onShow() {
+			if(this.accountName == this.$store.state.accountName){
+				// 账号无修改，无需请求
+			} else {
+				// 账号修改，接口请求触发
+				this.accountName = this.$store.state.accountName
+			}
 		},
 		methods: {
 			toggle(type) {
@@ -701,7 +716,24 @@
 		color: #FFFFFF;
 		margin-left: 12rpx;
 	}
-
+	
+	.noData{
+		text-align: center;
+		margin-top: 122rpx;
+	}
+	.noDataLogo{
+		width: 128rpx;
+		height: 108rpx;
+	}
+	.noDataText{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #999999;
+		line-height: 24rpx;
+		margin-top: 12rpx;
+	}
+	
 	/* 悬浮框 */
 	.suspension {
 		width: 340rpx;
