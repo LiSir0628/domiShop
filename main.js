@@ -6,6 +6,9 @@ import App from './App'
 import store from './store'
 //把vuex定义成全局组件
 Vue.prototype.$store = store
+// 复制
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 
 import utils from './common/util.js'
 Vue.prototype.$utils = utils;

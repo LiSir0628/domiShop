@@ -1,19 +1,20 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :fixed="true" title="Product details">
+		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :fixed="true"
+			title="Product details">
 		</uni-nav-bar>
 
-		<uni-swiper-dot class="uni-swiper-dot-box" :info="info" :current="current" mode="nav"
-			:dots-styles="dotsStyles" field="content">
+		<uni-swiper-dot class="uni-swiper-dot-box" :info="info" :current="current" mode="nav" :dots-styles="dotsStyles"
+			field="content">
 			<swiper class="swiper-box" @change="change" :current="swiperDotIndex">
 				<swiper-item v-for="(item, index) in info" :key="index">
 					<image class="banner" :src="item.url"></image>
 				</swiper-item>
 			</swiper>
 		</uni-swiper-dot>
-		
+
 		<view class="priceTemplate">
-			<view class="price"> 
+			<view class="price">
 				<text class="priceSpan">$</text>25632
 			</view>
 			<view class="profit">
@@ -27,7 +28,8 @@
 			<view class="totalSales">
 				<view>Total sales: 562622</view>
 				<view class="logoSubject">
-					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png"></image>
+					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')">
+					</image>
 					<image class="totalSalesLogo" src="../../static/images/detail/icon04.png"></image>
 				</view>
 			</view>
@@ -38,14 +40,14 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="liveTemplate">
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
 					<view class="liveTitle">Live benefits</view>
 				</view>
-				<view  class="logoSubject">
+				<view class="logoSubject">
 					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png"></image>
 					<image class="totalSalesLogo" src="../../static/images/detail/icon06.png"></image>
 				</view>
@@ -54,14 +56,14 @@
 				Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag .
 			</view>
 		</view>
-		
+
 		<view class="sellTemplate">
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
 					<view class="liveTitle">Selling Point</view>
 				</view>
-				<view  class="logoSubject">
+				<view class="logoSubject">
 					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png"></image>
 				</view>
 			</view>
@@ -80,14 +82,14 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="deliveryTemplate">
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
 					<view class="liveTitle">Delivery Logistics</view>
 				</view>
-				<view  class="logoSubject">
+				<view class="logoSubject">
 					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png"></image>
 				</view>
 			</view>
@@ -106,26 +108,26 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="detailTitle">
 			<view class="underline"></view>
 			Product details
 			<view class="underline"></view>
 		</view>
-		
+
 		<view class="spImages">
 			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
 			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
 			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
 		</view>
-		
+
 		<view class="bottom">
 			<image class="copyLogo" src="../../static/images/detail/icon03.png"></image>
 			<view class="copy">Copy the link</view>
 			<view class="add">Add a window</view>
 			<view class="collection">Free sample collection</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -167,6 +169,28 @@
 				this.current = e.detail.current
 				console.log(e)
 			},
+			copy(text) {
+				// #ifdef H5
+				this.$copyText(text).then(
+					res => {
+						uni.showToast({
+							title: '复制成功'
+						})
+					}
+				)
+				// #endif
+				// #ifndef H5
+				uni.setClipboardData({
+					data: text,
+					success: () => {
+						uni.showToast({
+							title: '复制成功'
+						})
+					}
+				})
+				// #endif
+			}
+
 		}
 	}
 </script>
@@ -176,7 +200,7 @@
 		width: 100%;
 		height: 100%;
 	}
-	
+
 	.container {
 		width: 100%;
 		min-height: 100%;
@@ -189,71 +213,77 @@
 		width: 750rpx;
 		height: 750rpx
 	}
-	
+
 	.swiper-box {
 		width: 750rpx;
 		height: 750rpx
 	}
-	
+
 	.banner {
 		width: 750rpx;
 		height: 750rpx;
 	}
-	
-	/deep/ .uni-swiper__dots-nav{
+
+	/deep/ .uni-swiper__dots-nav {
 		background: none;
 		justify-content: flex-end;
 	}
-	/deep/ .uni-swiper__dots-nav-item{
+
+	/deep/ .uni-swiper__dots-nav-item {
 		width: 60rpx;
 		height: 40rpx;
 		line-height: 40rpx;
 		background: #000000;
 		opacity: 0.4;
 		border-radius: 20rpx;
-		
+
 		text-align: center;
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #FFFFFF;
 	}
-	
+
 	/* 价格展示模块 */
-	.priceTemplate{
+	.priceTemplate {
 		padding: 30rpx 0 30rpx 30rpx;
 		background: #ffffff;
 	}
-	.price{
+
+	.price {
 		font-size: 46rpx;
 		line-height: 28rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #FF3838;
 	}
-	.priceSpan{
+
+	.priceSpan {
 		font-size: 24rpx;
 		margin-right: 8rpx;
 	}
-	.profit{
+
+	.profit {
 		width: 392rpx;
 		height: 48rpx;
 		line-height: 48rpx;
 		background: #FF3838;
 		border-radius: 24rpx;
-		
+
 		font-size: 24rpx;
 		font-family: Arial;
 		color: #ffffff;
 		text-align: center;
 		margin-top: 21rpx;
 	}
-	.profitPrice{
+
+	.profitPrice {
 		margin-left: 8rpx;
 		font-size: 32rpx;
 		color: #ffffff;
 	}
-	.rate{
+
+	.rate {
 		margin-top: 20rpx;
 		font-size: 24rpx;
 		font-family: Arial;
@@ -261,16 +291,19 @@
 		color: #0B0B0B;
 		line-height: 28rpx;
 	}
-	.hotLogo{
+
+	.hotLogo {
 		width: 22rpx;
 		height: 29rpx;
 		margin-right: 8rpx;
 	}
-	.rateNum{
+
+	.rateNum {
 		margin-left: 4rpx;
 		font-size: 32rpx;
 	}
-	.totalSales{
+
+	.totalSales {
 		font-size: 24rpx;
 		line-height: 24rpx;
 		font-family: Arial;
@@ -281,18 +314,21 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-	.logoSubject{
+
+	.logoSubject {
 		display: flex;
 		align-items: center;
 		margin-right: 30rpx;
 	}
-	.totalSalesLogo{
+
+	.totalSalesLogo {
 		width: 30rpx;
 		height: 30rpx;
 		margin-left: 18rpx;
 		display: block;
 	}
-	.sample{
+
+	.sample {
 		width: 690rpx;
 		height: 60rpx;
 		background: rgba(40, 168, 151, 0.1);
@@ -303,91 +339,103 @@
 		display: flex;
 		align-items: center;
 	}
-	.menuLogo{
+
+	.menuLogo {
 		width: 24rpx;
 		height: 24rpx;
 	}
-	.priceContent{
+
+	.priceContent {
 		width: 617rpx;
 		font-size: 22rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #28A897;
 		overflow: hidden;
-		white-space: nowrap; 
-		word-wrap: normal;  
+		white-space: nowrap;
+		word-wrap: normal;
 		text-overflow: ellipsis;
-		-o-text-overflow:ellipsis;
+		-o-text-overflow: ellipsis;
 		margin-left: 10rpx;
 	}
-	
+
 	/* 直播利益 */
-	.liveTemplate,.sellTemplate,.deliveryTemplate{
+	.liveTemplate,
+	.sellTemplate,
+	.deliveryTemplate {
 		padding: 30rpx 0 30rpx 30rpx;
 		background: #ffffff;
 		margin-top: 20rpx;
 	}
-	.liveModular{
+
+	.liveModular {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
-	.liveSubject{
+
+	.liveSubject {
 		display: flex;
 		align-items: center;
 	}
-	.starsLogo{
+
+	.starsLogo {
 		width: 24rpx;
 		height: 24rpx;
 	}
-	.liveTitle{
+
+	.liveTitle {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #0B0B0B;
 		margin-left: 8rpx;
 	}
-	.liveContent{
+
+	.liveContent {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
-		padding:44rpx 27rpx 0 30rpx;
+		padding: 44rpx 27rpx 0 30rpx;
 		line-height: 40rpx;
 	}
+
 	/* 商品卖点 */
-	.sellTemplate{
-		
-	}
-	.sellContent{
+	.sellTemplate {}
+
+	.sellContent {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
-		padding:44rpx 16rpx 0 30rpx;
+		padding: 44rpx 16rpx 0 30rpx;
 		line-height: 40rpx;
 	}
+
 	/* 发货物流 */
-	.deliveryTemplate{
-		
-	}
-	.deliveryContent{
+	.deliveryTemplate {}
+
+	.deliveryContent {
 		padding: 14rpx 30rpx 0 30rpx;
 	}
-	.deliveryList{
+
+	.deliveryList {
 		font-size: 24rpx;
 		line-height: 24rpx;
 		display: flex;
 		margin-top: 30rpx;
 	}
-	.deliveryTitle{
+
+	.deliveryTitle {
 		width: 280rpx;
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
 	}
-	.deliveryMsg{
+
+	.deliveryMsg {
 		width: 320rpx;
 		font-size: 24rpx;
 		font-family: Arial;
@@ -395,9 +443,9 @@
 		color: #FF7436;
 		margin-left: 60rpx;
 	}
-	
+
 	/* 标题线 */
-	.detailTitle{
+	.detailTitle {
 		width: 750rpx;
 		height: 80rpx;
 		line-height: 80rpx;
@@ -414,24 +462,24 @@
 		letter-spacing: 2rpx;
 		margin-top: 20rpx;
 	}
-	.underline{
+
+	.underline {
 		width: 200rpx;
 		height: 2rpx;
 		background: #FFFFFF;
 	}
-	
+
 	/* 商品图片展示 */
-	.spImages{
-		
-	}
-	.spImage{
+	.spImages {}
+
+	.spImage {
 		width: 100%;
 		display: block;
 	}
-	
-	
+
+
 	/* 购物栏底部 */
-	.bottom{
+	.bottom {
 		width: 750rpx;
 		height: 120rpx;
 		background: #FFFFFF;
@@ -440,23 +488,26 @@
 		bottom: 0;
 		padding: 24rpx 20rpx;
 		box-sizing: border-box;
-		
+
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
-	.copyLogo{
+
+	.copyLogo {
 		width: 20rpx;
 		height: 20rpx;
 	}
-	.copy{
+
+	.copy {
 		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
 		margin-left: 8rpx;
 	}
-	.add{
+
+	.add {
 		width: 202rpx;
 		height: 72rpx;
 		background: #0B0B0B;
@@ -469,7 +520,8 @@
 		line-height: 72rpx;
 		margin-left: 16rpx;
 	}
-	.collection{
+
+	.collection {
 		width: 297rpx;
 		height: 72rpx;
 		background: #FF7436;
@@ -482,5 +534,4 @@
 		line-height: 72rpx;
 		margin-left: 12rpx;
 	}
-	
 </style>
