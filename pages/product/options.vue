@@ -240,6 +240,14 @@
 				if (this.cindex == index) return
 				this.cindex = index
 				console.log(index)
+				// this.$nextTick(()=>{
+				// 	const that = this
+				// 	let view = uni.createSelectorQuery().select(".scroll-view-item-active")
+				// 	view.boundingClientRect(function(data) {
+				// 		console.log(data)
+				// 		that.scrollLeft = parseInt(data.left)
+				// 	}).exec();
+				// })
 			},
 			scroll(e) {
 				// this.scrollLeft = e.detail.scrollLeft

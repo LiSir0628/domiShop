@@ -121,17 +121,61 @@
 			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
 		</view>
 
-		<view class="bottom">
+		<view class="bottomCar">
 			<image class="copyLogo" src="../../static/images/detail/icon03.png"></image>
 			<view class="copy">Copy the link</view>
-			<view class="add">Add a window</view>
-			<view class="collection">Free sample collection</view>
+			<view class="add" @click="openAdd">Add a window</view>
+			<view class="collection" @click="openCollection">Free sample collection</view>
 		</view>
-
+		
+		<view>
+			<!-- 普通弹窗 -->
+			<uni-popup ref="popupAdd" type="bottom" background-color="#fff" @maskClick="closeAdd">
+				<view class="popup-content">
+					<view class="popupTop">
+						<view class="addTitle">Select the TIKTOK</view>
+						<view class="addClose" @click="closeAdd">X</view>
+					</view>
+					
+					<view class="popupCenter">
+						<view class="userMsg" :class="{'userMsgActive': cindex == index }" v-for="item,index in userList" @click="chooseTiktok(index)">
+							<image class="photo" :src="item.photo"></image>
+							<view class="useMsg">
+								<view class="userName">{{item.name}}</view>
+								<view class="userFans">
+									<view class="FansNum">
+										<image class="userLogo" src="../../static/images/detail/icon09.png"></image>
+										{{item.fans}}
+									</view>
+									<view class="sales">
+										Window sales: {{item.sales}}
+									</view>
+								</view>
+								<view class="isFree">Meet the conditions of free sample</view>								
+					
+							</view>
+							<image v-if="cindex == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
+						</view>
+					</view>
+					
+					<view class="popupBottom">
+						<view class="newAdd" @click="open('center')">
+							New TIKTOK
+						</view>
+						<view class="confirmed" @click="confirmed">
+							Confirmed
+						</view>
+					</view>
+				</view>
+			</uni-popup>
+		</view>
+		
+		<add-admin ref="addAdmin"></add-admin>
 	</view>
 </template>
 
 <script>
+	import addAdmin from "../common/addAdmin.vue"
 	export default {
 		data() {
 			return {
@@ -151,15 +195,34 @@
 						content: ''
 					}
 				],
-
+				
+				cindex: 0,
+				kindex: 0,
+				userList:[{
+					id: 1,
+					photo: '../../static/images/home/photo.png',
+					name: 'zhanghaomingcheng',
+					fans: 450,
+					sales: 56263
+				},{
+					id: 2,
+					photo: '../../static/images/home/photo.png',
+					name: 'zhanghaomingcheng',
+					fans: 450,
+					sales: 56263
+				}],
+				
 				current: 0,
 				mode: 'default',
 				dotsStyles: {},
 				swiperDotIndex: 0
 			}
 		},
+		components: {
+			addAdmin
+		},
 		mounted() {
-			console.log(this.$store.state.accountName)
+
 		},
 		methods: {
 			back() {
@@ -189,8 +252,43 @@
 					}
 				})
 				// #endif
-			}
-
+			},
+			/* 添加窗口 */
+			openAdd() {
+				this.cindex = this.kindex
+				this.$refs.popupAdd.open()
+			},
+			closeAdd() {
+				this.$refs.popupAdd.close()
+			},
+			chooseTiktok(index){
+				if(this.cindex == index) return
+				this.cindex = index
+			},
+			open(type) {	
+				this.$refs.addAdmin.open()
+			},
+			
+			confirmed() {
+				this.kindex = this.cindex
+				this.$refs.popupAdd.close()
+				// 成功获取选择用户信息，此时应该对用户身份进行替换
+			},
+			
+			onUnload() {
+				//页面销毁、清除定时器
+				clearInterval(this.setTime);
+				this.$refs.addAdmin.close()
+			},
+			onBeforeUnload() {
+				//页面销毁、清除定时器
+				clearInterval(this.setTime);
+				this.$refs.addAdmin.close()
+			},
+			/* 免费领样 */
+			openCollection() {
+				
+			},
 		}
 	}
 </script>
@@ -479,7 +577,7 @@
 
 
 	/* 购物栏底部 */
-	.bottom {
+	.bottomCar {
 		width: 750rpx;
 		height: 120rpx;
 		background: #FFFFFF;
@@ -533,5 +631,163 @@
 		text-align: center;
 		line-height: 72rpx;
 		margin-left: 12rpx;
+	}
+	
+	/* 下拉框弹窗 */
+	.popup-content {
+		width: 750rpx;
+		height: 980rpx;
+		/* display: flex;
+		align-items: center;
+		justify-content: center; */
+		background-color: #fff;
+		box-sizing: border-box;
+		position: relative;
+		padding: 30rpx 30rpx 20rpx 30rpx;
+	}
+	
+	.popupTop{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	
+	.addTitle{
+		font-size: 28rpx;
+		line-height: 28rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #0B0B0B;
+	}
+	.addClose{
+		width: 24rpx;
+		height: 24rpx;
+		line-height: 24rpx;
+		color: rgb(209,209,209);
+		display: block;
+	}
+	.popupCenter{
+		height: 720rpx;
+		margin-top: 40rpx;
+		overflow: hidden;
+		overflow-y: auto;
+	}
+	::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
+	.userMsg{
+		width: 690rpx;
+		height: 161rpx;
+		display: flex;
+		padding: 26rpx 0 26rpx 20rpx;
+		background: #FFFFFF;
+		border: 2rpx solid #CECECE;
+		border-radius: 8rpx;
+		position: relative;
+		box-sizing: border-box;
+		margin-bottom: 19rpx;
+	}
+	.userMsgActive{
+		background: rgb(255, 244, 239);
+		border: 2rpx solid rgb(225, 116, 54);
+	}
+	.photo{
+		width: 88rpx;
+		height: 86rpx;
+		display: block;
+		border-radius: 50%;
+		margin-top: 6rpx;
+	}
+	.useMsg{
+		margin-left: 20rpx;
+		line-height: 24rpx;
+	}
+	.userName{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #0B0B0B;
+	}
+	.userFans{
+		display: flex;
+		align-items: center;
+		margin-top: 16rpx;
+	}
+	.FansNum{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #666666;
+	}
+	.userLogo{
+		width: 24rpx;
+		height: 17rpx;
+		margin-right: 8rpx;
+	}
+	.sales{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FF3838;
+		margin-left: 20rpx;
+	}
+	.isFree{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #39B83C;
+		margin-top: 16rpx;
+	}
+	.noFree{
+		font-size: 14rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #CECECE;
+		margin-top: 16rpx;
+	}
+	.activeLogo{
+		width: 61rpx;
+		height: 57rpx;
+		position: absolute;
+		right: -2rpx;
+		bottom: -2rpx;
+		display: block;
+	}
+	
+	.popupBottom{
+		width: 690rpx;
+		position: fixed;
+		bottom: 21rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		box-sizing: border-box;
+		text-align: center;
+	}
+	.newAdd{
+		width: 335rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		background: #0B0B0B;
+		border-radius: 8rpx;
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FFFFFF;
+	}
+	.confirmed{
+		width: 335rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		background: #FF7436;
+		border-radius: 8rpx;
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FFFFFF;
 	}
 </style>

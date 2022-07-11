@@ -7,10 +7,10 @@
 				<view class="userName">{{item.name}}</view>
 			</view>
 			<!-- <view class="btn" @click="add">New TIKTOK account</view> -->
-			<view class="btn" @click="toggle('center')">New TIKTOK account</view>
+			<view class="btn" @click="open('center')">New TIKTOK account</view>
 		</view>
 		<!-- <view class="mask" v-if="isShowMask" @click="close"> -->
-		<uni-popup ref="popup" background-color="#fff" @maskClick="close">
+		<!-- <uni-popup ref="popup" background-color="#fff" @maskClick="close">
 			<view class="popup-content">
 				<view class="card" @click.stop="noClose">
 					<view class="close" @click="close">X</view>
@@ -35,12 +35,14 @@
 					</view>
 				</view>
 			</view>
-		</uni-popup>
+		</uni-popup> -->
 		<!-- </view> -->
+		<add-admin ref="addAdmin"></add-admin>
 	</view>
 </template>
 
 <script>
+	import addAdmin from "../common/addAdmin.vue"
 	export default {
 		data() {
 			return {
@@ -98,6 +100,9 @@
 				},
 			}
 		},
+		components: {
+			addAdmin
+		},
 		onLoad(option) {
 			var that = this;
 			uni.getSystemInfo({
@@ -142,15 +147,18 @@
 					} 
 				}, 1000);
 			},
-			toggle(type) {
+			open(type) {
 				// open 方法传入参数 等同在 uni-popup 组件上绑定 type属性
-				this.$refs.popup.open(type)
-				this.time = 59
-				this.openTimer()
+				// this.$refs.popup.open(type)
+				// this.time = 59
+				// this.openTimer()
+				
+				this.$refs.addAdmin.open()
 			},
 			close() {
-				this.$refs.popup.close()
-				clearInterval(this.setTime)
+				// this.$refs.popup.close()
+				// clearInterval(this.setTime)
+				this.$refs.addAdmin.close()
 			},
 			noClose() {
 				// 防止点击图片关闭遮罩
@@ -158,10 +166,12 @@
 			onUnload() {
 				//页面销毁、清除定时器
 				clearInterval(this.setTime);
+				this.$refs.addAdmin.close()
 			},
 			onBeforeUnload() {
 				//页面销毁、清除定时器
 				clearInterval(this.setTime);
+				this.$refs.addAdmin.close()
 			},
 		}
 	}
