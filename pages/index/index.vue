@@ -141,7 +141,7 @@
 						<view class="spDes">zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi
 							shangpinneirongshangpinne shangpinneirongs</view>
 						<view class="spOperation">
-							<view class="state">order paid</view>
+							<view class="stateRefund">refund/return of order</view>
 							<view class="time">10-18 16:05:20 payment</view>
 						</view>
 					</view>
@@ -541,8 +541,8 @@
 	}
 
 	.merchandiseBottom {
-		font-size: 24rpx;
-		line-height: normal;
+		font-size: 26rpx;
+		line-height: 34rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #FFFFFF;
@@ -558,7 +558,7 @@
 
 	.sort {
 		min-width: 180rpx;
-		height: 48rpx;
+		height: 64rpx;
 		background: #111111;
 		border: 2rpx solid #F7F7F7;
 		border-radius: 8rpx;
@@ -571,7 +571,7 @@
 	}
 
 	.sortText {
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #FFFFFF;
@@ -608,6 +608,7 @@
 		height: 144rpx;
 		background: #FFFFFF;
 		border-radius: 8rpx;
+		display: block;
 	}
 
 	.spMsg {
@@ -647,6 +648,18 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #28A897;
+		text-align: center;
+		line-height: 40rpx;
+	}
+	.stateRefund{
+		width: 246rpx;
+		height: 40rpx;
+		background: rgb(51, 51, 51);
+		border-radius: 20rpx;
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #999999;
 		text-align: center;
 		line-height: 40rpx;
 	}
@@ -710,7 +723,7 @@
 	}
 
 	.name {
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #FFFFFF;

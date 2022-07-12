@@ -3,7 +3,8 @@
 		<uni-popup ref="popup" background-color="#fff" @maskClick="close">
 			<view class="popup-content">
 				<view class="card" @click.stop="noClose">
-					<view class="close" @click="close">X</view>
+					<!-- <view class="close" @click="close">X</view> -->
+					<image class="close" src="../../static/images/detail/icon13.png" @click="close"></image>
 					<view class="cardTitle">TIKTOK APP SCAN code access</view>
 					<view class="cardTip">Please make sure you scan the TIK Tok account for at least one public video</view>
 					<image class="cardEwm" src="../../static/images/home/demo.png"></image>
@@ -78,7 +79,9 @@
 	.container {
 		
 	}
-	
+	/deep/ .uni-popup .uni-popup__wrapper{
+		border-radius: 50px;
+	}
 	/* 遮罩样式 */
 	.mask{
 		position: fixed;
@@ -103,11 +106,18 @@
 		position: relative;
 	}
 	.close{
-		font-size: 24rpx;
+		/* font-size: 24rpx;
 		color: #999999;
 		position: absolute;
 		right: 30rpx;
+		line-height: 24rpx; */
+		width: 24rpx;
+		height: 24rpx;
 		line-height: 24rpx;
+		color: rgb(209,209,209);
+		display: block;
+		position: absolute;
+		right: 30rpx;
 	}
 	.cardTitle{
 		font-size: 26rpx;

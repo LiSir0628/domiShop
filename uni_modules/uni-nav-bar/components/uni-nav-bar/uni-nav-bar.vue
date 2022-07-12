@@ -202,10 +202,10 @@
 
 	.uni-nav-bar-text {
 		/* #ifdef APP-PLUS */
-		font-size: 34rpx;
+		font-size: 32rpx;
 		/* #endif */
 		/* #ifndef APP-PLUS */
-		font-size: 14px;
+		font-size: 32rpx;
 		/* #endif */
 	}
 
@@ -267,6 +267,9 @@
 		width: 120rpx;
 		justify-content: flex-start;
 		align-items: center;
+		// 新增样式
+		position: absolute;
+		line-height: 44px;
 	}
 
 	.uni-navbar__header-btns-right {
@@ -278,6 +281,8 @@
 		// padding-right: 30rpx;
 		justify-content: flex-end;
 		align-items: center;
+		// 新增样式
+		display: none;
 	}
 
 	.uni-navbar__header-container {

@@ -16,7 +16,7 @@
 				<image class="arrowDown" src="../../static/images/rank/icon07.png"></image>
 			</view>
 			<view class="sort" @click="goSwitch">
-				<view class="sortText">All of them</view>
+				<view class="sortText">{{accountName}}</view>
 				<image class="arrowDown" src="../../static/images/rank/icon07.png"></image>
 			</view>
 			<view class="sort" v-if="cindex != 2" @click="goSwitch">
@@ -50,11 +50,11 @@
 					<view class="merRankBottom">
 						<view class="sales">
 							<image class="salesLogo" src="../../static/images/rank/icon08.png"></image>
-							<view>Cumulative sales: ${{item.cumulativeSales}}</view>
+							<view>Cumulative sales:<text class="weight">${{item.cumulativeSales}}</text></view>
 						</view>
 						<view class="commission">
 							<image class="commissionLogo" src="../../static/images/rank/icon06.png"></image>
-							<view>Accumulated Commission: ${{item.accumulatedCommission}}</view>
+							<view>Accumulated Commission:<text class="weight">${{item.accumulatedCommission}}</text></view>
 						</view>
 					</view>
 				</view>
@@ -80,18 +80,19 @@
 							<view>Account Name</view>
 							<view class="ID">ID:15494965</view>
 						</view>
-						<view class="accountName">name</view>
+						<!-- <view class="accountName">name</view> -->
 					</view>
 					<view class="accountBottom">
 						<view class="sales">
 							<image class="salesLogo" src="../../static/images/rank/icon08.png"></image>
-							<view>Cumulative sales: ${{item.cumulativeSales}}</view>
+							<view>Cumulative sales:<text class="weight">${{item.cumulativeSales}}</text></view>
 						</view>
 						<view class="commission">
 							<image class="commissionLogo" src="../../static/images/rank/icon06.png"></image>
-							<view>Accumulated Commission: ${{item.accumulatedCommission}}</view>
+							<view>Accumulated Commission:<text class="weight">${{item.accumulatedCommission}}</text></view>
 						</view>
 					</view>
+					<view class="accountName">namenamenamenamenamename</view>
 				</view>
 			</view>
 		</view>
@@ -120,11 +121,11 @@
 					<view class="membershipBottom">
 						<view class="bindAccount">
 							Immediate subordinate: 
-							<text class="numStyle">5</text>
+							<text class="numStyle">50</text>
 						</view>
 						<view class="bindAccount">
 							Bind the account: 
-							<text class="numStyle">10</text>
+							<text class="numStyle">100</text>
 						</view>
 					</view>
 				</view>
@@ -180,7 +181,8 @@
 
 				citem: 0,
 				prepareState: 'Today',
-				orderState: 'Today',
+				orderState: 'Today',	
+				accountName: 'All of them',
 				
 				merIndex: 0,
 				merRankList:[{
@@ -229,6 +231,14 @@
 		},
 		created() {
 			
+		},
+		onShow() {
+			if(this.accountName == this.$store.state.accountName){
+				// 账号无修改，无需请求
+			} else {
+				// 账号修改，接口请求触发
+				this.accountName = this.$store.state.accountName
+			}
 		},
 		methods: {
 			back() {
@@ -300,14 +310,14 @@
 	.scroll-view-item_H {
 		display: inline-block;
 		text-align: center;
-		height: 56rpx;
-		line-height: 56rpx;
+		height: 64rpx;
+		line-height: 64rpx;
 		padding: 0 20rpx;
 		background: #FFFFFF;
 		border: 2rpx solid #999999;
 		border-radius: 8rpx;
 		margin-right: 20rpx;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
@@ -349,7 +359,7 @@
 	}
 
 	.sortText {
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
@@ -366,7 +376,7 @@
 		padding: 30rpx;
 	}	.merRank{
 		width: 690rpx;
-		height: 215rpx;
+		height: 220rpx;
 		background: #FFFFFF;
 		border: 2rpx solid #CECECE;
 		border-radius: 10rpx;
@@ -377,7 +387,7 @@
 	}
 	.merRankAccount{
 		width: 690rpx;
-		height: 162rpx;
+		height: 196rpx;
 		padding: 0 14rpx 0 34rpx;
 	}
 	.membershipAccount{
@@ -414,7 +424,7 @@
 	}
 	.rankLogoAccount{
 		top: 33rpx;
-		left: 0rpx;
+		left: -10rpx;
 	}
 	
 	.rankText{
@@ -424,12 +434,12 @@
 		color: #999999;
 		position: absolute;
 		top: 45rpx;
-		left: -6rpx;
+		left: -4rpx;
 		z-index: 2;
 	}
 	.rankTextAccount{
 		top: 32rpx;
-		left: 13rpx;
+		left: 5rpx;
 	}
 		.photo{
 		width: 88rpx;
@@ -468,7 +478,7 @@
 		
 	}
 	.spTitle{
-		font-size: 26rpx;
+		font-size: 28rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #0B0B0B;
@@ -484,17 +494,26 @@
 		display: inherit;
 	}
 	.ID{
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
 		margin-left: 20rpx;
 	}
 	.accountName{
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #666666;
+		margin-top: 10rpx;
+		text-align: right;
+		width: 220rpx;
+		float: right;
+		overflow: hidden;
+		white-space: nowrap; 
+		word-wrap: normal;  
+		text-overflow: ellipsis;
+		-o-text-overflow:ellipsis;
 	}	.profit{
 		display: flex;
 		align-items: center;
@@ -545,7 +564,7 @@
 		margin-top: 14rpx;
 	}
 	.membershipBottom{
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
@@ -564,29 +583,29 @@
 	}	.sales{
 		display: flex;
 		align-items: center;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
-		line-height: 12px;
+		line-height: 26rpx;
 	}	.salesLogo{
-		width: 14rpx;
-		height: 19rpx;
+		width: 20rpx;
+		height: 27rpx;
 		margin: -4rpx 8rpx 0 0;
 		display: block;
 	}	.commission{
 		display: flex;
 		align-items: center;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
 		margin-top: 18rpx;
-		line-height: 12px;
+		line-height: 26rpx;
 	}	.commissionLogo{
-		width: 17rpx;
-		height: 17rpx;
-		margin: -2rpx 8rpx 0 0;
+		width: 22rpx;
+		height: 22rpx;
+		margin: -1rpx 8rpx 0 0;
 		display: block;
 	}
 	/* 下拉框弹窗 */
@@ -639,5 +658,9 @@
 		right: 0;
 		margin: 0 auto;
 		bottom: 37rpx;
+	}
+	.weight{
+		font-weight: bold;
+		margin-left: 6rpx;
 	}
 </style>

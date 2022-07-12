@@ -28,9 +28,9 @@
 			<view class="totalSales">
 				<view>Total sales: 562622</view>
 				<view class="logoSubject">
-					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')">
+					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')">
 					</image>
-					<image class="totalSalesLogo" src="../../static/images/detail/icon04.png"></image>
+					<image class="loveLogo" src="../../static/images/detail/icon04.png"></image>
 				</view>
 			</view>
 			<view class="sample">
@@ -45,11 +45,11 @@
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-					<view class="liveTitle">Live benefits</view>
+					<view class="liveTitle">LIVE BENEFITS</view>
 				</view>
 				<view class="logoSubject">
-					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png"></image>
-					<image class="totalSalesLogo" src="../../static/images/detail/icon06.png"></image>
+					<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
+					<image class="cardLogo" src="../../static/images/detail/icon06.png"></image>
 				</view>
 			</view>
 			<view class="liveContent">
@@ -61,21 +61,21 @@
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-					<view class="liveTitle">Selling Point</view>
+					<view class="liveTitle">SELLING POINT</view>
 				</view>
 				<view class="logoSubject">
-					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png"></image>
+					<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
 				</view>
 			</view>
 			<view class="sellContent">
-				<view>1. Chongqing Strength Factory, Douyin hotpot base</view>
-				<view>2. Independent Small Packaging, 1 small bag 1 small</view>
-				<view>3.the praise rate is above 92% , product quality is guaranteed</view>
-				<view>
+				<view class="sellContentText">1. Chongqing Strength Factory, Douyin hotpot base</view>
+				<view class="sellContentText">2. Independent Small Packaging, 1 small bag 1 small</view>
+				<view class="sellContentText">3.the praise rate is above 92% , product quality is guaranteed</view>
+				<view class="sellContentText">
 					4. the optimization of seasoning, craftsmanship quality, thicken
 					pepper, spicy and addictive. The butter is rich and fragrant.
 				</view>
-				<view>
+				<view class="sellContentText">
 					5. a multi-purpose, can do hot pot, braised vegetables, Malatan
 					INGREDIENTS: Butter, pepper, Douban, ginger, garlic, edibles
 					seasoning, monosodium glutamate, rock sugar, spices
@@ -87,10 +87,10 @@
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-					<view class="liveTitle">Delivery Logistics</view>
+					<view class="liveTitle">DELIVERY LOGISTICS</view>
 				</view>
 				<view class="logoSubject">
-					<image class="totalSalesLogo" src="../../static/images/detail/icon03.png"></image>
+					<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
 				</view>
 			</view>
 			<view class="deliveryContent">
@@ -134,7 +134,8 @@
 				<view class="popup-content">
 					<view class="popupTop">
 						<view class="addTitle">Select the TIKTOK</view>
-						<view class="addClose" @click="closeAdd">X</view>
+						<!-- <view class="addClose" @click="closeAdd">X</view> -->
+						<image class="addClose" src="../../static/images/detail/icon13.png" @click="closeAdd"></image>
 					</view>
 					
 					<view class="popupCenter">
@@ -383,27 +384,31 @@
 
 	.rate {
 		margin-top: 20rpx;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
 		line-height: 28rpx;
+		display: flex;
+		align-items: flex-end;
 	}
 
 	.hotLogo {
-		width: 22rpx;
-		height: 29rpx;
+		width: 32rpx;
+		height: 38rpx;
 		margin-right: 8rpx;
+		display: block;
 	}
 
 	.rateNum {
 		margin-left: 4rpx;
 		font-size: 32rpx;
+		font-weight: bold;
 	}
 
 	.totalSales {
-		font-size: 24rpx;
-		line-height: 24rpx;
+		font-size: 26rpx;
+		line-height: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
@@ -419,13 +424,26 @@
 		margin-right: 30rpx;
 	}
 
-	.totalSalesLogo {
-		width: 30rpx;
-		height: 30rpx;
-		margin-left: 18rpx;
+	.linkLogo {
+		width: 32rpx;
+		height: 32rpx;
 		display: block;
 	}
-
+	
+	.loveLogo {
+		width: 36rpx;
+		height: 31rpx;
+		display: block;
+		margin-left: 38rpx;
+	}
+	
+	.cardLogo {
+		width: 31rpx;
+		height: 36rpx;
+		display: block;
+		margin-left: 38rpx;
+	}
+	
 	.sample {
 		width: 690rpx;
 		height: 60rpx;
@@ -495,34 +513,44 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
-		padding: 44rpx 27rpx 0 30rpx;
+		padding: 16rpx 27rpx 0 30rpx;
 		line-height: 40rpx;
 	}
 
 	/* 商品卖点 */
-	.sellTemplate {}
-
+	.sellTemplate {
+		padding: 30rpx 0 20rpx 30rpx;
+	}
+	
+	
 	.sellContent {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #333333;
-		padding: 44rpx 16rpx 0 30rpx;
-		line-height: 40rpx;
+		padding: 16rpx 16rpx 0 30rpx;
+		line-height: 36rpx;
+	}
+
+	.sellContentText{
+		margin-bottom: 10rpx;
 	}
 
 	/* 发货物流 */
-	.deliveryTemplate {}
+	.deliveryTemplate {
+		padding: 30rpx 0 20rpx 30rpx;
+	}
 
 	.deliveryContent {
-		padding: 14rpx 30rpx 0 30rpx;
+		padding: 0 30rpx 0 30rpx;
 	}
 
 	.deliveryList {
 		font-size: 24rpx;
 		line-height: 24rpx;
 		display: flex;
-		margin-top: 30rpx;
+		margin-top: 20rpx;
+		padding-bottom: 10rpx;
 	}
 
 	.deliveryTitle {
@@ -593,8 +621,8 @@
 	}
 
 	.copyLogo {
-		width: 20rpx;
-		height: 20rpx;
+		width: 26rpx;
+		height: 26rpx;
 	}
 
 	.copy {
@@ -602,7 +630,7 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
-		margin-left: 8rpx;
+		margin-left: 7rpx;
 	}
 
 	.add {
@@ -616,7 +644,7 @@
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 72rpx;
-		margin-left: 16rpx;
+		margin-left: 12rpx;
 	}
 
 	.collection {

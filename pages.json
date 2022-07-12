@@ -73,6 +73,14 @@
 				"titleNView": false
 			}
 		}
+	},{
+		"path": "pages/user/addressList",
+		"style": {
+			"navigationBarTitleText": "Receiving address",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

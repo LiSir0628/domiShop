@@ -116,7 +116,7 @@
 	.searchText {
 		width: 580rpx;
 		height: 80rpx;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #666666;
@@ -160,7 +160,7 @@
 
 	.userName {
 		margin-left: 20rpx;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;

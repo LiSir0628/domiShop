@@ -20,10 +20,10 @@
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
 				:duration="duration">
 				<swiper-item>
-					1
+					<image style="width: 690rpx;" mode="widthFix" src="../../static/images/detail/icon11.png"></image>
 				</swiper-item>
 				<swiper-item>
-					2
+					<image style="width: 690rpx;" mode="widthFix" src="../../static/images/detail/icon12.png"></image>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -326,7 +326,7 @@
 	.searchText {
 		width: 580rpx;
 		height: 80rpx;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #666666;
@@ -398,7 +398,7 @@
 	.swiper {
 		height: 260rpx;
 		position: relative;
-		background: red;
+		border-radius: 4px;
 	}
 
 	.swiper-item {
@@ -443,7 +443,7 @@
 	.scroll-view-item_Tab {
 		display: inline-block;
 		text-align: center;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
@@ -505,6 +505,8 @@
 		/* height: 593rpx; */
 		background: #ffffff;
 		margin-bottom: 19rpx;
+		border-bottom-left-radius: 8rpx;
+		border-bottom-right-radius: 8rpx;
 	}
 	.productLogo{
 		width: 335rpx;

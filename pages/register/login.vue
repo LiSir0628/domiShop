@@ -7,12 +7,13 @@
 			<input class="account" v-model="account" placeholder="Please enter your account number" />
 			<view class="passInput">
 				<input class="password" v-model="passWord" placeholder="please set your password" />
-				<image class="greyEye" src="../../static/images/register/icon07.png"></image>
-				<view class="eyeChoose">
+				<image v-if="isShowEye" class="greyEye" src="../../static/images/register/icon07.png" @click="exhibition"></image>
+				<image v-else class="greyNoEye" src="../../static/images/register/icon06.png" @click="exhibition"></image>
+				<!-- <view class="eyeChoose">
 					<image class="blackEye" src="../../static/images/register/icon04.png"></image>
 					<image class="blackNoEye" src="../../static/images/register/icon05.png"></image>
 					<image class="greyNoEye" src="../../static/images/register/icon06.png"></image>
-				</view>
+				</view> -->
 			</view>	
 			<view class="prompt" @click="goRegister">
 				Register now
@@ -29,12 +30,17 @@
 	export default {
 		data() {
 			return {
+				isShowEye: true,
 				account: '',
 				code: '',
 				passWord: '',
 			}
 		},
 		methods: {
+			exhibition() {
+				this.isShowEye = !this.isShowEye
+				// 如果是true为密码可见，false为密码不可见
+			},
 			goRegister() {
 				uni.navigateTo({
 					url: './register'
@@ -119,7 +125,7 @@
 	}
 	
 	.mark{
-		font-size: 24rpx;
+		font-size: 28rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
@@ -141,7 +147,7 @@
 		border: 2rpx solid #999999;
 		border-radius: 4rpx;
 		box-sizing: border-box;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
@@ -157,6 +163,14 @@
 		height: 20rpx;
 		position: absolute;
 		top: 29.5rpx;
+		right: 20.5rpx;
+		bottom: 31.5rpx;
+	}
+	.greyNoEye{
+		width: 30rpx;
+		height: 25rpx;
+		position: absolute;
+		top: 27rpx;
 		right: 20.5rpx;
 		bottom: 31.5rpx;
 	}
@@ -177,17 +191,12 @@
 		height: 20rpx;
 		margin-top: 8.5rpx;
 	}
-	.greyNoEye{
-		width: 30rpx;
-		height: 20rpx;
-		margin-top: 15rpx;
-	}
 	/deep/ .uni-input-input{
 		height: auto;
 	}
 	/* 提示 */
 	.prompt{
-		font-size: 18rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #333333;
@@ -202,7 +211,7 @@
 		line-height: 80rpx;
 		background: #0B0B0B;
 		border-radius: 4rpx;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #FFFFFF;

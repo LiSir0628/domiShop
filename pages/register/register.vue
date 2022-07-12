@@ -5,7 +5,7 @@
 		<view class="content">
 			<input class="account" v-model="account" placeholder="Please enter your account number" />
 			<view class="codeText">
-				<input class="code" v-model="code" placeholder="enter the authentication code" />
+				<input class="code" v-model="code" placeholder="the authentication code" />
 				<view class="codeBtn" @click="getCode">
 					{{timeTitle}}
 				</view>
@@ -14,8 +14,8 @@
 		</view>
 		<view class="prompt">
 			<text class="label">*</text>
-			<text>By registering, you agree to the</text>
-			<text class="underline">Dome Service Agreement</text>
+			<text>By registering, you agree to</text>
+			<text class="underline">the Dome Service Agreement</text>
 			<text>and</text>
 			<text class="underline">privacy terms</text>
 		</view>
@@ -212,7 +212,7 @@
 		border: 2rpx solid #999999;
 		border-radius: 4rpx;
 		box-sizing: border-box;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
@@ -235,7 +235,7 @@
 		border: 2rpx solid #999999;
 		border-radius: 4rpx;
 		box-sizing: border-box;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
@@ -260,11 +260,12 @@
 	}
 	/* 提示语 */
 	.prompt{
-		width: 554rpx;
-		font-size: 24rpx;
+		width: 600rpx;
+		font-size: 26rpx;
 		padding: 24rpx 0 80rpx;
 		color: #333333;
 		line-height: normal;
+		letter-spacing: 3rpx;
 		
 	}
 	.label{
@@ -285,7 +286,7 @@
 		line-height: 80rpx;
 		background: #0B0B0B;
 		border-radius: 4rpx;
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #FFFFFF;
