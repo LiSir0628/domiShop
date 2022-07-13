@@ -33,7 +33,7 @@
 					<image class="loveLogo" src="../../static/images/detail/icon04.png"></image>
 				</view>
 			</view>
-			<view class="sample">
+			<view class="sample" @click="sample">
 				<image class="menuLogo" src="../../static/images/detail/icon05.png"></image>
 				<view class="priceContent">
 					Sample request: 1. Number of followers 56263 2.Windotrtrtt...
@@ -171,12 +171,31 @@
 			</uni-popup>
 		</view>
 		
+		<uni-popup ref="requestPopup" background-color="#fff" type="bottom" @maskClick="requestClose">
+			<view class="request-popup-content">
+				<view class="requestCard">
+					<view class="cardTitle">
+						<view class="cardTip">Sample request:</view>
+						<image class="requestClose" src="../../static/images/detail/icon13.png" @click="requestClose"></image>
+					</view>
+					<view class="followers">
+						1.Number of followers : 56263
+					</view>
+					<view class="salesDay">
+						2.Window sales in recent 30 days :  25636
+					</view>
+				</view>
+			</view>
+		</uni-popup>
+		
 		<add-admin ref="addAdmin"></add-admin>
+		<my-popup ref="myPopup" :isSuccess="isSuccess" :text="text"></my-popup>
 	</view>
 </template>
 
 <script>
 	import addAdmin from "../common/addAdmin.vue"
+	import myPopup from "../common/myPopup.vue"
 	export default {
 		data() {
 			return {
@@ -216,11 +235,15 @@
 				current: 0,
 				mode: 'default',
 				dotsStyles: {},
-				swiperDotIndex: 0
+				swiperDotIndex: 0,
+				
+				isSuccess: true,
+				text: '',
 			}
 		},
 		components: {
-			addAdmin
+			addAdmin,
+			myPopup
 		},
 		mounted() {
 
@@ -233,13 +256,19 @@
 				this.current = e.detail.current
 				console.log(e)
 			},
+			sample() {
+				this.$refs.requestPopup.open()
+			},
 			copy(text) {
 				// #ifdef H5
 				this.$copyText(text).then(
 					res => {
-						uni.showToast({
-							title: '复制成功'
-						})
+						// uni.showToast({
+						// 	title: '复制成功'
+						// })
+						this.isSuccess = true
+						this.text = 'Link replication successful'
+						this.$refs.myPopup.open()
 					}
 				)
 				// #endif
@@ -247,9 +276,12 @@
 				uni.setClipboardData({
 					data: text,
 					success: () => {
-						uni.showToast({
-							title: '复制成功'
-						})
+						// uni.showToast({
+						// 	title: '复制成功'
+						// })
+						this.isSuccess = true
+						this.text = 'Link replication successful'
+						this.$refs.myPopup.open()
 					}
 				})
 				// #endif
@@ -261,6 +293,9 @@
 			},
 			closeAdd() {
 				this.$refs.popupAdd.close()
+			},
+			requestClose() {
+				this.$refs.requestPopup.close()
 			},
 			chooseTiktok(index){
 				if(this.cindex == index) return
@@ -817,5 +852,59 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #FFFFFF;
+	}
+	
+	/* 领样要求 */
+	.requestPopup{
+		
+	}
+	.request-popup-content{
+
+	}
+	.requestCard{
+		width: 750rpx;
+		height: 230rpx;
+		background: #FFFFFF;
+		
+		margin: 0 auto;
+		text-align: center;
+		line-height: normal;
+		padding: 30rpx;
+		box-sizing: border-box;
+		position: relative;
+	}
+	.cardTitle{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.cardTip{
+		font-size: 28rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #0B0B0B;
+	}
+	.requestClose{
+		width: 24rpx;
+		height: 24rpx;
+		display: block;
+	}
+	.followers{
+		font-size: 24rpx;
+		line-height: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #666666;
+		text-align: left;
+		margin-top: 32rpx;
+	}
+	.salesDay{
+		font-size: 24rpx;
+		line-height: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #666666;
+		text-align: left;
+		margin-top: 32rpx;
 	}
 </style>
