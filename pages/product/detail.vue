@@ -171,6 +171,44 @@
 			</uni-popup>
 		</view>
 		
+		<view>
+			<!-- 普通弹窗2 -->
+			<uni-popup ref="popupCollection" type="bottom" background-color="#fff" @maskClick="closeCollection">
+				<view class="collectionMask">
+					<view class="popupTop">
+						<view class="addTitle">Select Harvest Address</view>
+						<image class="addClose" src="../../static/images/detail/icon13.png" @click="closeCollection"></image>
+					</view>
+					
+					<view class="addressList" :style="contentHeight">
+						<view class="addressModular" :class="{'activeModular': point == index}" v-for="item,index in list" @click="chooseAddress(index)">
+							<image v-if="!point == index" class="addressPhoto" src="../../static/images/user/icon03.png"></image>
+							<image v-else class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
+							<view class="addressContent">
+								<view class="addressUserMsg">
+									<view class="addressUserName">{{item.name}}</view>
+									<view class="addressTel">{{item.tel}}</view>
+									<view v-if="item.isDefault" class="default">Default</view>
+								</view>
+								<view class="address">{{item.address}}</view>
+							</view>
+							<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
+							<image v-if="point == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
+						</view>
+					</view>
+					
+					<view class="popupBottom">
+						<view class="newAdd" @click="addAddress">
+							New receiving address
+						</view>
+						<view class="confirmed" @click="confirmedCollection">
+							Confirmed
+						</view>
+					</view>
+				</view>
+			</uni-popup>
+		</view>
+		
 		<uni-popup ref="requestPopup" background-color="#fff" type="bottom" @maskClick="requestClose">
 			<view class="request-popup-content">
 				<view class="requestCard">
@@ -239,6 +277,27 @@
 				
 				isSuccess: true,
 				text: '',
+				
+				point: 0, //免费领样指向
+				cPoint: 0 ,			
+				contentHeight: {
+					'height': '720rpx'
+				},
+				list:[{
+					id: 1,
+					photo: '../../static/images/home/photo.png',
+					name: 'name',
+					tel: 12563622222,
+					isDefault: true,
+					address: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong"	
+				},{
+					id: 2,
+					photo: '../../static/images/home/photo.png',
+					name: 'name',
+					tel: 12563622222,
+					isDefault: false,
+					address: "中文中文中文中文中文中文中文中文"	
+				}],
 			}
 		},
 		components: {
@@ -246,7 +305,7 @@
 			myPopup
 		},
 		mounted() {
-
+			
 		},
 		methods: {
 			back() {
@@ -323,7 +382,27 @@
 			},
 			/* 免费领样 */
 			openCollection() {
-				
+				this.point = this.cPoint
+				this.$refs.popupCollection.open()
+			},
+			
+			closeCollection() {
+				this.$refs.popupCollection.close()
+			},
+			chooseAddress(index){
+				if(this.point == index) return
+				this.point = index
+			},
+			edit(index) {
+				console.log("修改地址" + index)
+			},
+			addAddress() {
+				console.log("新增收货地址")
+			},
+			confirmedCollection() {
+				this.cPoint = this.point
+				this.$refs.popupCollection.close()
+				// 成功获取选择用户地址，此时应该对用户地址进行替换
 			},
 		}
 	}
@@ -906,5 +985,112 @@
 		color: #666666;
 		text-align: left;
 		margin-top: 32rpx;
+	}
+	
+	/* 第二个弹窗样式 */
+	.collectionMask{
+		width: 750rpx;
+		height: 980rpx;
+		/* display: flex;
+		align-items: center;
+		justify-content: center; */
+		background-color: #fff;
+		box-sizing: border-box;
+		position: relative;
+		padding: 30rpx 30rpx 20rpx 30rpx;
+	}
+	.addressList{
+		height: 1080rpx;
+		margin: 30rpx 0;
+		box-sizing: border-box;
+		overflow: hidden;
+		overflow-y: auto;
+	}
+	.addressList::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
+	
+	.addressModular{
+		width: 690rpx;
+		min-height: 134rpx;
+		background: #FFFFFF;
+		border: 2rpx solid #CECECE;
+		border-radius: 8rpx;
+		margin: 0 auto 20rpx;
+		padding: 0 22rpx 0 20rpx;
+		box-sizing: border-box;
+		display: flex;
+		/* align-items: center; */
+		justify-content: space-between;
+		position: relative;
+	}
+	.activeModular{
+		width: 690rpx;
+		min-height: 134rpx;
+		background: rgba(255,116,54,0.0800);
+		border: 2rpx solid #FF7436;
+		border-radius: 8rpx;
+	}
+	.addressPhoto{
+		width: 64rpx;
+		height: 64rpx;
+		margin: 35rpx 0;
+		border: 2rpx solid rgba(0,0,0,0);
+	}
+	.addressContent{
+		width: 520rpx;
+		padding: 20rpx 0 14rpx;
+	}
+	.addressUserMsg{
+		display: flex;
+		align-items: center;
+		line-height: 40rpx;
+	}
+	.addressUserName{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #0B0B0B;
+	}
+	.addressTel{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #0B0B0B;
+		margin-left: 20rpx;
+	}
+	.default{
+		width: 93rpx;
+		height: 40rpx;
+		line-height: 40rpx;
+		background: rgba(255,116,54,0.0800);
+		border-radius: 4rpx;
+		text-align: center;
+		
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FF3838;
+		margin-left: 16rpx;
+	}
+	.address{
+		font-size: 24rpx;
+		line-height: 36rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #666666;
+		margin-top: 14rpx;
+		word-wrap: break-word;
+	}
+	
+	
+	.edit{
+		width: 24rpx;
+		height: 24rpx;
+		margin: 55rpx 0;
 	}
 </style>

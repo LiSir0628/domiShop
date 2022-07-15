@@ -81,6 +81,14 @@
 				"titleNView": false
 			}
 		}
+	},{
+		"path": "pages/user/address",
+		"style": {
+			"navigationBarTitleText": "New receiving address",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

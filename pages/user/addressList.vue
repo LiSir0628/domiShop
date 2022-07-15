@@ -3,20 +3,20 @@
 		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Receiving address"></uni-nav-bar>
 		<view class="addressList" :style="contentHeight">
 			<view class="addressModular" :class="{'activeModular': item.isDefault}" v-for="item,index in list">
-				<image v-if="!item.isDefault" class="photo" src="../../static/images/user/icon03.png"></image>
-				<image v-else class="photo" src="../../static/images/user/icon04.png"></image>
-				<view class="content">
-					<view class="userMsg">
-						<view class="userName">{{item.name}}</view>
-						<view class="tel">{{item.tel}}</view>
+				<image v-if="!item.isDefault" class="addressPhoto" src="../../static/images/user/icon03.png"></image>
+				<image v-else class="addressPhoto" src="../../static/images/user/icon04.png"></image>
+				<view class="addressContent">
+					<view class="addressUserMsg">
+						<view class="addressUserName">{{item.name}}</view>
+						<view class="addressTel">{{item.tel}}</view>
 						<view v-if="item.isDefault" class="default">Default</view>
 					</view>
 					<view class="address">{{item.address}}</view>
 				</view>
-				<image class="edit" src="../../static/images/user/icon02.png"></image>
+				<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
 			</view>
 		</view>
-		<view class="newAddress">
+		<view class="newAddress" @click="newAdd">
 			New receiving address
 		</view>
 	</view>
@@ -68,6 +68,12 @@
 			back() {
 				window.history.go(-1)
 			},
+			edit(index) {
+				console.log("修改地址" + index)
+			},
+			newAdd() {
+				console.log("新增地址")
+			}
 		}
 	}
 </script>
@@ -85,7 +91,11 @@
 		overflow-y: auto;
 	}
 	.addressList::-webkit-scrollbar {
-	  display: none;
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
 	}
 	
 	.addressModular{
@@ -108,29 +118,29 @@
 		border: 2rpx solid #FF7436;
 		border-radius: 8rpx;
 	}
-	.photo{
+	.addressPhoto{
 		width: 64rpx;
 		height: 64rpx;
 		margin: 35rpx 0;
 		border: 2rpx solid rgba(0,0,0,0);
 	}
 	/* 主要内容 */
-	.content{
+	.addressContent{
 		width: 520rpx;
 		padding: 20rpx 0 14rpx;
 	}
-	.userMsg{
+	.addressUserMsg{
 		display: flex;
 		align-items: center;
 		line-height: 40rpx;
 	}
-	.userName{
+	.addressUserName{
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
 	}
-	.tel{
+	.addressTel{
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
