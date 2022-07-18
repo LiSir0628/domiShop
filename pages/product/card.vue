@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Live cell phone cards"></uni-nav-bar>
-		<view class="content" :style="contentHeight">
+		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Live cell phone cards"></uni-nav-bar>
+		<view class="content">
 			<view class="spMsg">
 				<image class="spLogo" src="../../static/images/home/photo.png"></image>
 				<view class="spModular">
@@ -81,8 +81,9 @@
 			</view>
 		</view>
 		
-		
-		<view class="btn" @click="save">Save the image</view>
+		<view class="bottom">
+			<view class="btn" @click="save">Save the image</view>
+		</view>
 		
 		<my-popup ref="myPopup" :isSuccess="isSuccess" :text="text"></my-popup>
 	</view>
@@ -93,35 +94,12 @@
 	export default {
 		data() {
 			return {
-				contentHeight: {
-					'height': '1080rpx'
-				},
 				isSuccess: '',
 				text: '',
 			}
 		},
 		components: {
 			myPopup
-		},
-		onLoad(option) {
-			var that = this;
-			uni.getSystemInfo({
-				success(res) {
-					// #ifdef MP-WEIXIN
-					if (res.windowHeight > 568) {
-						// that.showListActive.height = (res.windowHeight - 52 - 90 - 27 - 10) + "px"
-					}
-					// #endif
-			
-					// #ifdef H5
-					if (res.windowHeight > 568) {
-						that.contentHeight.height = (res.windowHeight - 44 - 30 - 60) + "px"
-					}
-					// #endif
-					console.log(res.windowHeight)
-					console.log(that.contentHeight.height)
-				},
-			})
 		},
 		methods: {
 			back() {
@@ -142,13 +120,12 @@
 	}
 	
 	.container {
-		
+		padding-bottom: 120rpx;
 	}
 	.content{
 		/* max-height: 1130rpx; */
-		height: 1080rpx;
-		margin-top: 20rpx;
-		padding: 0 30rpx 20rpx;
+		margin: 20rpx 30rpx 20rpx;
+		background: #F7F7F7;
 		box-sizing: border-box;
 		overflow: hidden;
 		overflow-y: auto;
@@ -300,7 +277,17 @@
 		color: #FF7436;
 		margin-left: 40rpx;
 	}
-	
+	/* 底部按钮 */
+	.bottom{
+		width: 100%;
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: 0 auto;
+		padding: 25rpx 0;
+		background: #FFFFFF;
+	}
 	.btn{
 		width: 670rpx;
 		height: 80rpx;
@@ -313,10 +300,7 @@
 		font-weight: 400;
 		color: #FFFFFF;
 		text-align: center;
-		position: fixed;
-		left: 0;
-		right: 0;
+		
 		margin: 0 auto;
-		bottom: 25rpx;
 	}
 </style>
