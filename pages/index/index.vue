@@ -198,7 +198,7 @@
 				<image class="navLogo" src="../../static/images/home/icon08.png"></image>
 				<view class="navText">Options</view>
 			</view>
-			<view class="bottomNav">
+			<view class="bottomNav" @click="goIndividuals">
 				<image class="navLogo" src="../../static/images/home/icon14.png"></image>
 				<view class="navText">Individuals</view>
 			</view>
@@ -342,6 +342,11 @@
 			goOptions() {
 				uni.navigateTo({
 					url: './../product/options'
+				});
+			},
+			goIndividuals() {
+				uni.navigateTo({
+					url: './../user/user'
 				});
 			}
 		}
@@ -833,6 +838,7 @@
 		display: flex;
 		/* align-items: center; */
 		justify-content: space-around;
+		border-top: 2rpx solid #666666;
 	}
 	.bottomNav{
 		width: 33.3%;
