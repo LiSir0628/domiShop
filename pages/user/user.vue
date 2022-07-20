@@ -38,14 +38,24 @@
 					</view>
 				</view>
 			</view>
-			
-			<view class="menuList">
-				
-			</view>
 		</view>
 		
 		<view class="menuList">
-			
+			<uni-list :border="false">
+				<uni-list-item v-for="item,index in lists" :border="false" @click="goClick(index)">
+					<template v-slot:header>
+						<view class="slot-box">
+							<image class="slot-image" :src="item.image"></image>
+						</view>
+					</template>
+					<template v-slot:body>
+						<text class="slot-box slot-text">{{item.title}}</text>
+					</template>
+					<template v-slot:footer>
+						<image class="arrow" src="../../static/images/user/icon05.png"></image>
+					</template>
+				</uni-list-item>
+			</uni-list>
 		</view>
 		
 		<view class="bottomNavigation">
@@ -70,10 +80,29 @@
 	export default {
 		data() {
 			return {
-				
+				lists:[{
+					id: 1,
+					image: '../../static/images/user/icon10.png',
+					title: 'Tiktok account manager'
+				},{
+					id: 2,
+					image: '../../static/images/user/icon08.png',
+					title: 'Merchandise collection'
+				},{
+					id: 3,
+					image: '../../static/images/user/icon07.png',
+					title: 'Contact your own customer service'
+				},{
+					id: 4,
+					image: '../../static/images/user/icon09.png',
+					title: 'Log out'
+				}]
 			}
 		},
 		methods: {
+			goClick(index) {
+				// 如果index是3，id是4的话 退出当前登录，跳转登录页面
+			},
 			goIndex() {
 				uni.navigateTo({
 					url: './../index/index'
@@ -83,14 +112,14 @@
 				uni.navigateTo({
 					url: './../product/options'
 				});
-			}
+			},
 		}
 	}
 </script>
 
 <style scoped>
 	.container {
-		
+		padding-bottom: 100rpx;
 	}
 	
 	.userMsg{
@@ -184,7 +213,7 @@
 		justify-content: center;
 	}
 	.orderState{
-		width: 33.3%;
+		width: 32.5%;
 		text-align: center;
 		margin-bottom: 48rpx;
 	}
@@ -209,9 +238,39 @@
 	
 	/* 菜单列表 */
 	.menuList{
-		
+		margin-top: 26rpx;
 	}
 	
+	/deep/ .uni-list-item__container{
+		align-items: center;
+		padding: 0 30rpx;
+		margin-bottom: 67rpx;
+	}
+	
+	.slot-box {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.slot-image{
+		width: 38rpx;
+		height: 38rpx;
+		margin-right: 16rpx;
+	}
+	
+	.slot-text {
+		flex: 1;
+		font-size: 26rpx;
+		font-family: Arial-Regular, Arial;
+		font-weight: 400;
+		color: #0B0B0B;
+		line-height: 30rpx;
+	}
+	
+	.menuList .arrow{
+		margin: 0;
+	}
 	
 	/* 底部导航 */
 	.bottomNavigation{
