@@ -1,9 +1,9 @@
 <template>
 	<view class="container">
 		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Live cell phone cards"></uni-nav-bar>
-		<view class="content">
+		<div v-if="!imgUrl" class="content" id="htmlCanvas" ref="imgCanvas">
 			<view class="spMsg">
-				<image class="spLogo" src="../../static/images/home/photo.png"></image>
+				<img class="spLogo" src="../../static/images/home/photo.png"/>
 				<view class="spModular">
 					<view class="spTitle">ZshangpinneirGDHASDI...</view>
 					<view class="priceModular">
@@ -79,10 +79,13 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</div>
+		
+		<image class="cardLogo" v-if="imgUrl" mode="widthFix" :src="imgUrl"></image>
 		
 		<view class="bottom">
-			<view class="btn" @click="save">Save the image</view>
+			<view class="btn">Long press to save the picture</view>
+			<!-- <view class="btn" @click="save">Long press to save the picture</view> -->
 		</view>
 		
 		<my-popup ref="myPopup" :isSuccess="isSuccess" :text="text"></my-popup>
@@ -90,22 +93,39 @@
 </template>
 
 <script>
+	import html2canvas from "html2canvas"
 	import myPopup from "../common/myPopup.vue"
 	export default {
 		data() {
 			return {
 				isSuccess: '',
 				text: '',
+				imgUrl:"", // 用于存储base64图片
 			}
 		},
 		components: {
 			myPopup
+		},
+		mounted() {
+			setTimeout(()=>{
+				this.save()
+			},200)
 		},
 		methods: {
 			back() {
 				window.history.go(-1)
 			},
 			save() {
+				html2canvas(this.$refs.imgCanvas,{
+					backgroundColor: null,
+					useCORS: true, // 如果截图的内容里有图片,可能会有跨域的情况,加上这个参数,解决文件跨域问题
+					scale: window.devicePixelRatio,
+					dpi: 300,
+				}).then((canvas)=>{
+					let url = canvas.toDataURL('image/png', 1.0)
+					this.imgUrl = url					
+				})
+				return
 				this.isSuccess = true
 				this.text = 'Successfully saved to album'
 				this.$refs.myPopup.open()
@@ -154,7 +174,7 @@
 	}
 	.spTitle{
 		font-size: 28rpx;
-		line-height: 30rpx;
+		/* line-height: 30rpx; */
 		font-family: Arial;
 		font-weight: bold;
 		color: #0B0B0B;
@@ -277,6 +297,12 @@
 		color: #FF7436;
 		margin-left: 40rpx;
 	}
+	/* 生成卡片样式 */
+	 .cardLogo{
+		width: 690rpx;
+		margin: 20rpx 30rpx 20rpx;
+	 }
+	 
 	/* 底部按钮 */
 	.bottom{
 		width: 100%;

@@ -82,6 +82,14 @@
 			}
 		}
 	},{
+		"path": "pages/product/car",
+		"style": {
+			"navigationBarTitleText": "免费领样",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
 		"path": "pages/user/addressList",
 		"style": {
 			"navigationBarTitleText": "Receiving address",
@@ -93,6 +101,14 @@
 		"path": "pages/user/address",
 		"style": {
 			"navigationBarTitleText": "New receiving address",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
+		"path": "pages/user/user",
+		"style": {
+			"navigationBarTitleText": "个人中心",
 			"app-plus": {
 				"titleNView": false
 			}

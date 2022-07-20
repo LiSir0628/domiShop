@@ -30,7 +30,14 @@
 				<view class="logoSubject">
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')">
 					</image>
-					<image class="loveLogo" src="../../static/images/detail/icon04.png"></image>
+					<!-- <image v-if="isShowLove" class="loveLogo" src="../../static/images/detail/icon04.png" @click="goLove"></image>
+					<image v-else class="loveLogo" src="../../static/images/detail/icon16.png" @click="goLove"></image> -->
+					<uni-transition ref="ani" custom-class="transition" mode-class="fade" :duration="0" :show="isShowLove">
+						<image v-if="isShowLove" class="loveLogo" src="../../static/images/detail/icon04.png" @click="goLove"></image>
+					</uni-transition>
+					<uni-transition ref="ani" custom-class="transition" mode-class="zoom-in" :duration="800" :show="!isShowLove">
+						<image v-if="!isShowLove" class="loveLogo" src="../../static/images/detail/icon16.png" @click="goLove"></image>
+					</uni-transition>
 				</view>
 			</view>
 			<view class="sample" @click="sample">
@@ -48,8 +55,8 @@
 					<view class="liveTitle">LIVE BENEFITS</view>
 				</view>
 				<view class="logoSubject">
-					<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
-					<image class="cardLogo" src="../../static/images/detail/icon06.png"></image>
+					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')"></image>
+					<image class="cardLogo" src="../../static/images/detail/icon06.png" @click="goCard"></image>
 				</view>
 			</view>
 			<view class="liveContent">
@@ -64,7 +71,7 @@
 					<view class="liveTitle">SELLING POINT</view>
 				</view>
 				<view class="logoSubject">
-					<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
+					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')"></image>
 				</view>
 			</view>
 			<view class="sellContent">
@@ -90,7 +97,7 @@
 					<view class="liveTitle">DELIVERY LOGISTICS</view>
 				</view>
 				<view class="logoSubject">
-					<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
+					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')"></image>
 				</view>
 			</view>
 			<view class="deliveryContent">
@@ -122,8 +129,10 @@
 		</view>
 
 		<view class="bottomCar">
-			<image class="copyLogo" src="../../static/images/detail/icon03.png"></image>
-			<view class="copy">Copy the link</view>
+			<view class="copyLine" @click="copy('复制连接')">
+				<image class="copyLogo" src="../../static/images/detail/icon03.png"></image>
+				<view class="copy">Copy the link</view>
+			</view>
 			<view class="add" @click="openAdd">Add a window</view>
 			<view class="collection" @click="openCollection">Free sample collection</view>
 		</view>
@@ -237,6 +246,7 @@
 	export default {
 		data() {
 			return {
+				isShowLove: true,
 				info: [{
 						colorClass: '',
 						url: '../../static/images/detail/icon08.png',
@@ -298,6 +308,7 @@
 					isDefault: false,
 					address: "中文中文中文中文中文中文中文中文"	
 				}],
+
 			}
 		},
 		components: {
@@ -344,6 +355,14 @@
 					}
 				})
 				// #endif
+			},
+			goLove(type) {
+				this.isShowLove = !this.isShowLove
+			},
+			goCard() {
+				uni.navigateTo({
+					url: './card'
+				});
 			},
 			/* 添加窗口 */
 			openAdd() {
@@ -733,7 +752,12 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-
+	
+	.copyLine{
+		display: flex;
+		align-items: center;
+	}
+	
 	.copyLogo {
 		width: 26rpx;
 		height: 26rpx;
