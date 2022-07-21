@@ -30,6 +30,10 @@
 				</uni-list-item>
 			</uni-list>
 		</view>
+		
+		<view class="bottom">
+			Log out
+		</view>
 	</view>
 </template>
 
@@ -40,7 +44,7 @@
 				lists:[{
 					id: 1,
 					title: 'Name',
-					url: './../index/administration',
+					//url: './../index/administration',
 					value: 'DUOmihuyu'
 				},{
 					id: 2,
@@ -202,5 +206,25 @@
 	
 	.menuList .arrow{
 		margin: 0;
+	}
+	
+	/* 底部按钮 */
+	.bottom{
+		width: 670rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		background: #FF7436;
+		border-radius: 8rpx;
+		
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FFFFFF;
+		text-align: center;
+		position: fixed;
+		bottom: 26rpx;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
 	}
 </style>

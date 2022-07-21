@@ -73,6 +73,14 @@
 				<view class="navActiveText">Individuals</view>
 			</view>
 		</view>
+		
+		<uni-popup ref="popup" background-color="#fff" @maskClick="close">
+			<view class="kefu" @click.stop="noClose">
+				<image class="close" src="../../static/images/detail/icon13.png" @click="close"></image>
+				<view class="emailTip">Customer Service Mailbox</view>
+				<view class="email">kefu@gmail.com</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -89,7 +97,7 @@
 					id: 2,
 					image: '../../static/images/user/icon08.png',
 					title: 'Merchandise collection',
-					url: ''
+					url: './favorite'
 				},{
 					id: 3,
 					image: '../../static/images/user/icon07.png',
@@ -106,17 +114,27 @@
 		methods: {
 			edit() {
 				console.log("修改个人资料")
+				uni.navigateTo({
+					url: './editUser'
+				});
 			},
 			goClick(index) {
-				console.log(index)
-				// 如果index是3，id是4的话 退出当前登录，跳转登录页面
+				// id是3 客服，id是4 退出登錄。
 				if(this.lists[index].id == 4){
 					console.log("我要退出拉！")
+				} else if(this.lists[index].id == 3){
+					this.$refs.popup.open("center")
 				} else {
 					uni.navigateTo({
 						url: this.lists[index].url
 					});
 				}
+			},
+			close() {
+				this.$refs.popup.close()
+			},
+			noClose() {
+				
 			},
 			goIndex() {
 				uni.navigateTo({
@@ -321,5 +339,40 @@
 	}
 	.navActiveText{
 		color: #0B0B0B;
+	}
+	
+	/* 客服提示 */
+	.kefu{
+		width: 550rpx;
+		/* height: 182rpx; */
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		position: relative;
+		text-align: center;
+		padding: 40rpx 0;
+		/* box-sizing: border-box; */
+	}
+	.close{
+		width: 24rpx;
+		height: 24rpx;
+		line-height: 24rpx;
+		color: rgb(209,209,209);
+		display: block;
+		position: absolute;
+		right: 30rpx;
+		top: 30rpx;
+	}
+	.emailTip{
+		font-size: 28rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #0B0B0B;
+	}
+	.email{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #333333;
+		margin-top: 26rpx;
 	}
 </style>

@@ -165,10 +165,6 @@
 					<view class="name">zhanghaomingcheng</view>
 				</view>
 			</view>
-			<!-- <view class="noData">
-				<image class="noDataLogo" src="../../static/images/common/icon01.png"></image>
-				<view class="noDataText">It’s empty</view>
-			</view> -->
 		</view>
 
 		<view class="suspension" @click="goAdministration">

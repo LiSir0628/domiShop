@@ -1,0 +1,133 @@
+<template>
+	<view class="container">
+		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Favorite list"></uni-nav-bar>
+		<view class="content">
+			<view class="sp" v-for="item,index in lists">
+				<view class="spTop">
+					<image class="spLogo" :src="item.image"></image>
+					<view class="spMsg">
+						<view class="spDes">{{item.name}}</view>
+						<view class="spOperation">
+							<view class="price">$ {{item.price}}</view>
+							<view class="commission">High Commission: {{item.commission}}%</view>
+							<image class="love" src="../../static/images/detail/icon16.png" @click="remove(index)"></image>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				lists:[{
+					id: 1,
+					image: '../../static/images/home/photo.png',
+					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+					price: '25632',
+					commission: '56'
+				},{
+					id: 2,
+					image: '../../static/images/home/photo.png',
+					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+					price: '300000',
+					commission: '60'
+				}]
+			}
+		},
+		methods: {
+			back() {
+				window.history.go(-1)
+			},
+			remove(index) {
+				this.lists.splice(index,1)
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.container {
+		
+	}
+	
+	/* 商品列表 */
+	.content {
+		width: 690rpx;
+		margin: 30rpx auto;
+	}
+	
+	.sp {
+		width: 690rpx;
+		/* height: 400rpx; */
+		background: #FFFFFF;
+		border: 2rpx solid #CECECE;
+		border-radius: 8rpx;
+		margin-bottom: 20rpx;
+	}
+	
+	.spTop {
+		padding: 22rpx 22rpx 22rpx 22rpx;
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.spLogo {
+		width: 144rpx;
+		height: 144rpx;
+		border-radius: 8rpx;
+		display: block;
+	}
+	
+	.spMsg {
+		width: 486rpx;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		justify-content: space-between;
+	
+	}
+	
+	.spDes {
+		width: 486rpx;
+		font-size: 28rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #0B0B0B;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+		line-height: normal;
+	}
+	
+	.spOperation {
+		width: 486rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		line-height: normal;
+	}
+	
+	.price{
+		font-size: 24rpx;
+		font-family: DIN;
+		font-weight: bold;
+		color: #999999;
+	}
+	
+	.commission{
+		font-size: 28rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #FF3838;
+	}
+	
+	.love{
+		width: 24rpx;
+		height: 21rpx;
+	}
+</style>

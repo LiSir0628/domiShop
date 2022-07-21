@@ -90,6 +90,14 @@
 			}
 		}
 	},{
+		"path": "pages/user/favorite",
+		"style": {
+			"navigationBarTitleText": "收藏列表",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
 		"path": "pages/user/addressList",
 		"style": {
 			"navigationBarTitleText": "Receiving address",
