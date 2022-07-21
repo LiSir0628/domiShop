@@ -102,62 +102,31 @@
 		</view>
 
 		<view class="spList">
-			<view class="sp">
+			<view class="sp" v-for="item,index in spLists">
 				<view class="spTop">
-					<image class="spLogo" src="../../static/images/home/photo.png"></image>
+					<image class="spLogo" :src="item.image"></image>
 					<view class="spMsg">
-						<view class="spDes">zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi
-							shangpinneirongshangpinne shangpinneirongs</view>
+						<view class="spDes">{{item.name}}</view>
 						<view class="spOperation">
-							<view class="state">order paid</view>
-							<view class="time">10-18 16:05:20 payment</view>
+							<view class="state" v-if="item.state == 1">order paid</view>
+							<view class="settled" v-else-if="item.state == 2">settled account</view>
+							<view class="stateRefund" v-else-if="item.state == 3">refund/return of order</view>
+							<view class="time">{{item.time}}</view>
 						</view>
 					</view>
 				</view>
 				<view class="spMiddle">
 					<view class="spData">
 						<view class="dataTitle">Amount of payment</view>
-						<view class="dataNum">$52563.23</view>
+						<view class="dataNum">${{item.payment}}</view>
 					</view>
 					<view class="spData">
 						<view class="dataTitle">Commission ratio</view>
-						<view class="dataNum">23%</view>
+						<view class="dataNum">{{item.ratio}}%</view>
 					</view>
 					<view class="spData">
 						<view class="dataTitle">Commission</view>
-						<view class="dataNum">$256</view>
-					</view>
-				</view>
-				<view class="spBottom">
-					<image class="photo" src="../../static/images/home/photo.png"></image>
-					<view class="name">zhanghaomingcheng</view>
-				</view>
-			</view>
-			
-			<view class="sp">
-				<view class="spTop">
-					<image class="spLogo" src="../../static/images/home/photo.png"></image>
-					<view class="spMsg">
-						<view class="spDes">zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi
-							shangpinneirongshangpinne shangpinneirongs</view>
-						<view class="spOperation">
-							<view class="stateRefund">refund/return of order</view>
-							<view class="time">10-18 16:05:20 payment</view>
-						</view>
-					</view>
-				</view>
-				<view class="spMiddle">
-					<view class="spData">
-						<view class="dataTitle">Amount of payment</view>
-						<view class="dataNum">$52563.23</view>
-					</view>
-					<view class="spData">
-						<view class="dataTitle">Commission ratio</view>
-						<view class="dataNum">23%</view>
-					</view>
-					<view class="spData">
-						<view class="dataTitle">Commission</view>
-						<view class="dataNum">$256</view>
+						<view class="dataNum">${{item.commission}}</view>
 					</view>
 				</view>
 				<view class="spBottom">
@@ -240,6 +209,35 @@
 					id: 3,
 					name: 'Membership ranking',
 					image: '../../static/images/home/icon10.png'
+				}],
+				
+				spLists:[{
+					id: 1,
+					image: '../../static/images/home/photo.png',
+					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+					state: 1,
+					time: '10-18 16:05:20 payment',
+					payment: '52563.23',
+					ratio: '23',
+					commission: '256'
+				},{
+					id: 2,
+					image: '../../static/images/home/photo.png',
+					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+					state: 2,
+					time: '10-18 16:05:20 payment',
+					payment: '52563.23',
+					ratio: '23',
+					commission: '256'
+				},{
+					id: 3,
+					image: '../../static/images/home/photo.png',
+					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+					state: 3,
+					time: '10-18 16:05:20 payment',
+					payment: '52563.23',
+					ratio: '23',
+					commission: '256'
 				}],
 				
 				orderStateList: [{
@@ -652,6 +650,19 @@
 		text-align: center;
 		line-height: 40rpx;
 	}
+	.settled {
+		width: 200rpx;
+		height: 40rpx;
+		background: rgba(245, 138, 90, 0.1);
+		border-radius: 20rpx;
+		
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #F58A5A;
+		text-align: center;
+		line-height: 40rpx;
+	}
 	.stateRefund{
 		width: 246rpx;
 		height: 40rpx;
@@ -671,6 +682,7 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #FFFFFF;
+		text-align: right;
 	}
 
 	.spMiddle {
