@@ -113,6 +113,14 @@
 				"titleNView": false
 			}
 		}
+	},{
+		"path": "pages/user/editUser",
+		"style": {
+			"navigationBarTitleText": "修改信息",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

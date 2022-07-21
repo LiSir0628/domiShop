@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="userMsg">
 			<image class="banner" src="../../static/images/user/icon11.png"></image>
-			<image class="edit" src="../../static/images/user/icon06.png"></image>
+			<image class="edit" src="../../static/images/user/icon06.png" @click="edit"></image>
 			<image class="photo" src="../../static/images/home/photo.png"></image>
 			<view class="name">DUOmihuyu</view>
 		</view>
@@ -42,17 +42,17 @@
 		
 		<view class="menuList">
 			<uni-list :border="false">
-				<uni-list-item v-for="item,index in lists" :border="false" @click="goClick(index)">
+				<uni-list-item v-for="item,index in lists" :border="false">
 					<template v-slot:header>
 						<view class="slot-box">
 							<image class="slot-image" :src="item.image"></image>
 						</view>
 					</template>
 					<template v-slot:body>
-						<text class="slot-box slot-text">{{item.title}}</text>
+						<text class="slot-box slot-text" @click="goClick(index)">{{item.title}}</text>
 					</template>
 					<template v-slot:footer>
-						<image class="arrow" src="../../static/images/user/icon05.png"></image>
+						<image class="arrow" src="../../static/images/user/icon05.png" @click="goClick(index)"></image>
 					</template>
 				</uni-list-item>
 			</uni-list>
@@ -83,25 +83,40 @@
 				lists:[{
 					id: 1,
 					image: '../../static/images/user/icon10.png',
-					title: 'Tiktok account manager'
+					title: 'Tiktok account manager',
+					url: './../index/administration'
 				},{
 					id: 2,
 					image: '../../static/images/user/icon08.png',
-					title: 'Merchandise collection'
+					title: 'Merchandise collection',
+					url: ''
 				},{
 					id: 3,
 					image: '../../static/images/user/icon07.png',
-					title: 'Contact your own customer service'
+					title: 'Contact your own customer service',
+					url: ''
 				},{
 					id: 4,
 					image: '../../static/images/user/icon09.png',
-					title: 'Log out'
+					title: 'Log out',
+					url: ''
 				}]
 			}
 		},
 		methods: {
+			edit() {
+				console.log("修改个人资料")
+			},
 			goClick(index) {
+				console.log(index)
 				// 如果index是3，id是4的话 退出当前登录，跳转登录页面
+				if(this.lists[index].id == 4){
+					console.log("我要退出拉！")
+				} else {
+					uni.navigateTo({
+						url: this.lists[index].url
+					});
+				}
 			},
 			goIndex() {
 				uni.navigateTo({
@@ -240,11 +255,12 @@
 	.menuList{
 		margin-top: 26rpx;
 	}
-	
+	/deep/ .uni-list-item{
+		margin-bottom: 67rpx;
+	}
 	/deep/ .uni-list-item__container{
 		align-items: center;
 		padding: 0 30rpx;
-		margin-bottom: 67rpx;
 	}
 	
 	.slot-box {
