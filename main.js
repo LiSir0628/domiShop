@@ -25,6 +25,11 @@ Vue.prototype.$_post = _post;
 Vue.prototype.$_put = _put;
 Vue.prototype.$_delete = _delete;
 
+import {handleTree,toast} from './common/api.js'
+Vue.prototype.$toast = toast;
+Vue.prototype.$handleTree = handleTree;
+
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'

@@ -11,7 +11,7 @@
 				<view class="orderTop">
 					<view class="collection">Free sample collection</view>
 					<view class="view">
-						<view class="">View all</view>
+						<view class="" @click="goView">View all</view>
 						<image class="arrow" src="../../static/images/user/icon05.png"></image>
 					</view>
 				</view>
@@ -135,6 +135,11 @@
 			},
 			noClose() {
 				
+			},
+			goView() {
+				uni.navigateTo({
+					url: './../product/collection'
+				});
 			},
 			goIndex() {
 				uni.navigateTo({

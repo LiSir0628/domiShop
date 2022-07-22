@@ -27,8 +27,8 @@
 					id: 1,
 					image: '../../static/images/home/photo.png',
 					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					price: '25632',
-					commission: '56'
+					price: '2563200.00',
+					commission: '56.00'
 				},{
 					id: 2,
 					image: '../../static/images/home/photo.png',
@@ -54,7 +54,7 @@
 		
 	}
 	
-	/* å•†å“åˆ—è¡¨ */
+	/* Ö÷ÒªÄÚÈİ */
 	.content {
 		width: 690rpx;
 		margin: 30rpx auto;
@@ -107,6 +107,7 @@
 	.spOperation {
 		width: 486rpx;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: center;
 		line-height: normal;

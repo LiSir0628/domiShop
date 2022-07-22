@@ -5,9 +5,9 @@
  * duration	提示的延迟时间  默认1500ms
  * icon		提示图标(success成功,loading加载中,none不显示) 默认不显示
  * */
-const toast = (title, duration=1500, icon='none', mask=false)=>{
+const toast = (title, duration = 1500, icon = 'none', mask = false) => {
 	//统一提示方便全局修改
-	if(Boolean(title) === false){
+	if (Boolean(title) === false) {
 		return;
 	}
 	uni.showToast({
@@ -24,15 +24,15 @@ const toast = (title, duration=1500, icon='none', mask=false)=>{
  * content	提示内容
  * showCancel 是否显示取消按钮 默认显示false
  * */
-const modal = (content, showCancel=false) => {
-	if(Boolean(content) === false){
+const modal = (content, showCancel = false) => {
+	if (Boolean(content) === false) {
 		return;
 	}
 	uni.showModal({
 		title: '温馨提示',
 		content: content,
 		showCancel: showCancel,
-		success: function (res) {
+		success: function(res) {
 			if (res.confirm) {
 				console.log('confirm');
 			} else if (res.cancel) {
@@ -51,7 +51,7 @@ const inArray = (arr, property, val, flag) => {
 	for (let i = 0; i < arr.length; i++) {
 		if (arr[i][property] == val) {
 			return flag ? i : arr[i];
-		} 
+		}
 	}
 	return false;
 }
@@ -84,7 +84,12 @@ const countDown = (time) => {
 	// 计算秒数
 	let leave3 = (date_differ % (24 * 3600 * 1000)) % (60 * 1000); // 计算分钟数后剩余的毫秒数
 	let seconds = Math.round(leave3 / 1000);
-	return {days, hours, minutes, seconds};
+	return {
+		days,
+		hours,
+		minutes,
+		seconds
+	};
 }
 
 /**
@@ -105,9 +110,9 @@ const getFormatTime = (timeStamp) => {
 	let now_new = now.valueOf();
 	let milliseconds = 0;
 	let timeSpanStr;
-	
+
 	milliseconds = now_new - no1new;
-	
+
 	if (milliseconds <= 1000 * 60 * 1) {
 		timeSpanStr = '刚刚';
 	} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
@@ -121,7 +126,7 @@ const getFormatTime = (timeStamp) => {
 	} else {
 		timeSpanStr = year + '-' + month + '-' + day
 	}
-	
+
 	return timeSpanStr;
 }
 
@@ -130,7 +135,7 @@ const getFormatTime = (timeStamp) => {
  * 
  * time		要转换的时间戳 单位:ms
  * */
-const transformTime = (time,data) => {
+const transformTime = (time, data) => {
 	if (time) {
 		let date = new Date(time);
 		let y = date.getFullYear();
@@ -139,40 +144,40 @@ const transformTime = (time,data) => {
 		let h = date.getHours();
 		let m = date.getMinutes();
 		let s = date.getSeconds();
-		if(data && data.toLowerCase() === 'yyyy-mm'){
+		if (data && data.toLowerCase() === 'yyyy-mm') {
 			return `${y}-${addZero(M)}`;
-		}else if(data && data.toLowerCase() === 'yyyy-mm-dd'){
+		} else if (data && data.toLowerCase() === 'yyyy-mm-dd') {
 			return `${y}-${addZero(M)}-${addZero(d)}`;
-		}else if(data && data.toLowerCase() === 'mm-dd'){
+		} else if (data && data.toLowerCase() === 'mm-dd') {
 			return `${addZero(M)}-${addZero(d)}`;
-		}else if(data && data.toLowerCase() === 'yyyy/mm/dd'){
+		} else if (data && data.toLowerCase() === 'yyyy/mm/dd') {
 			return `${y}/${addZero(M)}/${addZero(d)}`;
-		}else if(data && data.toLowerCase() === 'mm-dd hh:mm'){
+		} else if (data && data.toLowerCase() === 'mm-dd hh:mm') {
 			return `${addZero(M)}-${addZero(d)} ${addZero(h)}:${addZero(m)}`;
-		}else if(data && data.toLowerCase() === 'yyyy-mm-dd hh:mm:ss'){
+		} else if (data && data.toLowerCase() === 'yyyy-mm-dd hh:mm:ss') {
 			return `${y}-${addZero(M)}-${addZero(d)} ${addZero(h)}:${addZero(m)}:${addZero(s)}`;
-		}else if(data && data.toLowerCase() === 'yyyy-mm-dd hh:mm'){
+		} else if (data && data.toLowerCase() === 'yyyy-mm-dd hh:mm') {
 			return `${y}-${addZero(M)}-${addZero(d)} ${addZero(h)}:${addZero(m)}`;
-		}else if(data && data.toLowerCase() === 'mm:ss'){
+		} else if (data && data.toLowerCase() === 'mm:ss') {
 			return `${addZero(m)}:${addZero(s)}`;
-		}else if(data === undefined){
+		} else if (data === undefined) {
 			return `${y}年${addZero(M)}月${addZero(d)}日 ${addZero(h)}:${addZero(m)}`;
 			// return `${y}年${addZero(M)}月${addZero(d)}日 ${addZero(h)}:${addZero(m)}:${addZero(s)}`;
-		}else if(data === '年月日'){
+		} else if (data === '年月日') {
 			return `${y}年${addZero(M)}月${addZero(d)}日`;
-		}else if(data === '月'){
+		} else if (data === '月') {
 			return `${addZero(M)}月`;
-		}else if(data === '年月'){
+		} else if (data === '年月') {
 			return `${y}年${addZero(M)}月`;
-		}else if(data === '月日 hh:mm'){
+		} else if (data === '月日 hh:mm') {
 			return `${addZero(M)}月${addZero(d)}日 ${addZero(h)}:${addZero(m)}`;
-		}else if(data === 'yyyy.mm.dd'){
+		} else if (data === 'yyyy.mm.dd') {
 			return `${y}.${addZero(M)}.${addZero(d)}`;
-		}else if(data === '年月日 hh:mm') {
+		} else if (data === '年月日 hh:mm') {
 			return `${y}年${addZero(M)}月${addZero(d)}日 ${addZero(h)}:${addZero(m)}`;
-		}else if(data === '月日 时分'){  // 10月10日 10时10分
+		} else if (data === '月日 时分') { // 10月10日 10时10分
 			return `${addZero(M)}月${addZero(d)}日 ${addZero(h)}时${addZero(m)}分`;
-		}else{
+		} else {
 			console.log('data参数错误')
 			return;
 		}
@@ -180,6 +185,7 @@ const transformTime = (time,data) => {
 		return '';
 	}
 }
+
 function addZero(m) {
 	return m < 10 ? `0${m}` : m;
 }
@@ -191,15 +197,15 @@ function addZero(m) {
  * data 缓存数据
  * timeout 过期时间（单位：分钟）不设置时间即为永久保存
  */
-const setStorageSync = (key,data,timeout = 0) => {
+const setStorageSync = (key, data, timeout = 0) => {
 	let _timeout = parseInt(timeout);
-	
+
 	uni.setStorageSync(key, data);
-	
-	if(_timeout){
+
+	if (_timeout) {
 		uni.setStorageSync(`${key}__separator__`, Date.now() + 1000 * 60 * _timeout);
-	}else{
-		uni.setStorageSync(`${key}__separator__`,'');
+	} else {
+		uni.setStorageSync(`${key}__separator__`, '');
 	}
 }
 
@@ -211,7 +217,7 @@ const setStorageSync = (key,data,timeout = 0) => {
  */
 const getStorageSync = (key, def = '') => {
 	let timeout = parseInt(uni.getStorageSync(`${key}__separator__`) || 0);
-	
+
 	// 过期失效
 	if (timeout) {
 		if (Date.now() > timeout) {
@@ -219,7 +225,7 @@ const getStorageSync = (key, def = '') => {
 			return;
 		}
 	}
-	
+
 	let value = uni.getStorageSync(key);
 	return value ? value : def;
 }
@@ -252,30 +258,97 @@ const queryParam = (param) => {
 const isOpenType = () => {
 	let ua = navigator.userAgent.toLowerCase();
 	let isWeixin = ua.indexOf('micromessenger') != -1;
-	if(isWeixin){
+	if (isWeixin) {
 		return 'wx';
-	}else{
-		if(ua.indexOf('wxwork') != -1){
+	} else {
+		if (ua.indexOf('wxwork') != -1) {
 			return 'et'
-		}else{
+		} else {
 			return 'h5'
 		}
 	}
 }
- 
- /**
-  * 路由跳转
-  */
- const domiRouter = ($this,path,param) => {
-	 let query=$this.$Route.query;
-	 console.log($this.$Route.query)
-	 if(query.hasOwnProperty('token')){
-		param['token']=query.token;
-	 }  
-	 $this.$Router.push({
-	 	path: '/'+query.pathMatch+'/'+path,
-	 	query: param
-	 })
- }
 
-export { toast, modal, inArray, random, countDown, getFormatTime, transformTime, setStorageSync, getStorageSync, remove, queryParam, isOpenType, domiRouter}
+/**
+ * 路由跳转
+ */
+const domiRouter = ($this, path, param) => {
+	let query = $this.$Route.query;
+	console.log($this.$Route.query)
+	if (query.hasOwnProperty('token')) {
+		param['token'] = query.token;
+	}
+	$this.$Router.push({
+		path: '/' + query.pathMatch + '/' + path,
+		query: param
+	})
+}
+
+/**
+ * 构造树型结构数据
+ * data 数据源
+ * id id字段 默认 'id'
+ * parentId 父节点字段 默认 'parentId'
+ * children 孩子节点字段 默认 'children'
+ */
+const handleTree = (data, id, parentId, children) => {
+	let config = {
+		id: id || 'id',
+		parentId: parentId || 'parentId',
+		childrenList: children || 'children'
+	};
+
+	var childrenListMap = {};
+	var nodeIds = {};
+	var tree = [];
+
+	for (let d of data) {
+		let parentId = d[config.parentId];
+		if (childrenListMap[parentId] == null) {
+			childrenListMap[parentId] = [];
+		}
+		nodeIds[d[config.id]] = d;
+		childrenListMap[parentId].push(d);
+	}
+
+	for (let d of data) {
+		let parentId = d[config.parentId];
+		if (nodeIds[parentId] == null) {
+			tree.push(d);
+		}
+	}
+
+	for (let t of tree) {
+		adaptToChildrenList(t);
+	}
+
+	function adaptToChildrenList(o) {
+		if (childrenListMap[o[config.id]] !== null) {
+			o[config.childrenList] = childrenListMap[o[config.id]];
+		}
+		if (o[config.childrenList]) {
+			for (let c of o[config.childrenList]) {
+				adaptToChildrenList(c);
+			}
+		}
+	}
+	return tree;
+}
+
+
+export {
+	toast,
+	modal,
+	inArray,
+	random,
+	countDown,
+	getFormatTime,
+	transformTime,
+	setStorageSync,
+	getStorageSync,
+	remove,
+	queryParam,
+	isOpenType,
+	domiRouter,
+	handleTree
+}

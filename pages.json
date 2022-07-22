@@ -90,6 +90,14 @@
 			}
 		}
 	},{
+		"path": "pages/product/collection",
+		"style": {
+			"navigationBarTitleText": "免费领样列表",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
 		"path": "pages/user/favorite",
 		"style": {
 			"navigationBarTitleText": "收藏列表",
