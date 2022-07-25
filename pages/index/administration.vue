@@ -2,9 +2,17 @@
 	<view class="container">
 		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="TIKTOK administration"></uni-nav-bar>
 		<view class="content" :style="contentHeight">
-			<view class="userList" v-for="item,index in lists" :class="{'active': cIndex == index}" @click="choose(index)">
-				<image class="userPhoto" :src="item.photo"></image>
-				<view class="userName">{{item.name}}</view>
+			<view v-if="lists.length > 0">
+				<view class="userList" v-for="item,index in lists" :class="{'active': cIndex == index}" @click="choose(index)">
+					<image class="userPhoto" :src="item.photo"></image>
+					<view class="userName">{{item.name}}</view>
+				</view>
+			</view>
+			<view v-else>
+				<view class="noData">
+					<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+					<view class="noDataText">It's empty</view>
+				</view>
 			</view>
 			<!-- <view class="btn" @click="add">New TIKTOK account</view> -->
 			<view class="btn" @click="open('center')">New TIKTOK account</view>
@@ -50,6 +58,7 @@
 				time: 59,
 				setTime: null,
 				cIndex: 0,
+				// lists: [],
 				lists:[{
 					id: 1,
 					photo: '../../static/images/home/photo.png',
@@ -118,8 +127,6 @@
 						that.contentHeight.height = (res.windowHeight - 44 - 30 - 60) + "px"
 					}
 					// #endif
-					console.log(res.windowHeight)
-					console.log(that.contentHeight.height)
 				},
 			})
 		},
@@ -338,5 +345,23 @@
 	.text{
 		width: 540rpx;
 		margin-left: 20rpx;
+	}
+	
+	/* 无数据展示 */
+	.noData{
+		text-align: center;
+		margin: 300rpx auto 0;
+	}
+	.noDataLogo{
+		width: 188rpx;
+		height: 158rpx;
+	}
+	.noDataText{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #CECECE;
+		line-height: 24rpx;
+		margin-top: 12rpx;
 	}
 </style>

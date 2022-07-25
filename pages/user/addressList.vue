@@ -1,8 +1,8 @@
 <template>
 	<view class="container">
 		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Receiving address"></uni-nav-bar>
-		<view class="addressList" :style="contentHeight">
-			<view class="addressModular" :class="{'activeModular': item.isDefault}" v-for="item,index in list">
+		<view class="addressList" :style="contentHeight" v-if="lists.length > 0">
+			<view class="addressModular" :class="{'activeModular': item.isDefault}" v-for="item,index in lists">
 				<image v-if="!item.isDefault" class="addressPhoto" src="../../static/images/user/icon03.png"></image>
 				<image v-else class="addressPhoto" src="../../static/images/user/icon04.png"></image>
 				<view class="addressContent">
@@ -14,6 +14,12 @@
 					<view class="address">{{item.address}}</view>
 				</view>
 				<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
+			</view>
+		</view>
+		<view class="addressList" :style="contentHeight" v-else>
+			<view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
 		<view class="newAddress" @click="newAdd">
@@ -29,7 +35,8 @@
 				contentHeight: {
 					'height': '1080rpx'
 				},
-				list:[{
+				// lists:[],
+				lists:[{
 					id: 1,
 					photo: '../../static/images/home/photo.png',
 					name: 'name',
@@ -194,5 +201,23 @@
 		bottom: 37rpx;
 		left: 0;
 		right: 0;
+	}
+	
+	/* 无数据展示 */
+	.noData{
+		text-align: center;
+		margin: 300rpx auto 0;
+	}
+	.noDataLogo{
+		width: 188rpx;
+		height: 158rpx;
+	}
+	.noDataText{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #CECECE;
+		line-height: 24rpx;
+		margin-top: 12rpx;
 	}
 </style>

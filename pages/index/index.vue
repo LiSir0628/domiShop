@@ -101,7 +101,7 @@
 			</view>
 		</view>
 
-		<view class="spList">
+		<view class="spList" v-if="spLists.length>0">
 			<view class="sp" v-for="item,index in spLists">
 				<view class="spTop">
 					<image class="spLogo" :src="item.image"></image>
@@ -133,6 +133,12 @@
 					<image class="photo" src="../../static/images/home/photo.png"></image>
 					<view class="name">zhanghaomingcheng</view>
 				</view>
+			</view>
+		</view>
+		<view class="spList" v-else>
+			<view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon01.png"></image>
+				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
 
@@ -211,6 +217,7 @@
 					image: '../../static/images/home/icon10.png'
 				}],
 				
+				//spLists: [],
 				spLists:[{
 					id: 1,
 					image: '../../static/images/home/photo.png',
@@ -743,9 +750,10 @@
 		margin-left: 12rpx;
 	}
 	
+	/* 无数据展示 */
 	.noData{
 		text-align: center;
-		margin-top: 122rpx;
+		margin: 122rpx auto 0;
 	}
 	.noDataLogo{
 		width: 128rpx;

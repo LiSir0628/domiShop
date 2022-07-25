@@ -46,7 +46,7 @@
 			</scroll-view>
 		</view>
 
-		<view class="merRankList" v-if="cindex == 0">
+		<view class="merRankList" v-if="cindex == 0 && merRankList.length>0">
 			<view class="merRank" :class="{'merRankActive': merIndex == index}" v-for="item,index in merRankList"
 				@click="merIndexChoose(index)">
 				<view class="userMsg">
@@ -85,7 +85,13 @@
 				</view>
 			</view>
 		</view>
-		<view class="merRankList" v-else-if="cindex == 1">
+		<view class="merRankList" v-else-if="cindex == 0 && merRankList.length<=0">
+			<view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+				<view class="noDataText">It's empty</view>
+			</view>
+		</view>
+		<view class="merRankList" v-else-if="cindex == 1 && merRankList.length>0">
 			<view class="merRank merRankAccount" :class="{'merRankActive': merIndex == index}"
 				v-for="item,index in merRankList" @click="merIndexChoose(index)">
 				<view class="userMsg userMsgAccount">
@@ -126,7 +132,13 @@
 				</view>
 			</view>
 		</view>
-		<view class="merRankList" v-else-if="cindex == 2">
+		<view class="merRankList" v-else-if="cindex == 1 && merRankList.length<=0">
+			<view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+				<view class="noDataText">It's empty</view>
+			</view>
+		</view>
+		<view class="merRankList" v-else-if="cindex == 2 && merRankList.length>0">
 			<view class="membershipAccount" :class="{'merRankActive': merIndex == index}"
 				v-for="item,index in merRankList" @click="merIndexChoose(index)">
 				<view class="userMsg userMsgAccount">
@@ -163,6 +175,12 @@
 						</view>
 					</view>
 				</view>
+			</view>
+		</view>
+		<view class="merRankList" v-else-if="cindex == 2 && merRankList.length<=0">
+			<view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
 
@@ -223,6 +241,7 @@
 				accountName: 'All of them',
 
 				merIndex: 0,
+				// merRankList: [],
 				merRankList: [{
 					id: 1,
 					rank: 1,
@@ -750,5 +769,23 @@
 	.weight {
 		font-weight: bold;
 		margin-left: 6rpx;
+	}
+	
+	/* 无数据展示 */
+	.noData{
+		text-align: center;
+		margin: 260rpx auto 0;
+	}
+	.noDataLogo{
+		width: 188rpx;
+		height: 158rpx;
+	}
+	.noDataText{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #CECECE;
+		line-height: 24rpx;
+		margin-top: 12rpx;
 	}
 </style>

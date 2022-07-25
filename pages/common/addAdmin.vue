@@ -7,8 +7,13 @@
 					<image class="close" src="../../static/images/detail/icon13.png" @click="close"></image>
 					<view class="cardTitle">TIKTOK APP SCAN code access</view>
 					<view class="cardTip">Please make sure you scan the TIK Tok account for at least one public video</view>
-					<image class="cardEwm" src="../../static/images/home/demo.png"></image>
-					<view class="cardTime">Expired after {{time}}s</view>
+					
+					<view class="ewm">
+						<image class="cardEwm" :class="{'overdue': isShowOverdue}" src="../../static/images/home/demo.png"></image>
+						<image v-if="isShowOverdue" class="refreshLogo" src="../../static/images/home/icon15.png" @click="refreshBtn"></image>
+					</view>
+					<view v-if="!isShowOverdue" class="cardTime">Expired after {{time}}s</view>
+					<view v-else class="cardTime">The QR Code has expired</view>
 					<view class="service">With authorization, you can:</view>
 					<view class="serviceDes">
 						<view class="serviceText">
@@ -36,6 +41,7 @@
 			return {
 				time: 59,
 				setTime: null,
+				isShowOverdue: false,
 			}
 		},
 		created() {
@@ -47,19 +53,23 @@
 		methods: {
 			open(){
 				this.$refs.popup.open("center")
+				this.isShowOverdue = false
 				this.time = 59
 				this.openTimer()
 			},
 			openTimer() {
+				this.isShowOverdue = false
+				this.time = 59
 				//计时器计算倒计时
 				this.setTime = setInterval(()=>{
 					if (this.time > 0) {
 						this.time = this.time - 1
-						console.log(this.time)
+						//console.log(this.time)
 					} else{
 						this.time = 59
 						clearInterval(this.setTime);
 						//此时需要操作，展示0s 或者 替换二维码 重新开始计算。
+						this.isShowOverdue = true
 					} 
 				}, 1000);
 			},
@@ -69,6 +79,10 @@
 			},
 			noClose() {
 				// 防止点击图片关闭遮罩
+			},
+			refreshBtn() {
+				clearInterval(this.setTime)
+				this.openTimer()
 			}
 			
 		}
@@ -134,12 +148,31 @@
 		margin-top: 24rpx;
 		line-height: 24rpx;
 	}
+	.ewm{
+		width: 396rpx;
+		height: 396rpx;
+		display: block;
+		margin: 34rpx auto 0;
+		position: relative;
+	}
 	.cardEwm{
 		width: 396rpx;
 		height: 396rpx;
-		padding-top: 34rpx;
 		display: block;
 		margin: 0 auto;
+	}
+	.overdue{
+		opacity: 0.2;
+	}
+	.refreshLogo{
+		width: 74rpx;
+		height: 73rpx;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
 	}
 	.cardTime{
 		font-size: 24rpx;

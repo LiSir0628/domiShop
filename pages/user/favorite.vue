@@ -2,17 +2,25 @@
 	<view class="container">
 		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Favorite list"></uni-nav-bar>
 		<view class="content">
-			<view class="sp" v-for="item,index in lists">
-				<view class="spTop">
-					<image class="spLogo" :src="item.image"></image>
-					<view class="spMsg">
-						<view class="spDes">{{item.name}}</view>
-						<view class="spOperation">
-							<view class="price">$ {{item.price}}</view>
-							<view class="commission">High Commission: {{item.commission}}%</view>
-							<image class="love" src="../../static/images/detail/icon16.png" @click="remove(index)"></image>
+			<view v-if="lists.length > 0">
+				<view class="sp" v-for="item,index in lists">
+					<view class="spTop">
+						<image class="spLogo" :src="item.image"></image>
+						<view class="spMsg">
+							<view class="spDes">{{item.name}}</view>
+							<view class="spOperation">
+								<view class="price">$ {{item.price}}</view>
+								<view class="commission">High Commission: {{item.commission}}%</view>
+								<image class="love" src="../../static/images/detail/icon16.png" @click="remove(index)"></image>
+							</view>
 						</view>
 					</view>
+				</view>
+			</view>
+			<view v-else>
+				<view class="noData">
+					<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+					<view class="noDataText">It's empty</view>
 				</view>
 			</view>
 		</view>
@@ -23,6 +31,7 @@
 	export default {
 		data() {
 			return {
+				// lists:[],
 				lists:[{
 					id: 1,
 					image: '../../static/images/home/photo.png',
@@ -130,5 +139,23 @@
 	.love{
 		width: 24rpx;
 		height: 21rpx;
+	}
+	
+	/* 无数据展示 */
+	.noData{
+		text-align: center;
+		margin: 300rpx auto 0;
+	}
+	.noDataLogo{
+		width: 188rpx;
+		height: 158rpx;
+	}
+	.noDataText{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #CECECE;
+		line-height: 24rpx;
+		margin-top: 12rpx;
 	}
 </style>

@@ -44,7 +44,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view class="productList" :class="{productListHeight: isShowTabHeight}">
+		<view class="productList" :class="{productListHeight: isShowTabHeight}" v-if="productList.length > 0">
 			<view class="product" v-for="item,index in productList" @click="goDetail(index)">
 				<image class="productLogo" :src="item.image"></image>
 				<view class="productMsg">
@@ -59,6 +59,12 @@
 						<text class="earned">Earned: ${{item.earned}}</text>
 					</view>
 				</view>
+			</view>
+		</view>
+		<view class="productList" :class="{productListHeight: isShowTabHeight}" v-else>
+			<view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
 		
@@ -156,6 +162,7 @@
 				prepareState: 'Total sales',
 				orderState: 'Total sales',
 				
+				//productList:[],
 				productList:[{
 					id: 1,
 					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
@@ -659,5 +666,23 @@
 	}
 	.navActiveText{
 		color: #0B0B0B;
+	}
+	
+	/* 无数据展示 */
+	.noData{
+		text-align: center;
+		margin: 200rpx auto 0;
+	}
+	.noDataLogo{
+		width: 188rpx;
+		height: 158rpx;
+	}
+	.noDataText{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #CECECE;
+		line-height: 24rpx;
+		margin-top: 12rpx;
 	}
 </style>

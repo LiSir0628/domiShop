@@ -8,7 +8,7 @@
 					:class="{'scroll-view-item-active':cindex == index}" @click="scrollTab(index)">{{item.name}}</view>
 			</scroll-view>
 		</view>
-		<view class="content">
+		<view class="content" v-if="lists.length > 0">
 			<view class="sp" v-for="item,index in lists">
 				<view class="spTop">
 					<view class="timeClock">
@@ -38,6 +38,12 @@
 				</view>
 			</view>
 		</view>
+		<view class="content" v-else>
+			<view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+				<view class="noDataText">It's empty</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -57,6 +63,7 @@
 					id: 3,
 					name: 'Ready for shipment (2)'
 				}],
+				// lists: [],
 				lists:[{
 					id: 1,
 					image: '../../static/images/home/photo.png',
@@ -341,5 +348,23 @@
 	}
 	.number{
 		
+	}
+	
+	/* 无数据展示 */
+	.noData{
+		text-align: center;
+		margin: 360rpx auto 0;
+	}
+	.noDataLogo{
+		width: 188rpx;
+		height: 158rpx;
+	}
+	.noDataText{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #CECECE;
+		line-height: 24rpx;
+		margin-top: 12rpx;
 	}
 </style>

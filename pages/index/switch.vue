@@ -8,7 +8,7 @@
 			</view>
 		</view>
 
-		<view class="content">
+		<view class="content" v-if="lists.length>0">
 			<radio-group>
 				<view class="userList" v-for="item,index in lists" :key="item.id" @click="choose(index)">
 					<view class="userLeft">
@@ -21,6 +21,12 @@
 				</view>
 			</radio-group>
 		</view>
+		<view class="content" v-else>
+			<view class="noData">
+				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
+				<view class="noDataText">It's empty</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -29,6 +35,7 @@
 		data() {
 			return {
 				current: 0,
+				// lists: [],
 				lists: [{
 					id: '0',
 					photo: '../../static/images/home/icon03.png',
@@ -173,5 +180,23 @@
 	/deep/ .uni-radio-input-checked{
 		border-color: #FF7436 !important;
 		background: #FF7436 !important;
+	}
+	
+	/* 无数据展示 */
+	.noData{
+		text-align: center;
+		margin: 300rpx auto 0;
+	}
+	.noDataLogo{
+		width: 188rpx;
+		height: 158rpx;
+	}
+	.noDataText{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #CECECE;
+		line-height: 24rpx;
+		margin-top: 12rpx;
 	}
 </style>
