@@ -37,11 +37,11 @@
 							</view>
 							<view class="swiperData">
 								<view class="swiperDataNum">$52563.23</view>
-								<view class="swiperDataTitle">Full Commission</view>
+								<view class="swiperDataTitle">Full Profit</view>
 							</view>
 							<view class="swiperData">
 								<view class="swiperDataNum">$52563.23</view>
-								<view class="swiperDataTitle">Effective Commission</view>
+								<view class="swiperDataTitle">Effective Profit</view>
 							</view>
 						</view>
 					</swiper-item>
@@ -108,10 +108,10 @@
 					<view class="spMsg">
 						<view class="spDes">{{item.name}}</view>
 						<view class="spOperation">
-							<view class="state" v-if="item.state == 1">order paid</view>
-							<view class="settled" v-else-if="item.state == 2">settled account</view>
+							<view class="state" v-if="item.state == 2">order paid</view>
+							<view class="settled" v-else-if="item.state == 4">settled account</view>
 							<view class="stateRefund" v-else-if="item.state == 3">refund/return of order</view>
-							<view class="time">{{item.time}}</view>
+							<view class="time">{{item.time}} payment</view>
 						</view>
 					</view>
 				</view>
@@ -189,19 +189,24 @@
 				duration: 500,
 				scrollList: [{
 					id: 1,
-					name: 'Today'
+					name: 'Today',
+					value: 1
 				}, {
 					id: 2,
-					name: 'Yesterday'
+					name: 'Yesterday',
+					value: 2
 				}, {
 					id: 3,
-					name: 'Nearly seven days'
+					name: 'Nearly seven days',
+					value: 7
 				}, {
 					id: 4,
-					name: 'Nearly 30 days'
+					name: 'Nearly 30 days',
+					value: 30
 				}, {
 					id: 5,
-					name: 'Nearly 60 days'
+					name: 'Nearly 60 days',
+					value: 60
 				}],
 				rankList: [{
 					id: 1,
@@ -217,13 +222,31 @@
 					image: '../../static/images/home/icon10.png'
 				}],
 				
+				orderStateList: [{
+					id: 1,
+					name: 'Full state',
+					value: 1
+				},{
+					id: 2,
+					name: 'Order paid',
+					value: 2
+				},{
+					id: 3,
+					name: 'Refund/return of order',
+					value: 3
+				},{
+					id: 4,
+					name: 'Settled Account',
+					value: 4
+				}],
+				
 				//spLists: [],
 				spLists:[{
 					id: 1,
 					image: '../../static/images/home/photo.png',
 					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					state: 1,
-					time: '10-18 16:05:20 payment',
+					state: 2,
+					time: '10-18 16:05:20',
 					payment: '52563.23',
 					ratio: '23',
 					commission: '256'
@@ -231,8 +254,8 @@
 					id: 2,
 					image: '../../static/images/home/photo.png',
 					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					state: 2,
-					time: '10-18 16:05:20 payment',
+					state: 4,
+					time: '10-18 16:05:20',
 					payment: '52563.23',
 					ratio: '23',
 					commission: '256'
@@ -241,24 +264,10 @@
 					image: '../../static/images/home/photo.png',
 					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
 					state: 3,
-					time: '10-18 16:05:20 payment',
+					time: '10-18 16:05:20',
 					payment: '52563.23',
 					ratio: '23',
 					commission: '256'
-				}],
-				
-				orderStateList: [{
-					id: 1,
-					name: 'Full state'
-				},{
-					id: 2,
-					name: 'Order paid'
-				},{
-					id: 3,
-					name: 'Refund/return of order'
-				},{
-					id: 4,
-					name: 'Settled Account'
 				}],
 				
 				citem: 0,

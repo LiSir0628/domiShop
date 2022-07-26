@@ -36,7 +36,7 @@
 			<view class="tikTok">
 				<view class="tikTokLeft">Application notes</view>
 				<view class="tikTokRight">
-					Application notes
+					<input class="remarks" v-model="remarks" placeholder="Application notes"/>
 				</view>
 			</view>
 			<view class="notes">
@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		
-		<view class="bottom">
+		<view class="bottom" @click="commit">
 			Submission of application
 		</view>
 		
@@ -125,6 +125,7 @@
 					isDefault: false,
 					address: "中文中文中文中文中文中文中文中文"	
 				}],
+				remarks: "",
 				//des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.<br/>1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform."
 				des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform."
 			}
@@ -192,6 +193,9 @@
 				this.$refs.popupCollection.close()
 				// 成功获取选择用户地址，此时应该对用户地址进行替换
 			},
+			commit() {
+				console.log(this.remarks)
+			}
 		}
 	}
 </script>
@@ -305,6 +309,13 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
+	}
+	.remarks{
+		font-size: 26rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #999999;
+		text-align: right;
 	}
 	
 	.userPhoto{

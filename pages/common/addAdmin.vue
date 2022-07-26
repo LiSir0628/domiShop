@@ -64,7 +64,7 @@
 				this.setTime = setInterval(()=>{
 					if (this.time > 0) {
 						this.time = this.time - 1
-						//console.log(this.time)
+						console.log(this.time)
 					} else{
 						this.time = 59
 						clearInterval(this.setTime);
