@@ -35,17 +35,25 @@
 								<view class="swiperDataNum">$52563.23</view>
 								<view class="swiperDataTitle">Effective Commission</view>
 							</view>
-							<view class="swiperData">
+							<!-- <view class="swiperData">
 								<view class="swiperDataNum">$52563.23</view>
 								<view class="swiperDataTitle">Full Profit</view>
 							</view>
 							<view class="swiperData">
 								<view class="swiperDataNum">$52563.23</view>
 								<view class="swiperDataTitle">Effective Profit</view>
+							</view> -->
+							<view class="swiperData">
+								<view class="swiperDataNum">10000</view>
+								<view class="swiperDataTitle">All singular</view>
+							</view>
+							<view class="swiperData">
+								<view class="swiperDataNum">10000</view>
+								<view class="swiperDataTitle">Effective singular</view>
 							</view>
 						</view>
 					</swiper-item>
-					<swiper-item>
+					<!-- <swiper-item>
 						<image class="bannerLogo" src="../../static/images/home/icon04.png"></image>
 						<view class="swiperDataList">
 							<view class="swiperData">
@@ -75,22 +83,30 @@
 								<view class="swiperDataTitle">Refund rate</view>
 							</view>
 						</view>
-					</swiper-item>
+					</swiper-item> -->
 				</swiper>
 			</view>
 		</view>
 
 		<view class="rankModular">
-			<view class="merchandise" v-for="item,index in rankList" @click="goData(index)">
+			<view class="newMerchandise" @click="goData(0)">
+				<view class="merchandiseLeft">
+					<image class="merchandiseNewLogo" src="../../static/images/home/icon16.png"></image>
+					<view>Merchandise ranking</view>
+				</view>
+				<image class="merchandiseRight" src="../../static/images/home/icon05.png"></image>
+			</view>
+			<!-- <view class="merchandise" v-for="item,index in rankList" @click="goData(index)">
 				<view class="merchandiseTop">
 					<image class="merchandiseLogo" :src="item.image"></image>
 					<image class="arrowRight" src="../../static/images/home/icon05.png"></image>
 				</view>
 				<view class="merchandiseBottom">{{item.name}}</view>
-			</view>
+			</view> -->
 		</view>
 
-		<view class="sortList">
+		<!-- 订单状态，账号查看隐藏 -->
+		<!-- <view class="sortList">
 			<view class="sort" @click="toggle('bottom')">
 				<view class="sortText">{{orderState}}</view>
 				<image class="arrowDown" src="../../static/images/home/icon12.png"></image>
@@ -99,7 +115,7 @@
 				<view class="sortText">{{accountName}}</view>
 				<image class="arrowDown" src="../../static/images/home/icon12.png"></image>
 			</view>
-		</view>
+		</view> -->
 
 		<view class="spList" v-if="spLists.length>0">
 			<view class="sp" v-for="item,index in spLists">
@@ -108,9 +124,9 @@
 					<view class="spMsg">
 						<view class="spDes">{{item.name}}</view>
 						<view class="spOperation">
-							<view class="state" v-if="item.state == 2">order paid</view>
+							<!-- <view class="state" v-if="item.state == 2">order paid</view>
 							<view class="settled" v-else-if="item.state == 4">settled account</view>
-							<view class="stateRefund" v-else-if="item.state == 3">refund/return of order</view>
+							<view class="stateRefund" v-else-if="item.state == 3">refund/return of order</view> -->
 							<view class="time">{{item.time}} payment</view>
 						</view>
 					</view>
@@ -129,10 +145,11 @@
 						<view class="dataNum">${{item.commission}}</view>
 					</view>
 				</view>
-				<view class="spBottom">
+				<!-- 推荐人信息隐藏 -->
+				<!-- <view class="spBottom">
 					<image class="photo" src="../../static/images/home/photo.png"></image>
 					<view class="name">zhanghaomingcheng</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<view class="spList" v-else>
@@ -544,6 +561,35 @@
 		align-items: center;
 		justify-content: space-between;
 	}
+	
+	.newMerchandise{
+		width: 710rpx;
+		height: 100rpx;
+		padding: 20rpx 20rpx 20rpx 20rpx;
+		box-sizing: border-box;
+		background: #262626;
+		border-radius: 8rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.merchandiseLeft {
+		display: flex;
+		align-items: center;
+		font-size: 26rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FFFFFF;
+	}
+	.merchandiseNewLogo{
+		width: 56rpx;
+		height: 56rpx;
+		margin-right: 20rpx;
+	}
+	.merchandiseRight{
+		width: 32rpx;
+		height: 27rpx;
+	}
 
 	.merchandiseLogo {
 		width: 56rpx;
@@ -602,11 +648,14 @@
 	.spList {
 		width: 710rpx;
 		padding: 0 20rpx;
+		margin: 30rpx auto 0;
 	}
 
 	.sp {
 		width: 710rpx;
-		height: 400rpx;
+		/* 推荐达人模块隐藏，高度减少104rpx */
+		/* height: 400rpx; */  
+		height: 296rpx;
 		border-radius: 8rpx;
 		background: #262626;
 		margin-bottom: 20rpx;
@@ -650,7 +699,8 @@
 	.spOperation {
 		width: 508rpx;
 		display: flex;
-		justify-content: space-between;
+		/* justify-content: space-between; */
+		justify-content: flex-end;
 		align-items: end;
 	}
 
@@ -705,7 +755,7 @@
 		width: 710rpx;
 		height: 109rpx;
 		background: #333333;
-		border-radius: 2rpx;
+		border-radius: 2rpx 2rpx 8rpx 8rpx;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -762,7 +812,7 @@
 	/* 无数据展示 */
 	.noData{
 		text-align: center;
-		margin: 122rpx auto 0;
+		margin: 215rpx auto 0;
 	}
 	.noDataLogo{
 		width: 128rpx;

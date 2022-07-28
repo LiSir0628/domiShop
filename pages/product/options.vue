@@ -9,7 +9,7 @@
 		<view class="navbar">
 			<scroll-view class="scroll-view_H" :scroll-left="scrollLeft" scroll-x="true" @scroll="scroll"
 				:show-scrollbar="false">
-				<view class="scroll-view-item_H" v-for="item,index in scrollList"
+				<view class="scroll-view-item_H" v-for="item,index in category_lists"
 					:class="{'scroll-view-item-active':cindex == index}" @click="scrollChoose(index)">
 					{{item.name}}
 					<view :class="{'underline': index == cindex}"></view>
@@ -28,7 +28,7 @@
 			</swiper>
 		</view>
 		<view>
-			<!-- 我是一条小青龙 -->
+			<!-- 升降排序 -->
 			<scroll-view class="tab" :class="{tabHeight: isShowTabHeight}" :scroll-left="scrollTabLeft" scroll-x="true" @scroll="scrollTab"
 				:show-scrollbar="false">
 				<view class="scroll-view-item_Tab" v-for="item,index in scrollTabList"
@@ -44,19 +44,19 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view class="productList" :class="{productListHeight: isShowTabHeight}" v-if="productList.length > 0">
-			<view class="product" v-for="item,index in productList" @click="goDetail(index)">
+		<view class="productList" :class="{productListHeight: isShowTabHeight}" v-if="product_lists.length > 0">
+			<view class="product" v-for="item,index in product_lists" @click="goDetail(index)">
 				<image class="productLogo" :src="item.image"></image>
 				<view class="productMsg">
 					<view class="productTitle">{{item.title}}</view>
 					<view class="pricePlan">
-						<view>Sales: <text class="sales">{{item.sales}}</text></view>
-						<view>Price: <text class="price">${{item.price}}</text></view>
+						<view>Sales: <text class="sales">{{item.cumulative_sales}}</text></view>
+						<view>Price: <text class="price">${{item.unit_price}}</text></view>
 					</view>
-					<view class="commission">High Commission: {{item.commission}}%</view>
+					<view class="commission">High Commission: {{item.commission_ratio}}%</view>
 					<view class="earnedMsg">
 						<image class="priceLogo" src="../../static/images/product/icon06.png"></image>
-						<text class="earned">Earned: ${{item.earned}}</text>
+						<text class="earned">Earned: ${{item.commission}}</text>
 					</view>
 				</view>
 			</view>
@@ -103,7 +103,7 @@
 				searchText: "",
 				cindex: 0,
 				scrollLeft: 0,
-				scrollList: [{
+				category_lists: [{
 					id: 1,
 					name: 'All of it'
 				}, {
@@ -159,28 +159,28 @@
 					name: 'Two hours'
 				}],
 				kindex: 0,
-				prepareState: 'Total sales',
-				orderState: 'Total sales',
+				prepareState: 'sales',
+				orderState: 'sales',
 				
 				//productList:[],
-				productList:[{
+				product_lists:[{
 					id: 1,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
+					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 111, 					unit_price: 111,					commission_ratio: 1,					commission: 1,
 				},{
 					id: 2,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
+					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
 				},{
 					id: 3,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
+					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
 				},{
 					id: 4,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
+					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
 				},{
 					id: 5,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
+					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
 				},{
 					id: 6,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					sales: 52366, 					price: 6525,					commission: 20,					earned: 21,
+					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
 				}]
 			}
 		},
@@ -207,7 +207,7 @@
 		methods: {
 			goDetail(index) {
 				uni.navigateTo({
-					url: './detail?id=' + this.productList[index].id
+					url: './detail?id=' + this.product_lists[index].id
 				});
 			},
 			search() {
@@ -233,13 +233,22 @@
 					this.$refs.popup.close()
 					console.log("我没请求")
 				} else {
+					//其他升降序全部关闭
+					for(let i in this.scrollTabList){
+						this.scrollTabList[i].rise = false
+						this.scrollTabList[i].drop = false
+					}		
 					this.orderState = this.prepareState
 					this.$refs.popup.close()
 					console.log("我有请求")
 				}
 			},
 			confirmed(){
+				// 销售选择关闭
 				this.$refs.popup.close()
+				this.prepareState = "sales"
+				this.orderState = "sales"
+				this.kindex = 0
 			},
 			
 			

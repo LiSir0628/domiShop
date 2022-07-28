@@ -8,42 +8,42 @@
 			field="content">
 			<swiper class="swiper-box" @change="change" :current="swiperDotIndex">
 				<swiper-item v-for="(item, index) in info" :key="index">
-					<image class="banner" :src="item.url"></image>
+					<image class="banner" :src="item.image"></image>
 				</swiper-item>
 			</swiper>
 		</uni-swiper-dot>
 
 		<view class="priceTemplate">
 			<view class="price">
-				<text class="priceSpan">$</text>25632
+				<text class="priceSpan">$</text>{{unit_price}}
 			</view>
 			<view class="profit">
 				Estimated profit per unit:
-				<text class="profitPrice">$5626</text>
+				<text class="profitPrice">${{commission}}</text>
 			</view>
 			<view class="rate">
 				<image class="hotLogo" src="../../static/images/detail/icon02.png"></image>
-				Commission rate: <text class="rateNum">35%</text>
+				Commission rate: <text class="rateNum">{{commission_ratio}}%</text>
 			</view>
 			<view class="totalSales">
-				<view>Total sales: 562622</view>
+				<view>Total sales: {{cumulative_sales}}</view>
 				<view class="logoSubject">
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')">
 					</image>
 					<!-- <image v-if="isShowLove" class="loveLogo" src="../../static/images/detail/icon04.png" @click="goLove"></image>
 					<image v-else class="loveLogo" src="../../static/images/detail/icon16.png" @click="goLove"></image> -->
-					<uni-transition ref="ani" custom-class="transition" mode-class="fade" :duration="0" :show="isShowLove">
-						<image v-if="isShowLove" class="loveLogo" src="../../static/images/detail/icon04.png" @click="goLove"></image>
+					<uni-transition ref="ani" custom-class="transition" mode-class="fade" :duration="0" :show="!isShowLove">
+						<image v-if="!isShowLove" class="loveLogo" src="../../static/images/detail/icon04.png" @click="goLove"></image>
 					</uni-transition>
-					<uni-transition ref="ani" custom-class="transition" mode-class="zoom-in" :duration="800" :show="!isShowLove">
-						<image v-if="!isShowLove" class="loveLogo" src="../../static/images/detail/icon16.png" @click="goLove"></image>
+					<uni-transition ref="ani" custom-class="transition" mode-class="zoom-in" :duration="800" :show="isShowLove">
+						<image v-if="isShowLove" class="loveLogo" src="../../static/images/detail/icon16.png" @click="goLove"></image>
 					</uni-transition>
 				</view>
 			</view>
 			<view class="sample" @click="sample">
 				<image class="menuLogo" src="../../static/images/detail/icon05.png"></image>
 				<view class="priceContent">
-					Sample request: 1. Number of followers 56263 2.Windotrtrtt...
+					Sample request: 1. Number of followers {{fans}}   2.Window sales in recent 30 days :{{show_window}}
 				</view>
 			</view>
 		</view>
@@ -59,8 +59,8 @@
 					<image class="cardLogo" src="../../static/images/detail/icon06.png" @click="goCard"></image>
 				</view>
 			</view>
-			<view class="liveContent">
-				Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag .
+			<view class="liveContent" v-html="benefits">
+				<!-- Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag . -->
 			</view>
 		</view>
 
@@ -74,8 +74,8 @@
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')"></image>
 				</view>
 			</view>
-			<view class="sellContent">
-				<view class="sellContentText">1. Chongqing Strength Factory, Douyin hotpot base</view>
+			<view class="sellContent" v-html="selling_point">
+				<!-- <view class="sellContentText">1. Chongqing Strength Factory, Douyin hotpot base</view>
 				<view class="sellContentText">2. Independent Small Packaging, 1 small bag 1 small</view>
 				<view class="sellContentText">3.the praise rate is above 92% , product quality is guaranteed</view>
 				<view class="sellContentText">
@@ -86,7 +86,7 @@
 					5. a multi-purpose, can do hot pot, braised vegetables, Malatan
 					INGREDIENTS: Butter, pepper, Douban, ginger, garlic, edibles
 					seasoning, monosodium glutamate, rock sugar, spices
-				</view>
+				</view> -->
 			</view>
 		</view>
 
@@ -103,15 +103,15 @@
 			<view class="deliveryContent">
 				<view class="deliveryList">
 					<view class="deliveryTitle">Place of shipment</view>
-					<view class="deliveryMsg">United Kingdom</view>
+					<view class="deliveryMsg">{{delivery_place}}</view>
 				</view>
 				<view class="deliveryList">
 					<view class="deliveryTitle">Delivery, express delivery</view>
-					<view class="deliveryMsg">United Kingdom</view>
+					<view class="deliveryMsg">{{express_company}}</view>
 				</view>
 				<view class="deliveryList">
-					<view class="deliveryTitle">United Kingdom</view>
-					<view class="deliveryMsg">Delivery in 48 hours</view>
+					<view class="deliveryTitle">Delivery Time</view>
+					<view class="deliveryMsg">{{delivery_time}}</view>
 				</view>
 			</view>
 		</view>
@@ -226,10 +226,10 @@
 						<image class="requestClose" src="../../static/images/detail/icon13.png" @click="requestClose"></image>
 					</view>
 					<view class="followers">
-						1.Number of followers : 56263
+						1.Number of followers : {{fans}}
 					</view>
 					<view class="salesDay">
-						2.Window sales in recent 30 days :  25636
+						2.Window sales in recent 30 days :  {{show_window}}
 					</view>
 				</view>
 			</view>
@@ -246,24 +246,38 @@
 	export default {
 		data() {
 			return {
-				isShowLove: true,
+				isShowLove: false,
 				info: [{
-						colorClass: '',
-						url: '../../static/images/detail/icon08.png',
-						content: ''
+						id: 1,
+						des: "轮播图说明",
+						image: "../../static/images/detail/icon08.png"
 					},
 					{
-						colorClass: '',
-						url: '../../static/images/detail/icon08.png',
-						content: ''
+						id: 2,
+						des: "轮播图说明",
+						image: "../../static/images/detail/icon08.png"
 					},
-					{
-						colorClass: '',
-						url: '../../static/images/detail/icon08.png',
-						content: ''
-					}
+					// {
+					// 	colorClass: '',
+					// 	image: '../../static/images/detail/icon08.png',
+					// 	content: ''
+					// }
 				],
-				
+				is_collection: true,
+				unit_price: "25632",
+				commission: "5623",
+				commission_ratio: "35",
+				cumulative_sales: "562622",
+				fans: "10000",
+				show_window: "100",
+				benefits: "<p>Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag .</p>",
+				selling_point: "<p>1. Chongqing Strength Factory, Douyin hotpot base</p><p>2. Independent Small Packaging, 1 small bag 1 small</p><p>3.the praise rate is above 92% , product quality is guaranteed</p><p>4. the optimization of seasoning, craftsmanship quality, thicken pepper, spicy and addictive. The butter is rich and fragrant.</p><p>5. a multi-purpose, can do hot pot, braised vegetables, Malatan INGREDIENTS: Butter, pepper, Douban, ginger, garlic, edibles seasoning, monosodium glutamate, rock sugar, spices</p>",
+				delivery_place: "United Kingdom",
+				express_company: "EMS",
+				delivery_time: "Delivery in 48 hours",
+				content: "<p>商品介绍</p>",
+						
+						
 				cindex: 0,
 				kindex: 0,
 				userList:[{
@@ -316,7 +330,9 @@
 			myPopup
 		},
 		mounted() {
-			
+			this.isShowLove = this.is_collection
+			console.log(this.isShowLove)
+			this.$forceUpdate()
 		},
 		methods: {
 			back() {
@@ -480,6 +496,7 @@
 	.priceTemplate {
 		padding: 30rpx 0 30rpx 30rpx;
 		background: #ffffff;
+		box-sizing: border-box;
 	}
 
 	.price {
@@ -496,7 +513,11 @@
 	}
 
 	.profit {
-		width: 392rpx;
+		width: max-content;
+		padding: 0 18rpx;
+		/* width: 392rpx; */
+		/* width: 356rpx;
+		padding: 0 18rpx; */
 		height: 48rpx;
 		line-height: 48rpx;
 		background: #FF3838;
@@ -668,7 +689,15 @@
 	.sellContentText{
 		margin-bottom: 10rpx;
 	}
-
+	
+	.sellContent p {
+		margin-bottom: 10rpx;
+	}
+	
+	/deep/ .sellContent p {
+		margin-bottom: 10rpx;
+	}
+	
 	/* 发货物流 */
 	.deliveryTemplate {
 		padding: 30rpx 0 20rpx 30rpx;

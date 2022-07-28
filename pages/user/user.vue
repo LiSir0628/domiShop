@@ -182,7 +182,7 @@
 		border-radius: 50%;
 		box-shadow: 0rpx 4rpx 40rpx 10rpx rgba(0,0,0,0.1);
 		position: absolute;
-		top: 65rpx;
+		top: 85rpx;
 		left: 0;
 		right: 0;
 		margin: 0 auto;
@@ -193,7 +193,7 @@
 		font-weight: bold;
 		color: #0B0B0B;
 		position: absolute;
-		top: 252rpx;
+		top: 282rpx;
 		left: 0;
 		right: 0;
 		margin: 0 auto;
@@ -228,7 +228,7 @@
 	.collection{
 		font-size: 26rpx;
 		font-family: Arial-Regular, Arial;
-		font-weight: 400;
+		font-weight: bold;
 		color: #0B0B0B;
 	}
 	.view{
@@ -269,7 +269,7 @@
 		font-size: 24rpx;
 		font-family: Arial-Regular, Arial;
 		font-weight: 400;
-		color: #999999;
+		color: #333333;
 		line-height: 28rpx;
 		margin-top: 17rpx;
 	}
@@ -302,7 +302,7 @@
 		flex: 1;
 		font-size: 26rpx;
 		font-family: Arial-Regular, Arial;
-		font-weight: 400;
+		font-weight: bold;
 		color: #0B0B0B;
 		line-height: 30rpx;
 	}
@@ -347,6 +347,9 @@
 	}
 	
 	/* 客服提示 */
+	/deep/ .uni-popup__wrapper{
+		border-radius: 8rpx;
+	}
 	.kefu{
 		width: 550rpx;
 		/* height: 182rpx; */

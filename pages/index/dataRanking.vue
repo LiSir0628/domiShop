@@ -1,32 +1,22 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Data ranking">
-		</uni-nav-bar>
-		<view class="navbar">
+		<view class="top">
+			<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Merchandise ranking">
+			</uni-nav-bar>
+			<view class="newSort" @click="toggle('bottom')">
+				<view class="newSortText">{{orderState}}</view>
+				<image class="arrowDown" src="../../static/images/rank/icon07.png"></image>
+			</view>
+		</view>
+		<!-- <view class="navbar">
 			<scroll-view class="scroll-view_H" :scroll-left="scrollLeft" scroll-x="true" @scroll="scroll"
 				:show-scrollbar="false">
 				<view class="scroll-view-item_H" v-for="item,index in scrollList"
 					:class="{'scroll-view-item-active':cindex == index}" @click="scrollTab(index)">{{item.name}}</view>
 			</scroll-view>
-		</view>
-
-		<!-- <view class="sortList">
-			<view class="sort" @click="toggle('bottom')">
-				<view class="sortText">{{orderState}}</view>
-				<image class="arrowDown" src="../../static/images/rank/icon07.png"></image>
-			</view>
-			<view class="sort" @click="goSwitch">
-				<view class="sortText">{{accountName}}</view>
-				<image class="arrowDown" src="../../static/images/rank/icon07.png"></image>
-			</view>
-			<view class="sort" v-if="cindex != 2" @click="goSwitch">
-				<view class="sortText">Membership ranking</view>
-				<image class="arrowDown" src="../../static/images/rank/icon07.png"></image>
-			</view>
 		</view> -->
 
-		<view>
-			<!-- 我是一条小青龙 -->
+		<!-- <view>
 			<scroll-view class="tab" :class="{tabHeight: isShowTabHeight}" :scroll-left="scrollTabLeft" scroll-x="true"
 				@scroll="scroll" :show-scrollbar="false">
 				<view class="sortList">
@@ -44,10 +34,10 @@
 					</view>
 				</view>
 			</scroll-view>
-		</view>
+		</view> -->
 
-		<view class="merRankList" v-if="cindex == 0 && merRankList.length>0">
-			<view class="merRank" :class="{'merRankActive': merIndex == index}" v-for="item,index in merRankList"
+		<view class="merRankList" v-if="cindex == 0 && lists.merchandise_ranking.length>0">
+			<view class="merRank" :class="{'merRankActive': merIndex == index}" v-for="item,index in lists.merchandise_ranking"
 				@click="merIndexChoose(index)">
 				<view class="userMsg">
 					<view>
@@ -68,32 +58,32 @@
 						<view class="spTitle ellip">{{item.title}}</view>
 						<view class="profit">
 							<view class="price">Unit Price: ${{item.unitPrice}}</view>
-							<view class="ratio">Commission ratio: {{item.commissionRatio}}%</view>
+							<view class="ratio">Commission ratio: {{item.commission_ratio}}%</view>
 						</view>
 					</view>
 					<view class="merRankBottom">
 						<view class="sales">
 							<image class="salesLogo" src="../../static/images/rank/icon08.png"></image>
-							<view>Cumulative sales:<text class="weight">${{item.cumulativeSales}}</text></view>
+							<view>Cumulative sales:<text class="weight">${{item.cumulative_sales}}</text></view>
 						</view>
 						<view class="commission">
 							<image class="commissionLogo" src="../../static/images/rank/icon06.png"></image>
-							<view>Accumulated Commission:<text class="weight">${{item.accumulatedCommission}}</text>
+							<view>Accumulated Commission:<text class="weight">${{item.accumulated_commission}}</text>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="merRankList" v-else-if="cindex == 0 && merRankList.length<=0">
+		<view class="merRankList" v-else-if="cindex == 0 && lists.merchandise_ranking.length<=0">
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
 				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
-		<view class="merRankList" v-else-if="cindex == 1 && merRankList.length>0">
+		<view class="merRankList" v-else-if="cindex == 1 && lists.account_ranking.length>0">
 			<view class="merRank merRankAccount" :class="{'merRankActive': merIndex == index}"
-				v-for="item,index in merRankList" @click="merIndexChoose(index)">
+				v-for="item,index in lists.account_ranking" @click="merIndexChoose(index)">
 				<view class="userMsg userMsgAccount">
 					<view>
 						<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon01.png"
@@ -107,40 +97,40 @@
 							<view class="rankText rankTextAccount">{{index+1}}</view>
 						</view>
 					</view>
-					<image class="photo circular" :src="item.image"></image>
+					<image class="photo circular" :src="item.tiktok_photo"></image>
 				</view>
 				<view class="accountRight">
 					<view class="accountTop">
 						<view class="spTitle">
-							<view>Account Name</view>
-							<view class="ID">ID:15494965</view>
+							<view>{{item.tiktok_name}}</view>
+							<view class="ID">ID:{{item.account_id}}</view>
 						</view>
 						<!-- <view class="accountName">name</view> -->
 					</view>
 					<view class="accountBottom">
 						<view class="sales">
 							<image class="salesLogo" src="../../static/images/rank/icon08.png"></image>
-							<view>Cumulative sales:<text class="weight">${{item.cumulativeSales}}</text></view>
+							<view>Cumulative sales:<text class="weight">${{item.cumulative_sales}}</text></view>
 						</view>
 						<view class="commission">
 							<image class="commissionLogo" src="../../static/images/rank/icon06.png"></image>
-							<view>Accumulated Commission:<text class="weight">${{item.accumulatedCommission}}</text>
+							<view>Accumulated Commission:<text class="weight">${{item.accumulated_commission}}</text>
 							</view>
 						</view>
 					</view>
-					<view class="accountName">namenamenamenamenamename</view>
+					<view class="accountName">{{item.name}}</view>
 				</view>
 			</view>
 		</view>
-		<view class="merRankList" v-else-if="cindex == 1 && merRankList.length<=0">
+		<view class="merRankList" v-else-if="cindex == 1 && lists.account_ranking.length<=0">
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
 				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
-		<view class="merRankList" v-else-if="cindex == 2 && merRankList.length>0">
+		<view class="merRankList" v-else-if="cindex == 2 && lists.membership_ranking.length>0">
 			<view class="membershipAccount" :class="{'merRankActive': merIndex == index}"
-				v-for="item,index in merRankList" @click="merIndexChoose(index)">
+				v-for="item,index in lists.membership_ranking" @click="merIndexChoose(index)">
 				<view class="userMsg userMsgAccount">
 					<view>
 						<image class="rankLogo rankLogoAccount" src="../../static/images/rank/icon01.png"
@@ -154,30 +144,30 @@
 							<view class="rankText rankTextAccount">{{index+1}}</view>
 						</view>
 					</view>
-					<image class="photo circular" :src="item.image"></image>
+					<image class="photo circular" :src="item.member_photo"></image>
 				</view>
 				<view class="membershipRight">
 					<view class="merRankTop">
-						<view class="spTitle ellip">{{item.title}}</view>
+						<view class="spTitle ellip">{{item.name}}</view>
 						<view class="profit">
-							<view class="cumulative">Cumulative sales: ${{item.unitPrice}}</view>
-							<!-- <view class="ratio">Commission ratio: {{item.commissionRatio}}%</view> -->
+							<view class="cumulative">Cumulative sales: ${{item.cumulative_sales}}</view>
+							<!-- <view class="ratio">Commission ratio: {{item.commission_ratio}}%</view> -->
 						</view>
 					</view>
 					<view class="membershipBottom">
 						<view class="bindAccount">
 							Immediate subordinate:
-							<text class="numStyle">50</text>
+							<text class="numStyle">{{item.subordinate_num}}</text>
 						</view>
 						<view class="bindAccount">
 							Bind the account:
-							<text class="numStyle">100</text>
+							<text class="numStyle">{{item.bind_account_num}}</text>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="merRankList" v-else-if="cindex == 2 && merRankList.length<=0">
+		<view class="merRankList" v-else-if="cindex == 2 && lists.membership_ranking.length<=0">
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
 				<view class="noDataText">It's empty</view>
@@ -217,19 +207,28 @@
 				}],
 				orderStateList: [{
 					id: 1,
-					name: 'Today'
+					name: 'Today',
+					value: 1
 				}, {
 					id: 2,
-					name: 'Yesterday'
+					name: 'Yesterday',
+					value: 2
 				}, {
 					id: 3,
-					name: 'Nearly seven days'
+					// name: 'Nearly seven days',
+					name: '7 days',
+					value: 7
+					
 				}, {
 					id: 4,
-					name: 'Nearly 30 days'
+					// name: 'Nearly 30 days',
+					name: '30 days',
+					value: 30
 				}, {
 					id: 5,
-					name: 'Nearly 60 days'
+					// name: 'Nearly 60 days',
+					name: '60 days',
+					value: 60
 				}],
 
 				scrollTabLeft: 0,
@@ -242,43 +241,84 @@
 
 				merIndex: 0,
 				// merRankList: [],
-				merRankList: [{
-					id: 1,
-					rank: 1,
-					image: '../../static/images/home/photo.png',
-					title: 'shangpinmingcheng...',
-					unitPrice: '12215466',
-					commissionRatio: '10',
-					cumulativeSales: '12215466',
-					accumulatedCommission: '12215466'
-				}, {
-					id: 2,
-					rank: 2,
-					image: '../../static/images/home/photo.png',
-					title: 'shangpinmingcheng...',
-					unitPrice: '12215466',
-					commissionRatio: '20',
-					cumulativeSales: '12215466',
-					accumulatedCommission: '12215466'
-				}, {
-					id: 3,
-					rank: 3,
-					image: '../../static/images/home/photo.png',
-					title: 'shangpinmingcheng...',
-					unitPrice: '12215466',
-					commissionRatio: '30',
-					cumulativeSales: '12215466',
-					accumulatedCommission: '12215466'
-				}, {
-					id: 4,
-					rank: 4,
-					image: '../../static/images/home/photo.png',
-					title: 'shangpinmingcheng...',
-					unitPrice: '12215466',
-					commissionRatio: '40',
-					cumulativeSales: '12215466',
-					accumulatedCommission: '12215466'
-				}]
+				lists:{
+					merchandise_ranking: [{
+						id: 1,
+						rank: 1,
+						image: '../../static/images/home/photo.png',
+						title: 'shangpinmingcheng...',
+						unitPrice: '12215466',
+						commission_ratio: '10',
+						cumulative_sales: '12215466',
+						accumulated_commission: '12215466'
+					}, {
+						id: 2,
+						rank: 2,
+						image: '../../static/images/home/photo02.png',
+						title: 'shangpinmingcheng...',
+						unitPrice: '12215466',
+						commission_ratio: '20',
+						cumulative_sales: '12215466',
+						accumulated_commission: '12215466'
+					}, {
+						id: 3,
+						rank: 3,
+						image: '../../static/images/home/photo03.png',
+						title: 'shangpinmingcheng...',
+						unitPrice: '12215466',
+						commission_ratio: '30',
+						cumulative_sales: '12215466',
+						accumulated_commission: '12215466'
+					}, {
+						id: 4,
+						rank: 4,
+						image: '../../static/images/home/photo.png',
+						title: 'shangpinmingcheng...',
+						unitPrice: '12215466',
+						commission_ratio: '40',
+						cumulative_sales: '12215466',
+						accumulated_commission: '12215466'
+					}, {
+						id: 4,
+						rank: 4,
+						image: '../../static/images/home/photo.png',
+						title: 'shangpinmingcheng...',
+						unitPrice: '12215466',
+						commission_ratio: '40',
+						cumulative_sales: '12215466',
+						accumulated_commission: '12215466'
+					}, {
+						id: 4,
+						rank: 4,
+						image: '../../static/images/home/photo.png',
+						title: 'shangpinmingcheng...',
+						unitPrice: '12215466',
+						commission_ratio: '40',
+						cumulative_sales: '12215466',
+						accumulated_commission: '12215466'
+					}],
+					account_ranking:[{
+						id: 1,
+						rank: 1,
+						tiktok_photo: '../../static/images/home/photo02.png',
+						member_id: "1",
+						name: "namenamenamename",
+						account_id: "15494965",
+						tiktok_name: "Account Name",
+						cumulative_sales: "10000",
+						accumulated_commission: "1000"
+					}],
+					membership_ranking:[{
+						id: 1,
+						rank: 1,
+						member_photo: '../../static/images/home/photo03.png',
+						member_id: "1",
+						name: "namenamenamename",
+						cumulative_sales: "10000",
+						subordinate_num: 5,
+						bind_account_num: 10
+					}],
+				},
 			}
 		},
 		onLoad(option) {
@@ -394,6 +434,13 @@
 	}
 
 	/* 分类 */
+	.top{
+		width: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 100;
+	}
 	.tab {
 		width: 100%;
 		padding: 0 20rpx;
@@ -422,7 +469,30 @@
 		padding: 0 20rpx;
 		box-sizing: border-box;
 	}
-
+	
+	.newSort{
+		position: absolute;
+		right: 30rpx;
+		top: 0;
+		bottom: 0;
+		vertical-align: middle;
+		display: flex;
+		align-items: center;
+	}
+	
+	.newSortText{
+		max-width: 120rpx;
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #0B0B0B;
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+	}
+	
 	.sortText {
 		font-size: 26rpx;
 		font-family: Arial;
@@ -438,12 +508,13 @@
 
 	/* 商品排行列表 */
 	.merRankList {
+		margin: 88rpx auto 0;
 		padding: 30rpx;
 	}
 
 	.merRank {
 		width: 690rpx;
-		height: 220rpx;
+		min-height: 220rpx;
 		background: #FFFFFF;
 		border: 2rpx solid #CECECE;
 		border-radius: 10rpx;
@@ -455,7 +526,7 @@
 
 	.merRankAccount {
 		width: 690rpx;
-		height: 196rpx;
+		min-height: 196rpx;
 		padding: 0 14rpx 0 34rpx;
 	}
 
@@ -541,7 +612,7 @@
 	.accountRight {
 		width: 518rpx;
 		line-height: normal;
-		padding: 26rpx 0 28rpx;
+		padding: 26rpx 0 21rpx;
 	}
 
 	.accountTop {
@@ -603,12 +674,14 @@
 	.profit {
 		display: flex;
 		align-items: center;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-top: 20rpx;
 	}
 
 	.price {
-		width: 253rpx;
+		min-width: 241rpx;
+		padding: 0 6rpx;
 		height: 40rpx;
 		line-height: 40rpx;
 		background: rgba(255, 166, 54, 0.1);
@@ -619,10 +692,12 @@
 		font-weight: 400;
 		color: #FF7436;
 		text-align: center;
+		margin-bottom: 10rpx;
 	}
 
 	.ratio {
-		width: 261rpx;
+		min-width: 249rpx;
+		padding: 0 6rpx;
 		height: 40rpx;
 		line-height: 40rpx;
 		background: rgba(255, 166, 54, 0.1);
@@ -633,10 +708,12 @@
 		font-weight: 400;
 		color: #FF7436;
 		text-align: center;
+		margin-bottom: 10rpx;
 	}
 
 	.cumulative {
-		width: 326rpx;
+		min-width: 306rpx;
+		padding: 0 6rpx;
 		height: 40rpx;
 		line-height: 40rpx;
 		background: rgba(255, 166, 54, 0.1);
@@ -651,7 +728,7 @@
 	}
 
 	.merRankBottom {
-		margin-top: 24rpx;
+		margin-top: 14rpx;
 	}
 
 	.accountBottom {
