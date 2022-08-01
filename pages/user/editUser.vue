@@ -59,7 +59,7 @@
 				},{
 					id: 4,
 					title: 'Address Management',
-					url: '',
+					url: './addressList',
 					val: ''
 				}]
 			}
@@ -116,7 +116,8 @@
 		border-radius: 50%;
 		box-shadow: 0rpx 4rpx 40rpx 10rpx rgba(0,0,0,0.1);
 		display: block;
-		margin: 0 auto;
+		/* margin: 0 auto; */
+		margin: 20rpx auto 0;
 		/* position: absolute;
 		top: 65rpx;
 		left: 0;
@@ -139,7 +140,7 @@
 		font-weight: bold;
 		color: #0B0B0B;
 		position: absolute;
-		top: 252rpx;
+		top: 282rpx;
 		left: 0;
 		right: 0;
 		margin: 0 auto;

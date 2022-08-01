@@ -154,6 +154,8 @@ const transformTime = (time, data) => {
 			return `${y}/${addZero(M)}/${addZero(d)}`;
 		} else if (data && data.toLowerCase() === 'mm-dd hh:mm') {
 			return `${addZero(M)}-${addZero(d)} ${addZero(h)}:${addZero(m)}`;
+		} else if(data && data.toLowerCase() === 'mm-dd hh:mm:ss'){
+			return `${addZero(M)}-${addZero(d)} ${addZero(h)}:${addZero(m)}:${addZero(s)}`;
 		} else if (data && data.toLowerCase() === 'yyyy-mm-dd hh:mm:ss') {
 			return `${y}-${addZero(M)}-${addZero(d)} ${addZero(h)}:${addZero(m)}:${addZero(s)}`;
 		} else if (data && data.toLowerCase() === 'yyyy-mm-dd hh:mm') {

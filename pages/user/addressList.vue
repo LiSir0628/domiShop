@@ -80,6 +80,9 @@
 			},
 			newAdd() {
 				console.log("新增地址")
+				uni.navigateTo({
+					url: "./address"
+				});
 			}
 		}
 	}

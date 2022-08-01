@@ -10,9 +10,42 @@
 		</view>
 
 		<view class="banner">
-			<!-- <image class="bannerLogo" src="../../static/images/home/icon04.png"></image> -->
 			<view class="uni-margin-wrap">
-				<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay"
+				<view class="bannerTitle">Data Overview</view>
+				<scroll-view class="tab" :scroll-left="scrollTabLeft" scroll-x="true" @scroll="scrollTwo"
+					:show-scrollbar="false">
+					<view class="dataNumsNew">
+						<image class="dataLogoNew" src="../../static/images/home/icon17.png"></image>
+						<view class="dataPriceNew">${{fund_data.total_sales}}</view>
+						<view class="dataTitleNew">Total sales</view>
+					</view>
+					<view class="dataNumsNew">
+						<image class="dataLogoNew" src="../../static/images/home/icon18.png"></image>
+						<view class="dataPriceNew">${{fund_data.effective_sales}}</view>
+						<view class="dataTitleNew">Effective sales</view>
+					</view>
+					<view class="dataNumsNew">
+						<image class="dataLogoNew" src="../../static/images/home/icon19.png"></image>
+						<view class="dataPriceNew">${{fund_data.full_commission}}</view>
+						<view class="dataTitleNew">Full Commission</view>
+					</view>
+					<view class="dataNumsNew">
+						<image class="dataLogoNew" src="../../static/images/home/icon20.png"></image>
+						<view class="dataPriceNew">${{fund_data.effective_commission}}</view>
+						<view class="dataTitleNew">Effective Commission</view>
+					</view>
+					<view class="dataNumsNew">
+						<image class="dataLogoNew" src="../../static/images/home/icon21.png"></image>
+						<view class="dataPriceNew">{{fund_data.all_singular}}</view>
+						<view class="dataTitleNew">All singular</view>
+					</view>
+					<view class="dataNumsNew">
+						<image class="dataLogoNew" src="../../static/images/home/icon22.png"></image>
+						<view class="dataPriceNew">{{fund_data.effective_singular}}</view>
+						<view class="dataTitleNew">Effective singular</view>
+					</view>
+				</scroll-view>
+				<!-- <swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay"
 					:interval="interval" :duration="duration">
 					<swiper-item>
 						<image class="bannerLogo" src="../../static/images/home/icon04.png"></image>
@@ -35,14 +68,6 @@
 								<view class="swiperDataNum">$52563.23</view>
 								<view class="swiperDataTitle">Effective Commission</view>
 							</view>
-							<!-- <view class="swiperData">
-								<view class="swiperDataNum">$52563.23</view>
-								<view class="swiperDataTitle">Full Profit</view>
-							</view>
-							<view class="swiperData">
-								<view class="swiperDataNum">$52563.23</view>
-								<view class="swiperDataTitle">Effective Profit</view>
-							</view> -->
 							<view class="swiperData">
 								<view class="swiperDataNum">10000</view>
 								<view class="swiperDataTitle">All singular</view>
@@ -53,7 +78,7 @@
 							</view>
 						</view>
 					</swiper-item>
-					<!-- <swiper-item>
+					<swiper-item>
 						<image class="bannerLogo" src="../../static/images/home/icon04.png"></image>
 						<view class="swiperDataList">
 							<view class="swiperData">
@@ -120,7 +145,8 @@
 		<view class="spList" v-if="spLists.length>0">
 			<view class="sp" v-for="item,index in spLists">
 				<view class="spTop">
-					<image class="spLogo" :src="item.image"></image>
+					<image class="spLogo" :src="item.cover"></image>
+					<!-- <image class="spLogo" :src="item.image"></image> -->
 					<view class="spMsg">
 						<view class="spDes">{{item.name}}</view>
 						<view class="spOperation">
@@ -138,7 +164,7 @@
 					</view>
 					<view class="spData">
 						<view class="dataTitle">Commission ratio</view>
-						<view class="dataNum">{{item.ratio}}%</view>
+						<view class="dataNum">{{item.rate}}</view>
 					</view>
 					<view class="spData">
 						<view class="dataTitle">Commission</view>
@@ -200,10 +226,12 @@
 			return {
 				cindex: 0,
 				scrollLeft: 0,
+				scrollTabLeft: 0,
 				indicatorDots: true,
 				autoplay: true,
 				interval: 60000,
 				duration: 500,
+				days: 1,
 				scrollList: [{
 					id: 1,
 					name: 'Today',
@@ -257,48 +285,66 @@
 					value: 4
 				}],
 				
-				//spLists: [],
-				spLists:[{
-					id: 1,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					state: 2,
-					time: '10-18 16:05:20',
-					payment: '52563.23',
-					ratio: '23',
-					commission: '256'
-				},{
-					id: 2,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					state: 4,
-					time: '10-18 16:05:20',
-					payment: '52563.23',
-					ratio: '23',
-					commission: '256'
-				},{
-					id: 3,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					state: 3,
-					time: '10-18 16:05:20',
-					payment: '52563.23',
-					ratio: '23',
-					commission: '256'
-				}],
+				fund_data: {},
+				spLists: [],
+				isRequest: true,
+				page: 1,
+				limit: 20,
+				total_limit: 0,
+				total_page: 0,
+				// spLists:[{
+				// 	id: 1,
+				// 	image: '../../static/images/home/photo.png',
+				// 	name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	state: 2,
+				// 	time: '10-18 16:05:20',
+				// 	payment: '52563.23',
+				// 	ratio: '23',
+				// 	commission: '256'
+				// },{
+				// 	id: 2,
+				// 	image: '../../static/images/home/photo.png',
+				// 	name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	state: 4,
+				// 	time: '10-18 16:05:20',
+				// 	payment: '52563.23',
+				// 	ratio: '23',
+				// 	commission: '256'
+				// },{
+				// 	id: 3,
+				// 	image: '../../static/images/home/photo.png',
+				// 	name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	state: 3,
+				// 	time: '10-18 16:05:20',
+				// 	payment: '52563.23',
+				// 	ratio: '23',
+				// 	commission: '256'
+				// }],
 				
 				citem: 0,
 				prepareState: 'Full state',
 				orderState: 'Full state',
 				
-				accountName: 'All of them'
+				accountName: 'All of them',
 			}
 		},
 		onReachBottom() {
 			//上拉加载，请求记得限制。
-			console.log("首页触底了,加载一下")
+			if(this.isRequest){
+				if(this.page < this.total_page){
+					console.log("选品页触底了,加载一下")
+					this.page = this.page + 1
+					this.getHttpLists()
+				} else {
+					console.log("页码已达到最大，无法再次请求")
+				}
+				this.$forceUpdate()
+			} else {
+				console.log("正在请求，无法再次请求")
+			}
 		},
 		mounted() {
+			this.getHttpLists("one")
 			// this.$refs.popup.open("bottom")
 			// 返回不触发，进行触发
 		},
@@ -311,6 +357,69 @@
 			}
 		},
 		methods: {
+			getHttpLists(type) {
+				this.isRequest = false
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: 'api/tiktok/index/index',
+					data:{
+						days: this.days,
+						order_page: this.page,
+						order_limit: this.limit,
+					}
+				})
+				.then(res=>{
+					this.isRequest = true
+					uni.hideLoading();
+					if(res.data.code == 200){
+						//console.log(res.data.data);
+						let order = {};
+						order = res.data.data.order
+						for(let i in order.orderList){
+							if(order.orderList[i].time){
+								order.orderList[i].time = this.$transformTime(order.orderList[i].time,'mm-dd hh:mm:ss')
+							}
+						}
+						if(type == "one") {
+							this.spLists = order.orderList
+							this.fund_data = res.data.data.fund_data
+							//console.log(this.spLists)
+							this.page = order.order_page
+							this.total_limit = order.order_total_limit
+							this.total_page = Math.ceil(order.order_total_limit / order.order_limit)
+							//console.log(this.total_page)
+						} else {
+							//下拉加载更多
+							this.spLists = this.spLists.concat(order.orderList)
+							
+							this.page = order.order_page
+							this.total_page = Math.ceil(order.order_total_limit / order.order_limit)
+						}
+						
+						
+					} else {
+						uni.showModal({
+							title: 'TIP',
+							content: res.data.msg,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err=>{
+					this.isRequest = true
+					uni.hideLoading();
+					uni.showModal({
+						title: 'TIP',
+						content: "Network error, please try again later",
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
 			toggle(type) {
 				// 获取选项索引
 				for(let i in this.orderStateList){
@@ -325,9 +434,19 @@
 			scrollTab(index) {
 				if (this.cindex == index) return
 				this.cindex = index
+				this.days = this.scrollList[index].value
+				this.scrollTabLeft = 0
+				this.page = 1
+				this.spLists = []
+				this.getHttpLists("one")
 			},
 			scroll(e) {
-				// this.scrollLeft = e.detail.scrollLeft
+				//this.scrollLeft = e.detail.scrollLeft
+				// console.log(e)
+				// console.log(this.scrollLeft)
+			},
+			scrollTwo(e) {
+				this.scrollTabLeft = e.detail.scrollLeft
 				// console.log(e)
 				// console.log(this.scrollLeft)
 			},
@@ -389,7 +508,7 @@
 	.container {
 		width: 100%;
 		min-height: 100%;
-		background: #111111;
+		background: #161616;
 		line-height: normal;
 		padding-bottom: 120rpx;
 	}
@@ -402,10 +521,12 @@
 		font-family: Arial;
 		font-weight: bold;
 		color: #FFFFFF;
+		background: #0B0B0B;
 	}
 
 	/* 滑动块 */
 	.navbar {
+		background: #0B0B0B;
 		padding: 0rpx 0 25rpx 20rpx;
 	}
 
@@ -450,15 +571,61 @@
 	/* 轮播图 */
 	.banner {
 		margin: 20rpx auto 0;
-		text-align: center;
+		text-align: left;
 	}
-
 	.uni-margin-wrap {
 		width: 711rpx;
 		height: 277rpx;
 		margin: 0 auto;
 	}
-
+	.bannerTitle{
+		font-size: 32rpx;
+		line-height: 32rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #FFFFFF;
+		margin-bottom: 20rpx;
+	}
+	.tab{
+		white-space: nowrap;
+		width: 100%;
+	}
+	.dataNumsNew{
+		display: inline-block;
+		min-width: 270rpx;
+		height: 223rpx;
+		background: #262626;
+		border-radius: 8rpx;
+		padding: 30rpx 20rpx;
+		box-sizing: border-box;
+		margin-right: 20rpx;
+	}
+	.dataLogoNew{
+		width: 56rpx;
+		height: 56rpx;
+		display: block;
+	}
+	.dataPriceNew{
+		font-size: 32rpx;
+		line-height: 34rpx;
+		font-family: DIN;
+		font-weight: bold;
+		color: #FFFFFF;
+		margin-top: 28rpx;
+	}
+	.dataTitleNew{
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #999999;
+		margin-top: 22rpx;
+	}
+	
+	
+	
+	
+	
+	
 	.swiper {
 		height: 277rpx;
 		position: relative;
@@ -620,7 +787,7 @@
 	.sort {
 		min-width: 180rpx;
 		height: 64rpx;
-		background: #111111;
+		background: #161616;
 		border: 2rpx solid #F7F7F7;
 		border-radius: 8rpx;
 		display: flex;
@@ -662,9 +829,11 @@
 	}
 
 	.spTop {
+		height: 187rpx;
 		padding: 22rpx 20rpx 20rpx 20rpx;
 		display: flex;
 		justify-content: space-between;
+		box-sizing: border-box;
 	}
 
 	.spLogo {
@@ -686,7 +855,8 @@
 
 	.spDes {
 		width: 508rpx;
-		font-size: 28rpx;
+		font-size: 30rpx;
+		line-height: 40rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #FFFFFF;
@@ -883,7 +1053,7 @@
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
-		color: #111111;
+		color: #161616;
 	}
 	.confirmed{
 		width: 670rpx;
@@ -913,7 +1083,7 @@
 		display: flex;
 		/* align-items: center; */
 		justify-content: space-around;
-		border-top: 2rpx solid #666666;
+		border-top: 2rpx solid #333333;
 	}
 	.bottomNav{
 		width: 33.3%;

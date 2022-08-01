@@ -3,7 +3,7 @@
 		<view class="top">
 			<view class="search">
 				<image class="searchLogo" src="../../static/images/home/icon02.png" @click="search"></image>
-				<input class="searchText" v-model="searchText" placeholder="Search for products you want" />
+				<input class="searchText" v-model="searchText" @confirm="search" placeholder="Search for products you want" />
 			</view>
 		</view>
 		<view class="navbar">
@@ -19,11 +19,8 @@
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
 				:duration="duration">
-				<swiper-item>
-					<image style="width: 690rpx;" mode="widthFix" src="../../static/images/detail/icon11.png"></image>
-				</swiper-item>
-				<swiper-item>
-					<image style="width: 690rpx;" mode="widthFix" src="../../static/images/detail/icon12.png"></image>
+				<swiper-item v-for="item,index in banner" @click="goBanner(index)">
+					<image style="width: 690rpx;" mode="widthFix" :src="item.image"></image>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -46,17 +43,18 @@
 		</view>
 		<view class="productList" :class="{productListHeight: isShowTabHeight}" v-if="product_lists.length > 0">
 			<view class="product" v-for="item,index in product_lists" @click="goDetail(index)">
-				<image class="productLogo" :src="item.image"></image>
+				<image v-if="item.image" class="productLogo" :src="item.image"></image>
+				<image v-else class="productLogo" src="../../static/images/product/icon18.png"></image>
 				<view class="productMsg">
 					<view class="productTitle">{{item.title}}</view>
 					<view class="pricePlan">
 						<view>Sales: <text class="sales">{{item.cumulative_sales}}</text></view>
-						<view>Price: <text class="price">${{item.unit_price}}</text></view>
+						<view>Price: <text class="price">$<text style="margin-left: 4rpx;">{{item.unit_price}}</text></text></view>
 					</view>
 					<view class="commission">High Commission: {{item.commission_ratio}}%</view>
 					<view class="earnedMsg">
 						<image class="priceLogo" src="../../static/images/product/icon06.png"></image>
-						<text class="earned">Earned: ${{item.commission}}</text>
+						<text class="earned">Earned: $<text style="margin-left: 4rpx;">{{item.commission}}</text></text>
 					</view>
 				</view>
 			</view>
@@ -122,7 +120,17 @@
 					id: 6,
 					name: 'Beauty makeup'
 				}],
-				
+				banner: [{
+					id: 1,
+					des: "轮播图说明",
+					image: "../../static/images/detail/icon11.png",
+					url: "http://www.baidu.com"
+				},{
+					id: 2,
+					des: "轮播图说明",
+					image: "../../static/images/detail/icon12.png",
+					url: "http://www.baidu.com"
+				}],
 				indicatorDots: true,
 				autoplay: true,
 				interval: 60000,
@@ -163,25 +171,33 @@
 				orderState: 'sales',
 				
 				//productList:[],
-				product_lists:[{
-					id: 1,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 111, 					unit_price: 111,					commission_ratio: 1,					commission: 1,
-				},{
-					id: 2,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
-				},{
-					id: 3,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
-				},{
-					id: 4,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
-				},{
-					id: 5,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
-				},{
-					id: 6,
-					image: '../../static/images/home/photo.png',					title: 'zhelishi shangpinbiao tishangpin...',					cumulative_sales: 52366, 					unit_price: 6525,					commission_ratio: 20,					commission: 21,
-				}]
+				category: '', //分类
+				sort: "", //排序
+				isRequest: true,
+				page: 1,
+				limit: 20,
+				total_limit: 0,
+				total_page: 0,
+				product_lists: [],
+				// product_lists:[{
+				// 	id: 1,
+				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 111, 			// 		unit_price: 111,				// 	commission_ratio: 1,				// 	commission: 1,
+				// },{
+				// 	id: 2,
+				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// },{
+				// 	id: 3,
+				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// },{
+				// 	id: 4,
+				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// },{
+				// 	id: 5,
+				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// },{
+				// 	id: 6,
+				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// }]
 			}
 		},
 		onLoad(option) {
@@ -189,9 +205,21 @@
 		},
 		onReachBottom() {
 			//上拉加载，请求记得限制。
-			console.log("选品页触底了,加载一下")
+			if(this.isRequest){
+				if(this.page < this.total_page){
+					console.log("选品页触底了,加载一下")
+					this.page = this.page + 1
+					this.getHttpLists()
+				} else {
+					console.log("页码已达到最大，无法再次请求")
+				}
+				this.$forceUpdate()
+			} else {
+				console.log("正在请求，无法再次请求")
+			}
 		},
 		mounted() {
+			this.getHttpLists("one")
 			window.onscroll = (()=>{
 				var scroll = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
 				// console.log(scroll);
@@ -205,6 +233,63 @@
 			})
 		},
 		methods: {
+			getHttpLists(type) {
+				this.isRequest = false
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: 'api/tiktok/product/options',
+					data:{
+						search: this.searchText,
+						category: this.category,
+						sort: this.sort,
+						page: this.page,
+						limit: this.limit,
+					}
+				})
+				.then(res=>{
+					this.isRequest = true
+					uni.hideLoading();
+					if(res.data.code == 200){
+						console.log(res.data.data);
+						if(type == "one") {
+							this.product_lists = res.data.data.product_lists
+							
+							this.page = res.data.data.page
+							this.total_limit = res.data.data.total_limit
+							this.total_page = Math.ceil(res.data.data.total_limit / res.data.data.limit)
+							console.log(this.total_page)
+						} else {
+							//下拉加载更多
+							this.product_lists = this.product_lists.concat(res.data.data.product_lists)
+							
+							this.page = res.data.data.page
+							this.total_page = Math.ceil(res.data.data.total_limit / res.data.data.limit)
+						}
+						
+						
+					} else {
+						uni.showModal({
+							title: 'TIP',
+							content: res.data.msg,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err=>{
+					this.isRequest = true
+					uni.hideLoading();
+					uni.showModal({
+						title: 'TIP',
+						content: "Network error, please try again later",
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
 			goDetail(index) {
 				uni.navigateTo({
 					url: './detail?id=' + this.product_lists[index].id
@@ -212,6 +297,9 @@
 			},
 			search() {
 				console.log(this.searchText)
+				this.page = 1
+				this.product_lists = []
+				this.getHttpLists("one")
 			},
 			toggle(type) {
 				// 获取选项索引
@@ -228,7 +316,7 @@
 				this.kindex = index
 				this.prepareState = name
 				// 点击后直接赋值触发
-				if(this.orderState == this.prepareState){
+				if(this.orderState == this.prepareState && this.sort > 6){
 					//相同状态,不再次触发接口请求
 					this.$refs.popup.close()
 					console.log("我没请求")
@@ -239,8 +327,13 @@
 						this.scrollTabList[i].drop = false
 					}		
 					this.orderState = this.prepareState
+					//请求 7总销量，8-24小时内，9-2小时内
+					this.sort = 7 + index
+					this.page = 1
+					this.product_lists = []
+					this.getHttpLists("one")
+					
 					this.$refs.popup.close()
-					console.log("我有请求")
 				}
 			},
 			confirmed(){
@@ -249,12 +342,28 @@
 				this.prepareState = "sales"
 				this.orderState = "sales"
 				this.kindex = 0
+				//升降序，总销量查询全部关闭
+				for(let i in this.scrollTabList){
+					this.scrollTabList[i].rise = false
+					this.scrollTabList[i].drop = false
+				}		
+				this.sort = ""
+				this.page = 1
+				this.product_lists = []
+				this.getHttpLists("one")
 			},
 			
+			goBanner(index){
+				console.log(this.banner[index])
+			},
 			
 			scrollChoose(index) {
 				if (this.cindex == index) return
 				this.cindex = index
+				this.category = this.category_lists[index].id
+				this.page = 1
+				this.product_lists = []
+				this.getHttpLists("one")
 				console.log(index)
 				// this.$nextTick(()=>{
 				// 	const that = this
@@ -284,7 +393,17 @@
 				//切换 分类点击，旧分类变为随机排序
 				if(oldCitem != this.citem) this.scrollTabList[oldCitem].rise = false
 				if(oldCitem != this.citem) this.scrollTabList[oldCitem].drop = false
-				console.log(this.citem)
+				
+				if(this.scrollTabList[index].rise){
+					this.sort = (index + 1) *2 -1
+				} else {
+					this.sort = (index + 1) *2
+				}
+				this.page = 1
+				this.product_lists = []
+				this.getHttpLists("one")
+				console.log(this.sort)
+				console.log("**************")
 			},
 			scrollTab(e) {
 				
@@ -436,15 +555,14 @@
 	/deep/ uni-swiper .uni-swiper-dot {
 		width: 20rpx;
 		height: 8rpx;
-		background: #FFFFFF;
+		background: rgba(0,0,0,0.4);
 		border-radius: 4rpx;
 	}
 
 	/deep/ uni-swiper .uni-swiper-dot-active {
 		width: 20rpx;
 		height: 8rpx;
-		background: #000000;
-		opacity: 0.4;
+		background: #FFFFFF;
 		border-radius: 4rpx;
 	}
 	
@@ -542,6 +660,7 @@
 		border-bottom-right-radius: 8rpx;
 	}
 	.productTitle{
+		height: 68rpx;
 		font-size: 28rpx;
 		font-family: Arial;
 		font-weight: bold;
@@ -558,6 +677,7 @@
 		color: #666666;
 		display: flex;
 		align-items: center;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-top: 22rpx;
 	}	.sales{
@@ -567,7 +687,8 @@
 		color: #0B0B0B;
 		font-weight: bold;
 	}	.commission{
-		width: 280rpx;
+		width: max-content;
+		padding: 0 10rpx;
 		height: 40rpx;
 		background: rgba(255, 116, 54, 0.1);
 		border-radius: 20rpx;

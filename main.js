@@ -25,9 +25,10 @@ Vue.prototype.$_post = _post;
 Vue.prototype.$_put = _put;
 Vue.prototype.$_delete = _delete;
 
-import {handleTree,toast} from './common/api.js'
+import {toast,handleTree,transformTime} from './common/api.js'
 Vue.prototype.$toast = toast;
 Vue.prototype.$handleTree = handleTree;
+Vue.prototype.$transformTime = transformTime;
 
 
 Vue.config.productionTip = false

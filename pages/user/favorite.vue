@@ -10,8 +10,10 @@
 							<view class="spDes">{{item.name}}</view>
 							<view class="spOperation">
 								<view class="price">$ {{item.price}}</view>
-								<view class="commission">High Commission: {{item.commission}}%</view>
-								<image class="love" src="../../static/images/detail/icon16.png" @click="remove(index)"></image>
+								<view class="favorite">
+									<view class="commission">High Commission: {{item.commission}}%</view>
+									<image class="love" src="../../static/images/detail/icon16.png" @click="remove(index)"></image>
+								</view>
 							</view>
 						</view>
 					</view>
@@ -128,7 +130,12 @@
 		font-weight: bold;
 		color: #999999;
 	}
-	
+	.favorite{
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 	.commission{
 		font-size: 28rpx;
 		font-family: Arial;
