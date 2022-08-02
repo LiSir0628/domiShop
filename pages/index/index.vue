@@ -145,7 +145,8 @@
 		<view class="spList" v-if="spLists.length>0">
 			<view class="sp" v-for="item,index in spLists">
 				<view class="spTop">
-					<image class="spLogo" :src="item.cover"></image>
+					<image v-if="item.cover" class="spLogo" :src="item.cover"></image>
+					<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
 					<!-- <image class="spLogo" :src="item.image"></image> -->
 					<view class="spMsg">
 						<view class="spDes">{{item.name}}</view>

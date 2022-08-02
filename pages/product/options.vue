@@ -99,6 +99,7 @@
 		data() {
 			return {
 				searchText: "",
+				searchValue: "",
 				cindex: 0,
 				scrollLeft: 0,
 				category_lists: [{
@@ -243,7 +244,7 @@
 					method: 'GET',
 					url: 'api/tiktok/product/options',
 					data:{
-						search: this.searchText,
+						search: this.searchValue,
 						category: this.category,
 						sort: this.sort,
 						page: this.page,
@@ -297,6 +298,7 @@
 			},
 			search() {
 				console.log(this.searchText)
+				this.searchValue = this.searchText
 				this.page = 1
 				this.product_lists = []
 				this.getHttpLists("one")
