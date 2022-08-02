@@ -46,16 +46,21 @@
 				<image v-if="item.image" class="productLogo" :src="item.image"></image>
 				<image v-else class="productLogo" src="../../static/images/product/icon18.png"></image>
 				<view class="productMsg">
-					<view class="productTitle">{{item.title}}</view>
-					<view class="pricePlan">
-						<view>Sales: <text class="sales">{{item.cumulative_sales}}</text></view>
-						<view>Price: <text class="price">$<text style="margin-left: 4rpx;">{{item.unit_price}}</text></text></view>
+					<view class="productMsgTop">
+						<view class="productTitle">{{item.title}}</view>
 					</view>
-					<view class="commission">High Commission: {{item.commission_ratio}}%</view>
-					<view class="earnedMsg">
-						<image class="priceLogo" src="../../static/images/product/icon06.png"></image>
-						<text class="earned">Earned: $<text style="margin-left: 4rpx;">{{item.commission}}</text></text>
+					<view class="productMsgBottom">
+						<view class="pricePlan">
+							<view>Sales: <text class="sales">{{item.cumulative_sales}}</text></view>
+							<view>Price: <text class="price">$<text style="margin-left: 4rpx;">{{item.unit_price}}</text></text></view>
+						</view>
+						<view class="commission">High Commission: {{(item.commission_ratio*100).toFixed()}}%</view>
+						<view class="earnedMsg">
+							<image class="priceLogo" src="../../static/images/product/icon06.png"></image>
+							<text class="earned">Earned: $<text style="margin-left: 4rpx;word-break: break-all;">{{item.commission}}</text></text>
+						</view>
 					</view>
+					
 				</view>
 			</view>
 		</view>
@@ -660,9 +665,19 @@
 		padding: 16rpx 11rpx 17rpx;
 		border-bottom-left-radius: 8rpx;
 		border-bottom-right-radius: 8rpx;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 260rpx;
+		box-sizing: border-box;
+	}
+	.productMsgTop{
+		width: 100%;
+		height: 80rpx;
 	}
 	.productTitle{
-		height: 68rpx;
+		/* height: 68rpx; */
 		font-size: 28rpx;
 		font-family: Arial;
 		font-weight: bold;
@@ -672,6 +687,9 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 		overflow: hidden;
+	}
+	.productMsgBottom{
+		width: 100%;
 	}	.pricePlan{
 		font-size: 24rpx;
 		font-family: Arial;
@@ -681,7 +699,8 @@
 		align-items: center;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		margin-top: 22rpx;
+		/* margin-top: 22rpx; */
+		margin-top: 16rpx;
 	}	.sales{
 		color: #0B0B0B;
 		font-weight: bold;
