@@ -225,15 +225,20 @@
 	export default {
 		data() {
 			return {
-				cindex: 0,
 				scrollLeft: 0,
 				scrollTabLeft: 0,
 				indicatorDots: true,
 				autoplay: true,
 				interval: 60000,
 				duration: 500,
-				days: 1,
+				
+				days: '',
+				cindex: 0, //0代表all 传递空值
 				scrollList: [{
+					id: '',
+					name: 'All',
+					value: ''
+				},{
 					id: 1,
 					name: 'Today',
 					value: 1

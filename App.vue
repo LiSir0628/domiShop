@@ -22,4 +22,7 @@
 	.uni-navbar__header{
 		padding: 0 30rpx !important;
 	}
+	page {
+		word-break: break-all
+	}
 </style>

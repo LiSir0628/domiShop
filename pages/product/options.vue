@@ -3,7 +3,8 @@
 		<view class="top">
 			<view class="search">
 				<image class="searchLogo" src="../../static/images/home/icon02.png" @click="search"></image>
-				<input class="searchText" v-model="searchText" @confirm="search" placeholder="Search for products you want" />
+				<input class="searchText" v-model="searchText" @confirm="search"
+					placeholder="Search for products you want" />
 			</view>
 		</view>
 		<view class="navbar">
@@ -26,14 +27,14 @@
 		</view>
 		<view>
 			<!-- 升降排序 -->
-			<scroll-view class="tab" :class="{tabHeight: isShowTabHeight}" :scroll-left="scrollTabLeft" scroll-x="true" @scroll="scrollTab"
-				:show-scrollbar="false">
+			<scroll-view class="tab" :class="{tabHeight: isShowTabHeight}" :scroll-left="scrollTabLeft" scroll-x="true"
+				@scroll="scrollTab" :show-scrollbar="false">
 				<view class="scroll-view-item_Tab" v-for="item,index in scrollTabList"
 					:class="{'scroll-view-item-activeTab':citem == index}" @click="scrollChooseTab(index)">
-						{{item.name}}
-						<image class="sortLogo" v-if="item.rise" src="../../static/images/product/icon03.png"></image>
-						<image class="sortLogo" v-else-if="item.drop" src="../../static/images/product/icon04.png"></image>
-						<image class="sortLogo" v-else src="../../static/images/product/icon05.png"></image>
+					{{item.name}}
+					<image class="sortLogo" v-if="item.rise" src="../../static/images/product/icon03.png"></image>
+					<image class="sortLogo" v-else-if="item.drop" src="../../static/images/product/icon04.png"></image>
+					<image class="sortLogo" v-else src="../../static/images/product/icon05.png"></image>
 				</view>
 				<view class="scroll-view-item_Tab" @click="toggle('bottom')">
 					<view class="sortText">{{orderState}}</view>
@@ -52,15 +53,17 @@
 					<view class="productMsgBottom">
 						<view class="pricePlan">
 							<view>Sales: <text class="sales">{{item.cumulative_sales}}</text></view>
-							<view>Price: <text class="price">$<text style="margin-left: 4rpx;">{{item.unit_price}}</text></text></view>
+							<view>Price: <text class="price">$<text
+										style="margin-left: 4rpx;">{{item.unit_price}}</text></text></view>
 						</view>
 						<view class="commission">High Commission: {{(item.commission_ratio*100).toFixed()}}%</view>
 						<view class="earnedMsg">
 							<image class="priceLogo" src="../../static/images/product/icon06.png"></image>
-							<text class="earned">Earned: $<text style="margin-left: 4rpx;word-break: break-all;">{{item.commission}}</text></text>
+							<text class="earned">Earned: $<text
+									style="margin-left: 4rpx;word-break: break-all;">{{item.commission}}</text></text>
 						</view>
 					</view>
-					
+
 				</view>
 			</view>
 		</view>
@@ -70,17 +73,19 @@
 				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
-		
+
 		<view>
 			<!-- 普通弹窗 -->
 			<uni-popup ref="popup" background-color="#fff">
 				<view class="popup-content">
-					<view class="popupChoose" v-for="item,index in orderStateList" :class="{'activePopupChoose': kindex == index}" @click="getOrderState(index,item.name)">{{item.name}}</view>
+					<view class="popupChoose" v-for="item,index in orderStateList"
+						:class="{'activePopupChoose': kindex == index}" @click="getOrderState(index,item.name)">
+						{{item.name}}</view>
 					<view class="confirmed" @click="confirmed">Cancels</view>
 				</view>
 			</uni-popup>
 		</view>
-		
+
 		<view class="bottomNavigation">
 			<view class="bottomNav" @click="goIndex">
 				<!-- <image class="navLogo" src="../../static/images/home/icon06.png"></image> -->
@@ -108,40 +113,45 @@
 				cindex: 0,
 				scrollLeft: 0,
 				category_lists: [{
-					id: 1,
+					id: '',
 					name: 'All of it'
-				}, {
-					id: 2,
-					name: 'Food and drink'
-				}, {
-					id: 3,
-					name: 'SMART home'
-				}, {
-					id: 4,
-					name: 'General merchandise'
-				}, {
-					id: 5,
-					name: 'Beauty makeup'
-				}, {
-					id: 6,
-					name: 'Beauty makeup'
 				}],
-				banner: [{
-					id: 1,
-					des: "轮播图说明",
-					image: "../../static/images/detail/icon11.png",
-					url: "http://www.baidu.com"
-				},{
-					id: 2,
-					des: "轮播图说明",
-					image: "../../static/images/detail/icon12.png",
-					url: "http://www.baidu.com"
-				}],
+				// category_lists: [{
+				// 	id: 1,
+				// 	name: 'All of it'
+				// }, {
+				// 	id: 2,
+				// 	name: 'Food and drink'
+				// }, {
+				// 	id: 3,
+				// 	name: 'SMART home'
+				// }, {
+				// 	id: 4,
+				// 	name: 'General merchandise'
+				// }, {
+				// 	id: 5,
+				// 	name: 'Beauty makeup'
+				// }, {
+				// 	id: 6,
+				// 	name: 'Beauty makeup'
+				// }],
+				banner: [],
+				// banner: [{
+				// 	id: 1,
+				// 	des: "轮播图说明",
+				// 	image: "../../static/images/detail/icon11.png",
+				// 	url: "http://www.baidu.com"
+				// }, {
+				// 	id: 2,
+				// 	des: "轮播图说明",
+				// 	image: "../../static/images/detail/icon12.png",
+				// 	url: "http://www.baidu.com"
+				// }],
 				indicatorDots: true,
 				autoplay: true,
 				interval: 60000,
 				duration: 500,
-				
+
 				citem: 0,
 				scrollTabLeft: 0,
 				scrollTabList: [{
@@ -161,21 +171,21 @@
 					drop: false
 				}],
 				isShowTabHeight: false,
-				
-				orderStateList:[{
+
+				orderStateList: [{
 					id: 1,
 					name: 'Total sales'
-				},{
+				}, {
 					id: 2,
 					name: '24 hours'
-				},{
+				}, {
 					id: 3,
 					name: 'Two hours'
 				}],
 				kindex: 0,
 				prepareState: 'sales',
 				orderState: 'sales',
-				
+
 				//productList:[],
 				category: '', //分类
 				sort: "", //排序
@@ -187,32 +197,62 @@
 				product_lists: [],
 				// product_lists:[{
 				// 	id: 1,
-				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 111, 			// 		unit_price: 111,				// 	commission_ratio: 1,				// 	commission: 1,
+				// 	image: '../../static/images/home/photo.png',
+				// 	title: 'zhelishi shangpinbiao tishangpin...',
+				// 	cumulative_sales: 111,
+				// 		unit_price: 111,
+				// 	commission_ratio: 1,
+				// 	commission: 1,
 				// },{
 				// 	id: 2,
-				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// 	image: '../../static/images/home/photo.png',
+				// 	title: 'zhelishi shangpinbiao tishangpin...',
+				// 	cumulative_sales: 52366,
+				// 		unit_price: 6525,
+				// 	commission_ratio: 20,
+				// 	commission: 21,
 				// },{
 				// 	id: 3,
-				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// 	image: '../../static/images/home/photo.png',
+				// 	title: 'zhelishi shangpinbiao tishangpin...',
+				// 	cumulative_sales: 52366,
+				// 		unit_price: 6525,
+				// 	commission_ratio: 20,
+				// 	commission: 21,
 				// },{
 				// 	id: 4,
-				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// 	image: '../../static/images/home/photo.png',
+				// 	title: 'zhelishi shangpinbiao tishangpin...',
+				// 	cumulative_sales: 52366,
+				// 		unit_price: 6525,
+				// 	commission_ratio: 20,
+				// 	commission: 21,
 				// },{
 				// 	id: 5,
-				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// 	image: '../../static/images/home/photo.png',
+				// 	title: 'zhelishi shangpinbiao tishangpin...',
+				// 	cumulative_sales: 52366,
+				// 		unit_price: 6525,
+				// 	commission_ratio: 20,
+				// 	commission: 21,
 				// },{
 				// 	id: 6,
-				// 	image: '../../static/images/home/photo.png',				// 	title: 'zhelishi shangpinbiao tishangpin...',				// 	cumulative_sales: 52366, 			// 		unit_price: 6525,				// 	commission_ratio: 20,				// 	commission: 21,
+				// 	image: '../../static/images/home/photo.png',
+				// 	title: 'zhelishi shangpinbiao tishangpin...',
+				// 	cumulative_sales: 52366,
+				// 		unit_price: 6525,
+				// 	commission_ratio: 20,
+				// 	commission: 21,
 				// }]
 			}
 		},
 		onLoad(option) {
-
+			
 		},
 		onReachBottom() {
 			//上拉加载，请求记得限制。
-			if(this.isRequest){
-				if(this.page < this.total_page){
+			if (this.isRequest) {
+				if (this.page < this.total_page) {
 					console.log("选品页触底了,加载一下")
 					this.page = this.page + 1
 					this.getHttpLists()
@@ -225,11 +265,12 @@
 			}
 		},
 		mounted() {
-			this.getHttpLists("one")
-			window.onscroll = (()=>{
+			this.sortLists()
+			//this.getHttpLists("one")
+			window.onscroll = (() => {
 				var scroll = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
 				// console.log(scroll);
-				if(scroll>=200){
+				if (scroll >= 200) {
 					// 分类 固定展示
 					this.isShowTabHeight = true
 				} else {
@@ -239,6 +280,50 @@
 			})
 		},
 		methods: {
+			sortLists() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/product/index',
+						data: {
+	
+						}
+					})
+					.then(res => {
+						//uni.hideLoading();
+						if (res.data.code == 200) {
+							let obj = {};
+							//this.category_lists = []
+							this.banner =  res.data.data.banner
+							for(let i in res.data.data.category_lists){
+								obj = {}
+								obj.id = i
+								obj.name = res.data.data.category_lists[i]
+								this.category_lists.push(obj)
+							}
+							this.getHttpLists("one")
+							// console.log(this.category_lists)
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			getHttpLists(type) {
 				this.isRequest = false
 				uni.showLoading({
@@ -246,54 +331,54 @@
 					mask: true
 				});
 				this.$myRequest({
-					method: 'GET',
-					url: 'api/tiktok/product/options',
-					data:{
-						search: this.searchValue,
-						category: this.category,
-						sort: this.sort,
-						page: this.page,
-						limit: this.limit,
-					}
-				})
-				.then(res=>{
-					this.isRequest = true
-					uni.hideLoading();
-					if(res.data.code == 200){
-						console.log(res.data.data);
-						if(type == "one") {
-							this.product_lists = res.data.data.product_lists
-							
-							this.page = res.data.data.page
-							this.total_limit = res.data.data.total_limit
-							this.total_page = Math.ceil(res.data.data.total_limit / res.data.data.limit)
-							console.log(this.total_page)
-						} else {
-							//下拉加载更多
-							this.product_lists = this.product_lists.concat(res.data.data.product_lists)
-							
-							this.page = res.data.data.page
-							this.total_page = Math.ceil(res.data.data.total_limit / res.data.data.limit)
+						method: 'GET',
+						url: 'api/tiktok/product/options',
+						data: {
+							search: this.searchValue,
+							category: this.category,
+							sort: this.sort,
+							page: this.page,
+							limit: this.limit,
 						}
-						
-						
-					} else {
+					})
+					.then(res => {
+						this.isRequest = true
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							// console.log(res.data.data);
+							if (type == "one") {
+								this.product_lists = res.data.data.product_lists
+
+								this.page = res.data.data.page
+								this.total_limit = res.data.data.total_limit
+								this.total_page = Math.ceil(res.data.data.total_limit / res.data.data.limit)
+								// console.log(this.total_page)
+							} else {
+								//下拉加载更多
+								this.product_lists = this.product_lists.concat(res.data.data.product_lists)
+
+								this.page = res.data.data.page
+								this.total_page = Math.ceil(res.data.data.total_limit / res.data.data.limit)
+							}
+
+
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						this.isRequest = true
+						uni.hideLoading();
 						uni.showModal({
 							title: 'TIP',
-							content: res.data.msg,
+							content: "Network error, please try again later",
+							//content: err,
 							showCancel: false,
 						})
-					}
-				})
-				.catch(err=>{
-					this.isRequest = true
-					uni.hideLoading();
-					uni.showModal({
-						title: 'TIP',
-						content: "Network error, please try again later",
-						//content: err,
-						showCancel: false,
-					})
 				})
 			},
 			goDetail(index) {
@@ -302,7 +387,7 @@
 				});
 			},
 			search() {
-				console.log(this.searchText)
+				// console.log(this.searchText)
 				this.searchValue = this.searchText
 				this.page = 1
 				this.product_lists = []
@@ -310,8 +395,8 @@
 			},
 			toggle(type) {
 				// 获取选项索引
-				for(let i in this.orderStateList){
-					if(this.orderStateList[i].name == this.orderState){
+				for (let i in this.orderStateList) {
+					if (this.orderStateList[i].name == this.orderState) {
 						this.prepareState = this.orderState
 						this.kindex = i
 					}
@@ -319,51 +404,56 @@
 				// open 方法传入参数 等同在 uni-popup 组件上绑定 type属性
 				this.$refs.popup.open(type)
 			},
-			getOrderState(index,name) {
+			getOrderState(index, name) {
 				this.kindex = index
 				this.prepareState = name
 				// 点击后直接赋值触发
-				if(this.orderState == this.prepareState && this.sort > 6){
+				if (this.orderState == this.prepareState && this.sort > 6) {
 					//相同状态,不再次触发接口请求
 					this.$refs.popup.close()
-					console.log("我没请求")
+					// console.log("我没请求")
 				} else {
 					//其他升降序全部关闭
-					for(let i in this.scrollTabList){
+					for (let i in this.scrollTabList) {
 						this.scrollTabList[i].rise = false
 						this.scrollTabList[i].drop = false
-					}		
+					}
 					this.orderState = this.prepareState
 					//请求 7总销量，8-24小时内，9-2小时内
 					this.sort = 7 + index
 					this.page = 1
 					this.product_lists = []
 					this.getHttpLists("one")
-					
+
 					this.$refs.popup.close()
 				}
 			},
-			confirmed(){
+			confirmed() {
 				// 销售选择关闭
 				this.$refs.popup.close()
 				this.prepareState = "sales"
 				this.orderState = "sales"
 				this.kindex = 0
 				//升降序，总销量查询全部关闭
-				for(let i in this.scrollTabList){
+				for (let i in this.scrollTabList) {
 					this.scrollTabList[i].rise = false
 					this.scrollTabList[i].drop = false
-				}		
+				}
 				this.sort = ""
 				this.page = 1
 				this.product_lists = []
 				this.getHttpLists("one")
 			},
-			
-			goBanner(index){
-				console.log(this.banner[index])
+
+			goBanner(index) {
+				//console.log(this.banner[index].url)
+				if(this.banner[index].url && this.banner[index].url != "#"){
+					//console.log("页面跳转")
+				} else {
+					//console.log("无链接,不进行跳转。")
+				}
 			},
-			
+
 			scrollChoose(index) {
 				if (this.cindex == index) return
 				this.cindex = index
@@ -371,7 +461,7 @@
 				this.page = 1
 				this.product_lists = []
 				this.getHttpLists("one")
-				console.log(index)
+				// console.log(index)
 				// this.$nextTick(()=>{
 				// 	const that = this
 				// 	let view = uni.createSelectorQuery().select(".scroll-view-item-active")
@@ -390,30 +480,30 @@
 				let oldCitem = this.citem
 				this.citem = index
 				// 首次点击为升序，再次点击为降序
-				if(this.scrollTabList[index].rise == false){
+				if (this.scrollTabList[index].rise == false) {
 					this.scrollTabList[index].rise = true
 					this.scrollTabList[index].drop = false
-				} else if(this.scrollTabList[index].rise){
+				} else if (this.scrollTabList[index].rise) {
 					this.scrollTabList[index].rise = false
 					this.scrollTabList[index].drop = true
 				}
 				//切换 分类点击，旧分类变为随机排序
-				if(oldCitem != this.citem) this.scrollTabList[oldCitem].rise = false
-				if(oldCitem != this.citem) this.scrollTabList[oldCitem].drop = false
-				
-				if(this.scrollTabList[index].rise){
-					this.sort = (index + 1) *2 -1
+				if (oldCitem != this.citem) this.scrollTabList[oldCitem].rise = false
+				if (oldCitem != this.citem) this.scrollTabList[oldCitem].drop = false
+
+				if (this.scrollTabList[index].rise) {
+					this.sort = (index + 1) * 2 - 1
 				} else {
-					this.sort = (index + 1) *2
+					this.sort = (index + 1) * 2
 				}
 				this.page = 1
 				this.product_lists = []
 				this.getHttpLists("one")
-				console.log(this.sort)
-				console.log("**************")
+				// console.log(this.sort)
+				// console.log("**************")
 			},
 			scrollTab(e) {
-				
+
 			},
 			goIndex() {
 				uni.navigateTo({
@@ -425,7 +515,7 @@
 					url: './../user/user'
 				});
 			}
-			
+
 		}
 	}
 </script>
@@ -435,7 +525,7 @@
 		width: 100%;
 		height: 100%;
 	}
-	
+
 	.container {
 		width: 100%;
 		min-height: 100%;
@@ -479,26 +569,26 @@
 		color: #666666;
 		line-height: 80rpx;
 	}
-	
+
 	/* 滑动块 */
 	.navbar {
 		padding: 8rpx 0 20rpx 30rpx;
 		margin-top: 116rpx;
 		background: #FFFFFF;
 	}
-	
+
 	.scroll-view_H {
 		white-space: nowrap;
 		width: 100%;
 	}
-	
+
 	.scroll-view-item {
 		height: 300rpx;
 		line-height: 300rpx;
 		text-align: center;
 		font-size: 36rpx;
 	}
-	
+
 	.scroll-view-item_H {
 		display: inline-block;
 		text-align: center;
@@ -509,22 +599,22 @@
 		line-height: normal;
 		margin-right: 62rpx;
 	}
-	
+
 	.scroll-view-item-active {
 		font-size: 32rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #0B0B0B;
 	}
-	
-	.underline{
+
+	.underline {
 		width: 40rpx;
 		height: 8rpx;
 		background: #FF7436;
 		border-radius: 4rpx;
 		margin: 20rpx auto 0;
 	}
-	
+
 	/deep/ ::-webkit-scrollbar {
 		display: none;
 		width: 0 !important;
@@ -562,7 +652,7 @@
 	/deep/ uni-swiper .uni-swiper-dot {
 		width: 20rpx;
 		height: 8rpx;
-		background: rgba(0,0,0,0.4);
+		background: rgba(0, 0, 0, 0.4);
 		border-radius: 4rpx;
 	}
 
@@ -572,20 +662,22 @@
 		background: #FFFFFF;
 		border-radius: 4rpx;
 	}
-	
+
 	/* 分类 */
-	.tab{
+	.tab {
 		width: 100%;
 		padding: 24rpx 0 24rpx 30rpx;
 		box-sizing: border-box;
 		background: #F7F7F7;
 		white-space: nowrap;
 	}
-	.tabHeight{
+
+	.tabHeight {
 		position: fixed;
 		top: 112rpx;
 		z-index: 100;
 	}
+
 	.scroll-view-item_Tab {
 		display: inline-block;
 		text-align: center;
@@ -602,27 +694,27 @@
 		line-height: normal;
 		margin-right: 62rpx; */
 	}
-	
+
 	.scroll-view-item-activeTab {
 		/* font-size: 32rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #0B0B0B; */
 	}
-	
-	.sortLogo{
+
+	.sortLogo {
 		width: 18rpx;
 		height: 18rpx;
 		margin-left: 8rpx;
 	}
-	
+
 	.sortText {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		display: inline-block;
 	}
-	
+
 	.arrowDown {
 		width: 15rpx;
 		height: 9rpx;
@@ -631,12 +723,13 @@
 		vertical-align: middle;
 		display: inline-block;
 	}
-	
+
 	/* 商品展示列表 */
-	.productListHeight{
+	.productListHeight {
 		margin-top: 86rpx;
 	}
-	.productList{
+
+	.productList {
 		width: 100%;
 		/* height: 2000rpx; */
 		padding: 0 30rpx;
@@ -646,7 +739,8 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 	}
-	.product{
+
+	.product {
 		width: 335rpx;
 		/* height: 593rpx; */
 		background: #ffffff;
@@ -654,14 +748,16 @@
 		border-bottom-left-radius: 8rpx;
 		border-bottom-right-radius: 8rpx;
 	}
-	.productLogo{
+
+	.productLogo {
 		width: 335rpx;
 		height: 335rpx;
 		border-top-left-radius: 8rpx;
 		border-top-right-radius: 8rpx;
 		display: block;
 	}
-	.productMsg{
+
+	.productMsg {
 		padding: 16rpx 11rpx 17rpx;
 		border-bottom-left-radius: 8rpx;
 		border-bottom-right-radius: 8rpx;
@@ -672,11 +768,13 @@
 		min-height: 260rpx;
 		box-sizing: border-box;
 	}
-	.productMsgTop{
+
+	.productMsgTop {
 		width: 100%;
 		height: 80rpx;
 	}
-	.productTitle{
+
+	.productTitle {
 		/* height: 68rpx; */
 		font-size: 28rpx;
 		font-family: Arial;
@@ -688,9 +786,12 @@
 		-webkit-line-clamp: 2;
 		overflow: hidden;
 	}
-	.productMsgBottom{
+
+	.productMsgBottom {
 		width: 100%;
-	}	.pricePlan{
+	}
+
+	.pricePlan {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
@@ -701,13 +802,19 @@
 		justify-content: space-between;
 		/* margin-top: 22rpx; */
 		margin-top: 16rpx;
-	}	.sales{
+	}
+
+	.sales {
 		color: #0B0B0B;
 		font-weight: bold;
-	}	.price{
+	}
+
+	.price {
 		color: #0B0B0B;
 		font-weight: bold;
-	}	.commission{
+	}
+
+	.commission {
 		width: max-content;
 		padding: 0 10rpx;
 		height: 40rpx;
@@ -721,21 +828,24 @@
 		line-height: 40rpx;
 		margin-top: 19rpx;
 	}
-	.earnedMsg{
+
+	.earnedMsg {
 		margin-top: 17rpx;
 	}
-	.priceLogo{
+
+	.priceLogo {
 		width: 22rpx;
 		height: 22rpx;
 	}
-	.earned{
+
+	.earned {
 		font-size: 28rpx;
 		font-family: Arial;
 		font-weight: bold;
 		color: #FF3838;
 		margin-left: 8rpx;
 	}
-	
+
 	/* 下拉框弹窗 */
 	.popup-content {
 		width: 750rpx;
@@ -748,26 +858,30 @@
 		text-align: center;
 		position: relative;
 	}
-	.popupChoose{
+
+	.popupChoose {
 		width: 750rpx;
 		height: 78rpx;
-		line-height: 78rpx;		
+		line-height: 78rpx;
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
 		border-bottom: 2rpx solid #F7F7F7;
 	}
-	.popupChoose:nth-last-child(2){
+
+	.popupChoose:nth-last-child(2) {
 		border-bottom: none;
 	}
-	.activePopupChoose{
+
+	.activePopupChoose {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #111111;
 	}
-	.confirmed{
+
+	.confirmed {
 		width: 670rpx;
 		height: 80rpx;
 		background: #FF7436;
@@ -783,31 +897,35 @@
 		margin: 0 auto;
 		bottom: 37rpx;
 	}
-	
+
 	/* 底部导航 */
-	.bottomNavigation{
+	.bottomNavigation {
 		position: fixed;
 		width: 750rpx;
 		height: 97rpx;
 		background: #FEFEFE;
 		bottom: 0;
-		left: 0;	
+		left: 0;
 		display: flex;
 		/* align-items: center; */
 		justify-content: space-around;
 		border-top: 2rpx solid #f7f7f7;
 	}
-	.bottomNav{
+
+	.bottomNav {
 		width: 33.3%;
 		text-align: center;
 	}
-	.navLogo{
+
+	.navLogo {
 		width: 42rpx;
 		height: 42rpx;
 		display: block;
 		margin: 13rpx auto 0;
 	}
-	.navText,.navActiveText{
+
+	.navText,
+	.navActiveText {
 		font-size: 20rpx;
 		line-height: 20rpx;
 		font-family: Arial;
@@ -815,20 +933,23 @@
 		color: #999999;
 		margin-top: 11rpx;
 	}
-	.navActiveText{
+
+	.navActiveText {
 		color: #0B0B0B;
 	}
-	
+
 	/* 无数据展示 */
-	.noData{
+	.noData {
 		text-align: center;
 		margin: 200rpx auto 0;
 	}
-	.noDataLogo{
+
+	.noDataLogo {
 		width: 188rpx;
 		height: 158rpx;
 	}
-	.noDataText{
+
+	.noDataText {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;

@@ -5,13 +5,14 @@
 			<view v-if="lists.length > 0">
 				<view class="sp" v-for="item,index in lists">
 					<view class="spTop">
-						<image class="spLogo" :src="item.image"></image>
+						<image v-if="item.image" class="spLogo" :src="item.image"></image>
+						<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
 						<view class="spMsg">
-							<view class="spDes">{{item.name}}</view>
+							<view class="spDes">{{item.title}}</view>
 							<view class="spOperation">
-								<view class="price">$ {{item.price}}</view>
+								<view class="price">$ {{item.unit_price}}</view>
 								<view class="favorite">
-									<view class="commission">High Commission: {{item.commission}}%</view>
+									<view class="commission">High Commission: {{(item.commission_ratio*100).toFixed()}}%</view>
 									<image class="love" src="../../static/images/detail/icon16.png" @click="remove(index)"></image>
 								</view>
 							</view>
@@ -33,28 +34,147 @@
 	export default {
 		data() {
 			return {
-				// lists:[],
-				lists:[{
-					id: 1,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					price: '2563200.00',
-					commission: '56.00'
-				},{
-					id: 2,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					price: '300000',
-					commission: '60'
-				}]
+				lists: [],
+				// lists:[{
+				// 	id: 1,
+				// 	product_id: 1,
+				// 	stock: 100,
+				// 	image: '../../static/images/home/photo.png',
+				// 	title: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	unit_price: '2563200.00',
+				// 	commission_ratio: '56.00',
+				// 	is_collection: true
+				// },{
+				// 	id: 2,
+				// 	product_id: 2,
+				// 	stock: 100,
+				// 	image: '../../static/images/home/photo.png',
+				// 	title: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	unit_price: '300000',
+				// 	commission_ratio: '60',
+				// 	is_collection: true
+				// }],
+				isRequest: true,
+				page: 1,
+				limit: 20,
+				total_limit: 0,
+				total_page: 0,
 			}
 		},
+		onReachBottom() {
+			//上拉加载，请求记得限制。
+			if (this.isRequest) {
+				if (this.page < this.total_page) {
+					console.log("选品页触底了,加载一下")
+					this.page = this.page + 1
+					this.getHttpLists()
+				} else {
+					console.log("页码已达到最大，无法再次请求")
+				}
+				this.$forceUpdate()
+			} else {
+				console.log("正在请求，无法再次请求")
+			}
+		},
+		onShow() {
+			// this.getHttpLists("one")
+		},
+		mounted() {
+			this.getHttpLists("one")
+		},
 		methods: {
+			getHttpLists(type) {
+				this.isRequest = false
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/product/collection',
+						data: {
+							page: this.page,
+							limit: this.limit
+						}
+					})
+					.then(res => {
+						this.isRequest = true
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							let dataList = res.data.data
+							if (type == "one") {
+								this.lists = dataList.collection_lists
+			
+								this.page = dataList.page
+								this.total_limit = dataList.total_limit
+								this.total_page = Math.ceil(dataList.total_limit / dataList.limit)
+								//console.log(this.total_page)
+							} else {
+								//下拉加载更多
+								this.lists = this.lists.concat(dataList.collection_lists)
+							
+								this.page = dataList.page
+								this.total_page = Math.ceil(dataList.total_limit / dataList.limit)
+							}
+							
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						this.isRequest = true
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			back() {
 				window.history.go(-1)
 			},
 			remove(index) {
-				this.lists.splice(index,1)
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'POST',
+						url: 'api/tiktok/product/collection',
+						data: {
+							id: this.lists[index].product_id,
+							is_collection: false
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							this.lists.splice(index,1)
+							console.log(res.data)
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
 			}
 		}
 	}

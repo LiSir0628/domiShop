@@ -4,11 +4,12 @@
 			title="Product details">
 		</uni-nav-bar>
 
-		<uni-swiper-dot class="uni-swiper-dot-box" :info="info" :current="current" mode="nav" :dots-styles="dotsStyles"
+		<uni-swiper-dot class="uni-swiper-dot-box" :info="banner" :current="current" mode="nav" :dots-styles="dotsStyles"
 			field="content">
 			<swiper class="swiper-box" @change="change" :current="swiperDotIndex">
-				<swiper-item v-for="(item, index) in info" :key="index">
-					<image class="banner" :src="item.image"></image>
+				<swiper-item v-for="(item, index) in banner" :key="index">
+					<image v-if="item.url" class="banner" :src="item.url"></image>
+					<image v-else class="banner" src="../../static/images/product/icon18.png"></image>
 				</swiper-item>
 			</swiper>
 		</uni-swiper-dot>
@@ -23,7 +24,7 @@
 			</view>
 			<view class="rate">
 				<image class="hotLogo" src="../../static/images/detail/icon02.png"></image>
-				Commission rate: <text class="rateNum">{{commission_ratio}}%</text>
+				Commission rate: <text class="rateNum">{{(commission_ratio*100).toFixed()}}%</text>
 			</view>
 			<view class="totalSales">
 				<view>Total sales: {{cumulative_sales}}</view>
@@ -41,9 +42,9 @@
 				</view>
 			</view>
 			<view class="sample" @click="sample">
-				<image class="menuLogo" src="../../static/images/detail/icon05.png"></image>
+				<image class="menuLogo" src="../../static/images/detail/icon17.png"></image>
 				<view class="priceContent">
-					Sample request: 1. Number of followers {{fans}}   2.Window sales in recent 30 days :{{show_window}}
+					Sample request: Number of followers {{fans}}   <!-- 2.Window sales in recent 30 days :{{show_window}} -->
 				</view>
 			</view>
 		</view>
@@ -116,17 +117,21 @@
 			</view>
 		</view>
 
-		<view class="detailTitle">
+		<view class="detailTitle" v-if="content">
 			<view class="underline"></view>
 			Product details
 			<view class="underline"></view>
 		</view>
+		
+		<view class="spImages" v-html="content">
 
-		<view class="spImages">
-			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
-			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
-			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
 		</view>
+		
+		<!-- <view class="spImages">
+			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
+			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
+			<image class="spImage" mode="widthFix" src="../../static/images/detail/icon08.png"></image>
+		</view> -->
 
 		<view class="bottomCar">
 			<view class="copyLine" @click="copy('复制连接')">
@@ -158,7 +163,7 @@
 										{{item.fans}}
 									</view>
 									<view class="sales">
-										Window sales: {{item.sales}}
+										<!-- Window sales: {{item.sales}} -->
 									</view>
 								</view>
 								<view class="isFree">Meet the conditions of free sample</view>								
@@ -197,9 +202,9 @@
 								<view class="addressUserMsg">
 									<view class="addressUserName">{{item.name}}</view>
 									<view class="addressTel">{{item.tel}}</view>
-									<view v-if="item.isDefault" class="default">Default</view>
+									<view v-if="item.is_default" class="default">Default</view>
 								</view>
-								<view class="address">{{item.address}}</view>
+								<view class="address">{{item.detail}}</view>
 							</view>
 							<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
 							<image v-if="point == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
@@ -229,7 +234,7 @@
 						1.Number of followers : {{fans}}
 					</view>
 					<view class="salesDay">
-						2.Window sales in recent 30 days :  {{show_window}}
+						<!-- 2.Window sales in recent 30 days :  {{show_window}} -->
 					</view>
 				</view>
 			</view>
@@ -246,38 +251,33 @@
 	export default {
 		data() {
 			return {
+				id: "",
 				isShowLove: false,
-				info: [{
-						id: 1,
-						des: "轮播图说明",
-						image: "../../static/images/detail/icon08.png"
-					},
-					{
-						id: 2,
-						des: "轮播图说明",
-						image: "../../static/images/detail/icon08.png"
-					},
-					// {
-					// 	colorClass: '',
-					// 	image: '../../static/images/detail/icon08.png',
-					// 	content: ''
-					// }
-				],
-				is_collection: true,
-				unit_price: "25632",
-				commission: "5623",
-				commission_ratio: "35",
-				cumulative_sales: "562622",
-				fans: "10000",
-				show_window: "100",
-				benefits: "<p>Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag .</p>",
-				selling_point: "<p>1. Chongqing Strength Factory, Douyin hotpot base</p><p>2. Independent Small Packaging, 1 small bag 1 small</p><p>3.the praise rate is above 92% , product quality is guaranteed</p><p>4. the optimization of seasoning, craftsmanship quality, thicken pepper, spicy and addictive. The butter is rich and fragrant.</p><p>5. a multi-purpose, can do hot pot, braised vegetables, Malatan INGREDIENTS: Butter, pepper, Douban, ginger, garlic, edibles seasoning, monosodium glutamate, rock sugar, spices</p>",
-				delivery_place: "United Kingdom",
-				express_company: "EMS",
-				delivery_time: "Delivery in 48 hours",
-				content: "<p>商品介绍</p>",
-						
-						
+				//info: ["../../static/images/detail/icon08.png","../../static/images/detail/icon08.png","../../static/images/detail/icon08.png"],
+				banner: [{url: "" ,content: ""}],
+				stock: 1000,
+				is_collection: false,
+				left_icon: "货币图标-左边",
+				right_icon: "货币图标-右边",
+				unit_price: "",
+				commission: "",
+				commission_ratio: "",
+				cumulative_sales: "",
+				fans: "",
+				show_window: "",
+				
+				benefits: "",
+				selling_point: "",
+				delivery_place: "",
+				express_company: "",
+				delivery_time: "",
+				content: "",
+				// benefits: "<p>Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag .</p>",
+				// selling_point: "<p>1. Chongqing Strength Factory, Douyin hotpot base</p><p>2. Independent Small Packaging, 1 small bag 1 small</p><p>3.the praise rate is above 92% , product quality is guaranteed</p><p>4. the optimization of seasoning, craftsmanship quality, thicken pepper, spicy and addictive. The butter is rich and fragrant.</p><p>5. a multi-purpose, can do hot pot, braised vegetables, Malatan INGREDIENTS: Butter, pepper, Douban, ginger, garlic, edibles seasoning, monosodium glutamate, rock sugar, spices</p>",
+				// delivery_place: "United Kingdom",
+				// express_company: "EMS",
+				// delivery_time: "Delivery in 48 hours",
+				// content: "<p>商品介绍</p>",
 				cindex: 0,
 				kindex: 0,
 				userList:[{
@@ -309,18 +309,24 @@
 				},
 				list:[{
 					id: 1,
-					photo: '../../static/images/home/photo.png',
 					name: 'name',
 					tel: 12563622222,
-					isDefault: true,
-					address: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong"	
+					country_id: 1,
+					country_name: "中国",
+					city_id: 2,
+					city_name: "福州市",
+					detail: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong",
+					is_default: true
 				},{
 					id: 2,
-					photo: '../../static/images/home/photo.png',
 					name: 'name',
 					tel: 12563622222,
-					isDefault: false,
-					address: "中文中文中文中文中文中文中文中文"	
+					country_id: 1,
+					country_name: "中国",
+					city_id: 2,
+					city_name: "福州市",
+					detail: "中文中文中文中文中文中文中文中文",
+					is_default: false,
 				}],
 
 			}
@@ -329,14 +335,92 @@
 			addAdmin,
 			myPopup
 		},
+		onLoad(option) {
+			//如果参数有值，渠道入口-请求
+			//如果首页、分类特殊值有值-请求（不与上方同时触发）
+			if (option.id) this.id = option.id
+			this.getHttpLists()
+		},
 		mounted() {
-			this.isShowLove = this.is_collection
-			console.log(this.isShowLove)
+			//this.isShowLove = this.is_collection
+			//console.log(this.isShowLove)
 			this.$forceUpdate()
 		},
 		methods: {
+			getHttpLists() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/product/detail',
+						data: {
+							id: this.id
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							let obj = res.data.data;
+							let arr = [];
+							let arrObj = {};
+							for(let i in obj.banner){
+								arrObj = {}
+								arrObj.url = obj.banner[i]
+								arrObj.content = ""
+								arr.push(arrObj)
+							}
+							this.banner = arr // 轮播图数据处理
+							console.log(this.banner)
+							this.stock = obj.stock
+							this.is_collection = obj.is_collection
+							this.isShowLove = this.is_collection
+							this.left_icon = obj.left_icon
+							this.right_icon = obj.right_icon
+							this.unit_price = obj.unit_price
+							this.commission = obj.commission
+							this.commission_ratio = obj.commission_ratio
+							this.cumulative_sales = obj.cumulative_sales
+							this.fans = obj.fans
+							this.benefits = obj.benefits
+							this.selling_point = obj.selling_point
+							this.delivery_place = obj.delivery_place
+							this.express_company = obj.express_company
+							this.delivery_time = obj.delivery_time
+							this.content = obj.content
+							
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			back() {
 				window.history.go(-1)
+				// const pages = getCurrentPages()
+				// if (pages.length === 1) {
+				// 	if (typeof params === 'number') {
+				// 		history.go(-1)
+				// 	} else {
+				// 		history.back()
+				// 	}
+				// } else {
+				// 	uni.navigateBack()
+				// }
 			},
 			change(e) {
 				this.current = e.detail.current
@@ -374,6 +458,41 @@
 			},
 			goLove(type) {
 				this.isShowLove = !this.isShowLove
+				console.log(this.isShowLove)
+				
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'POST',
+						url: 'api/tiktok/product/collection',
+						data: {
+							id: this.id,
+							is_collection: this.isShowLove
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data)						
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
 			},
 			goCard() {
 				uni.navigateTo({
@@ -611,13 +730,13 @@
 	}
 
 	.menuLogo {
-		width: 24rpx;
-		height: 24rpx;
+		width: 32rpx;
+		height: 32rpx;
 	}
 
 	.priceContent {
 		width: 617rpx;
-		font-size: 22rpx;
+		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #28A897;
@@ -758,8 +877,14 @@
 	}
 
 	/* 商品图片展示 */
-	.spImages {}
-
+	.spImages {
+		width: 100%;
+		display: block;
+	}
+	/deep/ .spImages img{
+		width: 100%;
+		display: block;
+	}
 	.spImage {
 		width: 100%;
 		display: block;

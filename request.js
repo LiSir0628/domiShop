@@ -18,7 +18,8 @@ function myRequest(options){
 	// #endif
 	return new Promise((res,rej)=>{
 		uni.request({
-			url:baseURL + options.url,
+			url: options.url.indexOf("http") == -1 ? baseURL + options.url : options.url,
+			//url:baseURL + options.url,
 			method:options.method || 'GET',
 			data:options.data,
 			header:headers,
@@ -33,7 +34,7 @@ function myRequest(options){
 					return false;
 				} else if(data.data.code==404){
 					//请求的内容为空
-					
+					res(data)
 				} else{
 					//其他状态
 					res(data)

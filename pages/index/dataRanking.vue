@@ -51,14 +51,15 @@
 							<view class="rankText">{{index+1}}</view>
 						</view>
 					</view>
-					<image class="photo" :src="item.image"></image>
+					<image v-if="item.image" class="photo" :src="item.image"></image>
+					<image v-else class="photo" src="../../static/images/product/icon18.png"></image>
 				</view>
 				<view class="merRankRight">
 					<view class="merRankTop">
 						<view class="spTitle ellip">{{item.title}}</view>
 						<view class="profit">
-							<view class="price">Unit Price: ${{item.unitPrice}}</view>
-							<view class="ratio">Commission ratio: {{item.commission_ratio}}%</view>
+							<view class="price">Unit Price: ${{item.unit_price}}</view>
+							<view class="ratio">Commission ratio: {{(item.commission_ratio*100).toFixed()}}%</view>
 						</view>
 					</view>
 					<view class="merRankBottom">
@@ -206,6 +207,10 @@
 					name: 'Membership ranking'
 				}],
 				orderStateList: [{
+					id: '',
+					name: 'All',
+					value: ''
+				},{
 					id: 1,
 					name: 'Today',
 					value: 1
@@ -235,89 +240,98 @@
 				isShowTabHeight: false,
 
 				citem: 0,
-				prepareState: 'Today',
-				orderState: 'Today',
+				prepareState: 'All',
+				orderState: 'All',
 				accountName: 'All of them',
 
 				merIndex: 0,
 				// merRankList: [],
+				
+				rank_type: 1,
+				days: '',
+				isRequest: true,
+				page: 1,
+				limit: 20,
+				total_limit: 0,
+				total_page: 0,
 				lists:{
-					merchandise_ranking: [{
-						id: 1,
-						rank: 1,
-						image: '../../static/images/home/photo.png',
-						title: 'shangpinmingcheng...',
-						unitPrice: '12215466',
-						commission_ratio: '10',
-						cumulative_sales: '12215466',
-						accumulated_commission: '12215466'
-					}, {
-						id: 2,
-						rank: 2,
-						image: '../../static/images/home/photo02.png',
-						title: 'shangpinmingcheng...',
-						unitPrice: '12215466',
-						commission_ratio: '20',
-						cumulative_sales: '12215466',
-						accumulated_commission: '12215466'
-					}, {
-						id: 3,
-						rank: 3,
-						image: '../../static/images/home/photo03.png',
-						title: 'shangpinmingcheng...',
-						unitPrice: '12215466',
-						commission_ratio: '30',
-						cumulative_sales: '12215466',
-						accumulated_commission: '12215466'
-					}, {
-						id: 4,
-						rank: 4,
-						image: '../../static/images/home/photo.png',
-						title: 'shangpinmingcheng...',
-						unitPrice: '12215466',
-						commission_ratio: '40',
-						cumulative_sales: '12215466',
-						accumulated_commission: '12215466'
-					}, {
-						id: 4,
-						rank: 4,
-						image: '../../static/images/home/photo.png',
-						title: 'shangpinmingcheng...',
-						unitPrice: '12215466',
-						commission_ratio: '40',
-						cumulative_sales: '12215466',
-						accumulated_commission: '12215466'
-					}, {
-						id: 4,
-						rank: 4,
-						image: '../../static/images/home/photo.png',
-						title: 'shangpinmingcheng...',
-						unitPrice: '12215466',
-						commission_ratio: '40',
-						cumulative_sales: '12215466',
-						accumulated_commission: '12215466'
-					}],
-					account_ranking:[{
-						id: 1,
-						rank: 1,
-						tiktok_photo: '../../static/images/home/photo02.png',
-						member_id: "1",
-						name: "namenamenamename",
-						account_id: "15494965",
-						tiktok_name: "Account Name",
-						cumulative_sales: "10000",
-						accumulated_commission: "1000"
-					}],
-					membership_ranking:[{
-						id: 1,
-						rank: 1,
-						member_photo: '../../static/images/home/photo03.png',
-						member_id: "1",
-						name: "namenamenamename",
-						cumulative_sales: "10000",
-						subordinate_num: 5,
-						bind_account_num: 10
-					}],
+					merchandise_ranking: [],
+					// merchandise_ranking: [{
+					// 	id: 1,
+					// 	rank: 1,
+					// 	image: '../../static/images/home/photo.png',
+					// 	title: 'shangpinmingcheng...',
+					// 	unit_price: '12215466',
+					// 	commission_ratio: '10',
+					// 	cumulative_sales: '12215466',
+					// 	accumulated_commission: '12215466'
+					// }, {
+					// 	id: 2,
+					// 	rank: 2,
+					// 	image: '../../static/images/home/photo02.png',
+					// 	title: 'shangpinmingcheng...',
+					// 	unit_price: '12215466',
+					// 	commission_ratio: '20',
+					// 	cumulative_sales: '12215466',
+					// 	accumulated_commission: '12215466'
+					// }, {
+					// 	id: 3,
+					// 	rank: 3,
+					// 	image: '../../static/images/home/photo03.png',
+					// 	title: 'shangpinmingcheng...',
+					// 	unit_price: '12215466',
+					// 	commission_ratio: '30',
+					// 	cumulative_sales: '12215466',
+					// 	accumulated_commission: '12215466'
+					// }, {
+					// 	id: 4,
+					// 	rank: 4,
+					// 	image: '../../static/images/home/photo.png',
+					// 	title: 'shangpinmingcheng...',
+					// 	unit_price: '12215466',
+					// 	commission_ratio: '40',
+					// 	cumulative_sales: '12215466',
+					// 	accumulated_commission: '12215466'
+					// }, {
+					// 	id: 4,
+					// 	rank: 4,
+					// 	image: '../../static/images/home/photo.png',
+					// 	title: 'shangpinmingcheng...',
+					// 	unit_price: '12215466',
+					// 	commission_ratio: '40',
+					// 	cumulative_sales: '12215466',
+					// 	accumulated_commission: '12215466'
+					// }, {
+					// 	id: 4,
+					// 	rank: 4,
+					// 	image: '../../static/images/home/photo.png',
+					// 	title: 'shangpinmingcheng...',
+					// 	unit_price: '12215466',
+					// 	commission_ratio: '40',
+					// 	cumulative_sales: '12215466',
+					// 	accumulated_commission: '12215466'
+					// }],
+					// account_ranking:[{
+					// 	id: 1,
+					// 	rank: 1,
+					// 	tiktok_photo: '../../static/images/home/photo02.png',
+					// 	member_id: "1",
+					// 	name: "namenamenamename",
+					// 	account_id: "15494965",
+					// 	tiktok_name: "Account Name",
+					// 	cumulative_sales: "10000",
+					// 	accumulated_commission: "1000"
+					// }],
+					// membership_ranking:[{
+					// 	id: 1,
+					// 	rank: 1,
+					// 	member_photo: '../../static/images/home/photo03.png',
+					// 	member_id: "1",
+					// 	name: "namenamenamename",
+					// 	cumulative_sales: "10000",
+					// 	subordinate_num: 5,
+					// 	bind_account_num: 10
+					// }],
 				},
 			}
 		},
@@ -337,7 +351,81 @@
 				this.accountName = this.$store.state.accountName
 			}
 		},
+		onReachBottom() {
+			//上拉加载，请求记得限制。
+			if (this.isRequest) {
+				if (this.page < this.total_page) {
+					console.log("选品页触底了,加载一下")
+					this.page = this.page + 1
+					this.getHttpLists()
+				} else {
+					console.log("页码已达到最大，无法再次请求")
+				}
+				this.$forceUpdate()
+			} else {
+				console.log("正在请求，无法再次请求")
+			}
+		},
+		mounted() {
+			this.getHttpLists("one")
+		},
 		methods: {
+			getHttpLists(type) {
+				this.isRequest = false
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/index/ranking',
+						data: {
+							rank_type: 1,
+							days: this.days,
+							page: this.page,
+							limit: this.limit
+						}
+					})
+					.then(res => {
+						this.isRequest = true
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data.merchandise_ranking)
+							let dataList = res.data.data.merchandise_ranking
+							if (type == "one") {
+								this.lists.merchandise_ranking = dataList.rank_lists
+
+								this.page = dataList.page
+								this.total_limit = dataList.total_limit
+								this.total_page = Math.ceil(dataList.total_limit / dataList.limit)
+								console.log(this.total_page)
+							} else {
+								//下拉加载更多
+								this.lists.merchandise_ranking = this.lists.merchandise_ranking.concat(dataList.rank_lists)
+							
+								this.page = dataList.page
+								this.total_page = Math.ceil(dataList.total_limit / dataList.limit)
+							}
+							
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						this.isRequest = true
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			back() {
 				window.history.go(-1)
 			},
@@ -375,6 +463,11 @@
 				} else {
 					this.orderState = this.prepareState
 					this.$refs.popup.close()
+					
+					this.days = this.orderStateList[this.citem].value
+					this.page = 1
+					this.lists.merchandise_ranking = []
+					this.getHttpLists("one")
 				}
 			},
 			goSwitch() {
@@ -508,8 +601,9 @@
 
 	/* 商品排行列表 */
 	.merRankList {
-		margin: 88rpx auto 0;
-		padding: 30rpx;
+		/* margin: 88rpx auto 0; */
+		margin: 0 auto;
+		padding: 118rpx 30rpx 30rpx 30rpx;
 	}
 
 	.merRank {
@@ -592,7 +686,7 @@
 	.photo {
 		width: 88rpx;
 		height: 88rpx;
-		background: #28A897;
+		/* background: #28A897; */
 		border-radius: 8rpx;
 		display: block;
 	}
@@ -794,7 +888,7 @@
 	/* 下拉框弹窗 */
 	.popup-content {
 		width: 750rpx;
-		height: 564rpx;
+		height: 644rpx;
 		/* display: flex;
 		align-items: center;
 		justify-content: center; */

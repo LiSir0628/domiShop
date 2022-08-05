@@ -2,16 +2,16 @@
 	<view class="container">
 		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Receiving address"></uni-nav-bar>
 		<view class="addressList" :style="contentHeight" v-if="lists.length > 0">
-			<view class="addressModular" :class="{'activeModular': item.isDefault}" v-for="item,index in lists">
-				<image v-if="!item.isDefault" class="addressPhoto" src="../../static/images/user/icon03.png"></image>
+			<view class="addressModular" :class="{'activeModular': item.is_default}" v-for="item,index in lists">
+				<image v-if="!item.is_default" class="addressPhoto" src="../../static/images/user/icon03.png"></image>
 				<image v-else class="addressPhoto" src="../../static/images/user/icon04.png"></image>
 				<view class="addressContent">
 					<view class="addressUserMsg">
 						<view class="addressUserName">{{item.name}}</view>
 						<view class="addressTel">{{item.tel}}</view>
-						<view v-if="item.isDefault" class="default">Default</view>
+						<view v-if="item.is_default" class="default">Default</view>
 					</view>
-					<view class="address">{{item.address}}</view>
+					<view class="address">{{item.detail}}</view>
 				</view>
 				<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
 			</view>
@@ -35,22 +35,28 @@
 				contentHeight: {
 					'height': '1080rpx'
 				},
-				// lists:[],
-				lists:[{
-					id: 1,
-					photo: '../../static/images/home/photo.png',
-					name: 'name',
-					tel: 12563622222,
-					isDefault: true,
-					address: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong"	
-				},{
-					id: 2,
-					photo: '../../static/images/home/photo.png',
-					name: 'name',
-					tel: 12563622222,
-					isDefault: false,
-					address: "中文中文中文中文中文中文中文中文"	
-				}],
+				lists:[],
+				// lists:[{
+				// 	id: 1,	
+				// 	name: 'name',
+				// 	tel: 12563622222,
+				// 	country_id: 1,
+				// 	country_name: "中国",
+				// 	city_id: 2,
+				// 	city_name: "福州市",
+				// 	detail: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong",
+				// 	is_default: false
+				// },{
+				// 	id: 2,	
+				// 	name: 'name',
+				// 	tel: 12563622222,
+				// 	country_id: 1,
+				// 	country_name: "中国",
+				// 	city_id: 2,
+				// 	city_name: "福州市",
+				// 	detail: "中文中文中文中文中文中文中文中文",
+				// 	is_default: true,
+				// }],
 			}
 		},
 		onLoad(option) {
@@ -71,7 +77,46 @@
 				},
 			})
 		},
+		created() {
+			this.getHttpLists()
+		},
 		methods: {
+			getHttpLists() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/user/address',
+						data: {
+							
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							this.lists = res.data.data
+								
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			back() {
 				window.history.go(-1)
 			},
