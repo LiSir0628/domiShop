@@ -150,7 +150,7 @@
 						url: 'api/tiktok/product/collection',
 						data: {
 							id: this.lists[index].product_id,
-							is_collection: false
+							is_collection: 0
 						}
 					})
 					.then(res => {

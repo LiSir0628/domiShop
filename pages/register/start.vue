@@ -13,6 +13,13 @@
 			
 			}
 		},
+		mounted() {
+			setTimeout(()=>{
+				uni.navigateTo({
+					url: '/pages/product/options'
+				});
+			},2000)
+		},
 		methods: {
 	
 		}

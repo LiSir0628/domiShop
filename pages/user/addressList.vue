@@ -2,18 +2,19 @@
 	<view class="container">
 		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Receiving address"></uni-nav-bar>
 		<view class="addressList" :style="contentHeight" v-if="lists.length > 0">
-			<view class="addressModular" :class="{'activeModular': item.is_default}" v-for="item,index in lists">
-				<image v-if="!item.is_default" class="addressPhoto" src="../../static/images/user/icon03.png"></image>
-				<image v-else class="addressPhoto" src="../../static/images/user/icon04.png"></image>
+			<view class="addressModular" :class="{'activeModular': item.is_default == 1}" v-for="item,index in lists">
+				<image v-if="item.is_default == 1" class="addressPhoto" src="../../static/images/user/icon04.png"></image>
+				<image v-else class="addressPhoto" src="../../static/images/user/icon03.png"></image>
 				<view class="addressContent">
 					<view class="addressUserMsg">
 						<view class="addressUserName">{{item.name}}</view>
 						<view class="addressTel">{{item.tel}}</view>
-						<view v-if="item.is_default" class="default">Default</view>
+						<view v-if="item.is_default == 1" class="default">Default</view>
 					</view>
-					<view class="address">{{item.detail}}</view>
+					<view class="address">{{item.country_name}} {{item.city_name}} {{item.detail}}</view>
 				</view>
-				<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
+				<image class="del" src="../../static/images/user/icon14.png" @click="del(index)"></image>
+				<image class="edit" src="../../static/images/user/icon15.png" @click="edit(index)"></image>
 			</view>
 		</view>
 		<view class="addressList" :style="contentHeight" v-else>
@@ -77,7 +78,10 @@
 				},
 			})
 		},
-		created() {
+		// created() {
+		// 	this.getHttpLists()
+		// },
+		onShow() {
 			this.getHttpLists()
 		},
 		methods: {
@@ -120,8 +124,47 @@
 			back() {
 				window.history.go(-1)
 			},
+			del(index) {
+				//默认地址不允许删除
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'POST',
+						url: 'api/tiktok/user/address/remove',
+						data: {
+							id: this.lists[index].id
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data)
+							this.lists.splice(index,1)
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			edit(index) {
 				console.log("修改地址" + index)
+				uni.navigateTo({
+					url: './address?id=' + this.lists[index].id
+				});
 			},
 			newAdd() {
 				console.log("新增地址")
@@ -181,7 +224,8 @@
 	}
 	/* 主要内容 */
 	.addressContent{
-		width: 520rpx;
+		/* width: 520rpx; */
+		width: 460rpx;
 		padding: 20rpx 0 14rpx;
 	}
 	.addressUserMsg{
@@ -227,10 +271,15 @@
 	}
 	
 	
+	.del{
+		width: 31rpx;
+		height: 32rpx;
+		margin: 48rpx 0 54rpx;
+	}
 	.edit{
-		width: 24rpx;
-		height: 24rpx;
-		margin: 55rpx 0;
+		width: 28rpx;
+		height: 30rpx;
+		margin: 48rpx 0 56rpx;
 	}
 	
 	.newAddress{

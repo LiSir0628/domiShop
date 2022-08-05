@@ -69,7 +69,7 @@
 				});
 				this.$myRequest({
 					method: 'POST',
-					url: 'login',
+					url: 'https://user.mini.zhishukongjian.com/login',
 					data:{
 						email: this.account,
 						code: this.code,
@@ -81,6 +81,10 @@
 					if(res.data.code == 200){
 						console.log(res.data.data);
 						uni.setStorageSync('token', res.data.data.token);
+						//登录成功 跳转数据页。
+						uni.navigateTo({
+							url: '/pages/index/index'
+						});
 					} else {
 						uni.showModal({
 							title: 'TIP',

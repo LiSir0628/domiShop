@@ -4,31 +4,39 @@
 		<view class="example">
 			<view class="modular">
 				<view class="modularTitle">Name of consignee</view>
-				<input class="uni-input" v-model="baseFormData.name" placeholder="enter the name of the consignee" />
+				<input class="uni-input" v-model="name" placeholder="enter the name of the consignee" />
 			</view>
 
 			<view class="modular">
 				<view class="modularTitle">Contact</view>
-				<input class="uni-input" v-model="baseFormData.tel" placeholder="enter your contact information" />
+				<input class="uni-input" v-model="tel" placeholder="enter your contact information" />
 			</view>
 			
 			<view class="modular">
 				<view class="modularTitle">In the area</view>
-				<uni-data-picker placeholder="Select Harvest Address" popup-title="请选择所在地区" :localdata="dataTree" v-model="classes"
-					@change="onchange" @nodeclick="onnodeclick" @popupopened="onpopupopened" @popupclosed="onpopupclosed">
-				</uni-data-picker>
+				<picker v-if="array.length > 0" @change="bindPickerChange" :value="index" range-key="name" :range="array">
+					<view class="uni-input">{{array[index].name}}</view>
+				</picker>
+			</view>
+			
+			<view class="modular">
+				<view class="modularTitle">In the city</view>
+				<picker v-if="arrayCity.length > 0" @change="bindPickerCaityChange" :value="cindex" range-key="name" :range="arrayCity">
+					<view class="uni-input">{{arrayCity[cindex].name}}</view>
+				</picker>
+				<!-- <view v-else class="noData">暂无数据</view> -->
 			</view>
 
 			<view class="modular modularAddress">
 				<view class="modularTitle">Detailed address</view>
-				<!-- <textarea v-model="baseFormData.address" placeholder="Please enter a detailed address" /> -->
-				<input class="uni-input" v-model="baseFormData.detail" placeholder="Please enter a detailed address" />
+				<!-- <textarea v-model="address" placeholder="Please enter a detailed address" /> -->
+				<input class="uni-input" v-model="detail" placeholder="Please enter a detailed address" />
 			</view>
 
 			<view class="modular modularSwitch">
 				<view class="modularTitle">To the default address</view>
-				<!-- <uni-data-checkbox v-model="baseFormData.sex" :localdata="sexs" /> -->
-				<switch :checked="baseFormData.is_default" color="#FF7436" @change="switchChange" />
+				<!-- <uni-data-checkbox v-model="sex" :localdata="sexs" /> -->
+				<switch :checked="is_default" color="#FF7436" @change="switchChange" />
 			</view>
 			<view class="btn" @click="submit">Save</view>
 		</view>
@@ -42,79 +50,72 @@
 			return {
 				id: "",
 				// 基础表单数据
-				baseFormData: {
-					name: '',
-					tel: '',
-					detail: '',
-					is_default: true
-				},
+				name: '',
+				tel: '',
+				detail: '',
+				is_default: false,
 				
-				classes: '',
-				areaList: [],
-				dataTree: [],
-				// dataTree: [{
-				// 		text: "一年级",
-				// 		value: "1-0",
-				// 		children: [{
-				// 				text: "1.1班",
-				// 				value: "1-1"
-				// 			},
-				// 			{
-				// 				text: "1.2班",
-				// 				value: "1-2"
-				// 			}
-				// 		]
-				// 	},
-				// 	{
-				// 		text: "二年级",
-				// 		value: "2-0",
-				// 		children: [{
-				// 				text: "2.1班",
-				// 				value: "2-1"
-				// 			},
-				// 			{
-				// 				text: "2.2班",
-				// 				value: "2-2"
-				// 			}
-				// 		]
-				// 	},
-				// 	{
-				// 		text: "三年级",
-				// 		value: "3-0",
-				// 		disable: true
-				// 	}
-				// ],
+				country_id: "",
+				country_name: "",
+				city_id: "",
+				city_name: "",
+				
+				array: [],
+				index: 0,
+				arrayCity: [],
+				cindex: 0,
 			}
 		},
-		created() {
-			this.getCountry()
-			
-			//this.$handleTree()
+		onLoad(option) {
+			//如果参数有值，渠道入口-请求
+			//如果首页、分类特殊值有值-请求（不与上方同时触发）
+			if (option.id){
+				this.id = option.id
+				this.getHttpLists()
+			} else {
+				this.getCountry("one")
+			}
 		},
 		methods: {
-			getCountry() {
+			bindPickerChange(e) {
+				console.log('国家选择，携带值为', e.detail.value)
+				this.index = e.detail.value
+				this.country_id = this.array[this.index].id
+				this.country_name = this.array[this.index].name
+				this.city(this.country_id)
+			},
+			bindPickerCaityChange(e) {
+				console.log('城市选择，携带值为', e.detail.value)
+				this.cindex = e.detail.value
+				this.city_id = this.arrayCity[this.cindex].id
+				this.city_name = this.arrayCity[this.cindex].name
+			},
+			getHttpLists() {
 				uni.showLoading({
 					title: 'loading...',
 					mask: true
 				});
 				this.$myRequest({
 						method: 'GET',
-						url: 'https://user.mini.zhishukongjian.com/country',
+						url: 'api/tiktok/user/address',
 						data: {
-							limit: 10000
+							id: this.id
 						}
 					})
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							//this.dataTree = this.$handleTree(res.data.data, "id", "parentId");
-							this.dataTree = res.data.data
-							for(let i in this.dataTree){
-								this.dataTree[i].text = this.dataTree[i].name
-								this.dataTree[i].value = this.dataTree[i].id
-								this.dataTree[i].children = []
-							}
-							console.log(this.dataTree)
+							console.log(res.data.data)
+							this.id = res.data.data.id
+							this.name = res.data.data.name
+							this.tel = res.data.data.tel
+							this.detail = res.data.data.detail
+							this.is_default = res.data.data.is_default == 1 ? true : false
+							this.country_id = res.data.data.country_id
+							this.country_name = res.data.data.country_name
+							this.city_id = res.data.data.city_id
+							this.city_name = res.data.data.city_name
+							this.getCountry("one")
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -133,7 +134,60 @@
 						})
 				})
 			},
-			city(country_id) {
+			getCountry(type) {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'https://user.mini.zhishukongjian.com/country',
+						data: {
+							limit: 10000
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							this.array = res.data.data
+							if(this.id){
+								for(let i in this.array){
+									if(this.array[i].id == this.country_id){
+										console.log(this.array[i])
+										this.index = i
+									}
+								}
+							}
+							//console.log(this.array)
+							//根据index获取country_id值
+							this.country_id = this.array[this.index].id
+							this.country_name = this.array[this.index].name
+							if(type == "one"){
+								this.city(this.array[this.index].id, this.city_id)
+							}
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
+			city(country_id, city_id) {
+				this.city_id = city_id ? city_id : ""
+				this.city_name = ""
+				this.cindex = 0
+				this.arrayCity = []
 				uni.showLoading({
 					title: 'loading...',
 					mask: true
@@ -148,17 +202,19 @@
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							for(let i in this.dataTree){
-								if(this.dataTree[i].id == country_id){
-									this.dataTree[i].children = res.data.data
-									for(let k in this.dataTree[i].children){
-										this.dataTree[i].children[k].text = this.dataTree[i].children[k].name
-										this.dataTree[i].children[k].value = this.dataTree[i].children[k].id
+							this.arrayCity = res.data.data
+							if(this.id){
+								for(let i in this.arrayCity){
+									if(this.arrayCity[i].id == this.city_id){
+										console.log(this.arrayCity[i])
+										this.cindex = i
 									}
 								}
 							}
-							this.$forceUpdate()
-							console.log(this.dataTree)
+							//console.log(this.arrayCity)
+							//根据cindex获取city_id值
+							this.city_id = this.arrayCity[this.cindex].id
+							this.city_name = this.arrayCity[this.cindex].name
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -181,12 +237,9 @@
 				window.history.go(-1)
 			},
 			switchChange() {
-				this.baseFormData.is_default = !this.baseFormData.is_default
+				this.is_default = !this.is_default
 			},
 			submit() {
-				console.log(this.baseFormData)
-				console.log(this.areaList);
-				return
 				uni.showLoading({
 					title: 'loading...',
 					mask: true
@@ -196,21 +249,33 @@
 						url: 'api/tiktok/user/address',
 						data: {
 							id: this.id,
-							name: this.baseFormData.name,
-							tel: this.baseFormData.tel,
-							country_id: "",
-							country_name: "",
-							city_id: "",
-							city_name: "",
-							detail: this.baseFormData.detail,
-							is_default: this.baseFormData.is_default,
+							name: this.name,
+							tel: this.tel,
+							country_id: this.country_id,
+							country_name: this.country_name,
+							city_id: this.city_id,
+							city_name: this.city_name,
+							detail: this.detail,
+							is_default: this.is_default ? 1 : 0,
 						}
 					})
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							console.log(res.data)
-								
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+							//返回上一页
+							history.back()
+							
+							// window.history.go(-1)
+							
+							// uni.navigateBack({
+							// 	delta:1,
+							// })
+							
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -228,29 +293,6 @@
 							showCancel: false,
 						})
 				})
-			},
-
-			onnodeclick(e) {
-				console.log(e);
-				console.log("第一步")
-				console.log(e.parent_value)
-				if(!e.parent_value){
-					this.city(e.id)
-				}
-			},
-			onpopupopened(e) {
-				// console.log('popupopened');
-				// console.log("第二步")
-			},
-			onpopupclosed(e) {
-				// console.log('popupclosed');
-				// console.log("第三步")
-			},
-			onchange(e) {
-				this.areaList = e
-				console.log(this.areaList);
-				console.log("第四步")
-				console.log("取到值了")
 			},
 		}
 	}
@@ -281,7 +323,14 @@
 		font-weight: bold;
 		color: #0B0B0B;
 	}
-
+	
+	.noData{
+		font-size: 26rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #999999;
+	}
+	
 	.modularAddress {
 		margin-top: 19rpx;
 	}

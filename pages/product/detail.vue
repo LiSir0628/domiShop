@@ -196,15 +196,15 @@
 					
 					<view class="addressList" :style="contentHeight">
 						<view class="addressModular" :class="{'activeModular': point == index}" v-for="item,index in list" @click="chooseAddress(index)">
-							<image v-if="!point == index" class="addressPhoto" src="../../static/images/user/icon03.png"></image>
-							<image v-else class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
+							<image v-if="point == index" class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
+							<image v-else class="addressPhoto" src="../../static/images/user/icon03.png"></image>
 							<view class="addressContent">
 								<view class="addressUserMsg">
 									<view class="addressUserName">{{item.name}}</view>
 									<view class="addressTel">{{item.tel}}</view>
-									<view v-if="item.is_default" class="default">Default</view>
+									<view v-if="item.is_default == 1" class="default">Default</view>
 								</view>
-								<view class="address">{{item.detail}}</view>
+								<view class="address">{{item.country_name}} {{item.city_name}} {{item.detail}}</view>
 							</view>
 							<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
 							<image v-if="point == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
@@ -307,27 +307,28 @@
 				contentHeight: {
 					'height': '720rpx'
 				},
-				list:[{
-					id: 1,
-					name: 'name',
-					tel: 12563622222,
-					country_id: 1,
-					country_name: "中国",
-					city_id: 2,
-					city_name: "福州市",
-					detail: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong",
-					is_default: true
-				},{
-					id: 2,
-					name: 'name',
-					tel: 12563622222,
-					country_id: 1,
-					country_name: "中国",
-					city_id: 2,
-					city_name: "福州市",
-					detail: "中文中文中文中文中文中文中文中文",
-					is_default: false,
-				}],
+				list: [],
+				// list:[{
+				// 	id: 1,
+				// 	name: 'name',
+				// 	tel: 12563622222,
+				// 	country_id: 1,
+				// 	country_name: "中国",
+				// 	city_id: 2,
+				// 	city_name: "福州市",
+				// 	detail: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong",
+				// 	is_default: 1
+				// },{
+				// 	id: 2,
+				// 	name: 'name',
+				// 	tel: 12563622222,
+				// 	country_id: 1,
+				// 	country_name: "中国",
+				// 	city_id: 2,
+				// 	city_name: "福州市",
+				// 	detail: "中文中文中文中文中文中文中文中文",
+				// 	is_default: 0,
+				// }],
 
 			}
 		},
@@ -341,12 +342,50 @@
 			if (option.id) this.id = option.id
 			this.getHttpLists()
 		},
+		onShow() {
+			this.getHttpAddress()
+		},
 		mounted() {
 			//this.isShowLove = this.is_collection
 			//console.log(this.isShowLove)
 			this.$forceUpdate()
 		},
 		methods: {
+			getHttpAddress() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/user/address',
+						data: {
+							
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							this.list = res.data.data
+								
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			getHttpLists() {
 				uni.showLoading({
 					title: 'loading...',
@@ -375,7 +414,8 @@
 							this.banner = arr // 轮播图数据处理
 							console.log(this.banner)
 							this.stock = obj.stock
-							this.is_collection = obj.is_collection
+							this.is_collection = obj.is_collection == 1 ? true : false
+							console.log(this.is_collection)
 							this.isShowLove = this.is_collection
 							this.left_icon = obj.left_icon
 							this.right_icon = obj.right_icon
@@ -469,7 +509,7 @@
 						url: 'api/tiktok/product/collection',
 						data: {
 							id: this.id,
-							is_collection: this.isShowLove
+							is_collection: this.isShowLove ? 1 : 0
 						}
 					})
 					.then(res => {
@@ -549,12 +589,21 @@
 			},
 			edit(index) {
 				console.log("修改地址" + index)
+				uni.navigateTo({
+					url: '/pages/user/address?id=' + this.list[index].id
+				});
 			},
 			addAddress() {
 				console.log("新增收货地址")
+				uni.navigateTo({
+					url: "/pages/user/address"
+				});
 			},
 			confirmedCollection() {
 				this.cPoint = this.point
+				console.log("选择地址id:" + this.cPoint)
+				console.log(this.list[this.cPoint])
+				console.log(this.list[this.cPoint].id)
 				this.$refs.popupCollection.close()
 				// 成功获取选择用户地址，此时应该对用户地址进行替换
 			},
