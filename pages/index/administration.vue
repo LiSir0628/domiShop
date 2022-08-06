@@ -15,7 +15,7 @@
 				</view>
 			</view>
 			<!-- <view class="btn" @click="add">New TIKTOK account</view> -->
-			<view class="btn" @click="open('center')">New TIKTOK account</view>
+			<view class="btn" @click="open('bottom')">New TIKTOK account</view>
 		</view>
 		<!-- <view class="mask" v-if="isShowMask" @click="close"> -->
 		<!-- <uni-popup ref="popup" background-color="#fff" @maskClick="close">
@@ -45,12 +45,15 @@
 			</view>
 		</uni-popup> -->
 		<!-- </view> -->
-		<add-admin ref="addAdmin"></add-admin>
+		
+		<!-- <add-admin ref="addAdmin"></add-admin> -->
+		<new-add ref="newAdd"></new-add>
 	</view>
 </template>
 
 <script>
 	import addAdmin from "../common/addAdmin.vue"
+	import newAdd from "../common/newAdd.vue"
 	export default {
 		data() {
 			return {
@@ -110,7 +113,8 @@
 			}
 		},
 		components: {
-			addAdmin
+			addAdmin,
+			newAdd
 		},
 		onLoad(option) {
 			var that = this;
@@ -160,7 +164,8 @@
 				// this.time = 59
 				// this.openTimer()
 				
-				this.$refs.addAdmin.open()
+				//this.$refs.addAdmin.open()
+				this.$refs.newAdd.open()
 			},
 			close() {
 				// this.$refs.popup.close()
