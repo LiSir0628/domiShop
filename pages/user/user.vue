@@ -121,7 +121,11 @@
 			goClick(index) {
 				// id是3 客服，id是4 退出登錄。
 				if(this.lists[index].id == 4){
-					console.log("我要退出拉！")
+					//退出登录，清空token值，跳转登录页
+					uni.setStorageSync('token', "");
+					uni.navigateTo({
+						url: '/pages/register/login'
+					});
 				} else if(this.lists[index].id == 3){
 					this.$refs.popup.open("center")
 				} else {

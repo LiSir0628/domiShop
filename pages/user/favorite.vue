@@ -3,7 +3,7 @@
 		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Favorite list"></uni-nav-bar>
 		<view class="content">
 			<view v-if="lists.length > 0">
-				<view class="sp" v-for="item,index in lists">
+				<view class="sp" v-for="item,index in lists" @click="goDetail(index)">
 					<view class="spTop">
 						<image v-if="item.image" class="spLogo" :src="item.image"></image>
 						<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
@@ -13,7 +13,7 @@
 								<view class="price">$ {{item.unit_price}}</view>
 								<view class="favorite">
 									<view class="commission">High Commission: {{(item.commission_ratio*100).toFixed()}}%</view>
-									<image class="love" src="../../static/images/detail/icon16.png" @click="remove(index)"></image>
+									<image class="love" src="../../static/images/detail/icon16.png" @click.stop="remove(index)"></image>
 								</view>
 							</view>
 						</view>
@@ -77,10 +77,10 @@
 			}
 		},
 		onShow() {
-			// this.getHttpLists("one")
+			this.getHttpLists("one")
 		},
 		mounted() {
-			this.getHttpLists("one")
+			//this.getHttpLists("one")
 		},
 		methods: {
 			getHttpLists(type) {
@@ -139,6 +139,11 @@
 			},
 			back() {
 				window.history.go(-1)
+			},
+			goDetail(index) {
+				uni.navigateTo({
+					url: '/pages/product/detail?id=' + this.lists[index].product_id
+				});
 			},
 			remove(index) {
 				uni.showLoading({

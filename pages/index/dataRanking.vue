@@ -476,8 +476,13 @@
 				});
 			},
 			merIndexChoose(id) {
-				if (this.merIndex == id) return
-				this.merIndex = id
+				console.log(id)
+				uni.navigateTo({
+					url: '/pages/product/detail?id=' + this.lists.merchandise_ranking[id].id
+				});
+				
+				// if (this.merIndex == id) return
+				// this.merIndex = id
 			}
 		}
 	}

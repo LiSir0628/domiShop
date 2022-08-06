@@ -6,7 +6,7 @@
 		<view class="content">
 			<input class="account" v-model="account" placeholder="Please enter your account number" />
 			<view class="passInput">
-				<input class="password" v-model="passWord" placeholder="please set your password" />
+				<input :password="!isShowEye" class="password" v-model="passWord" placeholder="please set your password" />
 				<image v-if="isShowEye" class="greyEye" src="../../static/images/register/icon07.png" @click="exhibition"></image>
 				<image v-else class="greyNoEye" src="../../static/images/register/icon06.png" @click="exhibition"></image>
 				<!-- <view class="eyeChoose">
@@ -30,15 +30,19 @@
 	export default {
 		data() {
 			return {
-				isShowEye: true,
+				isShowEye: false,
 				account: '',
 				code: '',
 				passWord: '',
 			}
 		},
+		mounted() {
+			
+		},
 		methods: {
 			exhibition() {
 				this.isShowEye = !this.isShowEye
+
 				// 如果是true为密码可见，false为密码不可见
 			},
 			goRegister() {

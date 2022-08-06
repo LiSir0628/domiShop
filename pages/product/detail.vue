@@ -152,9 +152,12 @@
 						<image class="addClose" src="../../static/images/detail/icon13.png" @click="closeAdd"></image>
 					</view>
 					
-					<view class="popupCenter">
+					<scroll-view class="popupCenter" :scroll-top="scrollHeightAdd" scroll-y="true" @scroll="scrollAdd"
+						:show-scrollbar="false">
 						<view class="userMsg" :class="{'userMsgActive': cindex == index }" v-for="item,index in userList" @click="chooseTiktok(index)">
-							<image class="photo" :src="item.photo"></image>
+							<image v-if="item.image" class="photo" :src="item.image"></image>
+							<image v-else class="photo" src="../../static/images/common/photo.png"></image>
+							<!-- <image v-else class="photo" src="../../static/images/home/photo.png"></image> -->
 							<view class="useMsg">
 								<view class="userName">{{item.name}}</view>
 								<view class="userFans">
@@ -163,7 +166,28 @@
 										{{item.fans}}
 									</view>
 									<view class="sales">
-										<!-- Window sales: {{item.sales}} -->
+										Likes: {{item.praise_nums}}
+									</view>
+								</view>
+								<view class="isFree">Meet the conditions of free sample</view>
+								<!-- <view class="isFree">Meet the conditions of free sample</view> -->											
+							</view>
+							<image v-if="cindex == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
+						</view>
+					</scroll-view>
+					<!-- <view class="popupCenter">
+						<view class="userMsg" :class="{'userMsgActive': cindex == index }" v-for="item,index in userList" @click="chooseTiktok(index)">
+							<image v-if="item.image" class="photo" :src="item.image"></image>
+							<image v-else class="photo" src="../../static/images/home/photo.png"></image>
+							<view class="useMsg">
+								<view class="userName">{{item.name}}</view>
+								<view class="userFans">
+									<view class="FansNum">
+										<image class="userLogo" src="../../static/images/detail/icon09.png"></image>
+										{{item.fans}}
+									</view>
+									<view class="sales">
+										Window sales: {{item.sales}}
 									</view>
 								</view>
 								<view class="isFree">Meet the conditions of free sample</view>								
@@ -171,7 +195,7 @@
 							</view>
 							<image v-if="cindex == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
 						</view>
-					</view>
+					</view> -->
 					
 					<view class="popupBottom">
 						<view class="newAdd" @click="open('center')">
@@ -192,9 +216,9 @@
 					<view class="popupTop">
 						<view class="addTitle">Select Harvest Address</view>
 						<image class="addClose" src="../../static/images/detail/icon13.png" @click="closeCollection"></image>
-					</view>
-					
-					<view class="addressList" :style="contentHeight">
+					</view>			
+					<scroll-view class="addressList" :scroll-top="scrollHeight" scroll-y="true" @scroll="scroll"
+						:show-scrollbar="false" :style="contentHeight">
 						<view class="addressModular" :class="{'activeModular': point == index}" v-for="item,index in list" @click="chooseAddress(index)">
 							<image v-if="point == index" class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
 							<image v-else class="addressPhoto" src="../../static/images/user/icon03.png"></image>
@@ -209,7 +233,23 @@
 							<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
 							<image v-if="point == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
 						</view>
-					</view>
+					</scroll-view>
+					<!-- <view class="addressList" :style="contentHeight">
+						<view class="addressModular" :class="{'activeModular': point == index}" v-for="item,index in list" @click="chooseAddress(index)">
+							<image v-if="point == index" class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
+							<image v-else class="addressPhoto" src="../../static/images/user/icon03.png"></image>
+							<view class="addressContent">
+								<view class="addressUserMsg">
+									<view class="addressUserName">{{item.name}}</view>
+									<view class="addressTel">{{item.tel}}</view>
+									<view v-if="item.is_default == 1" class="default">Default</view>
+								</view>
+								<view class="address">{{item.country_name}} {{item.city_name}} {{item.detail}}</view>
+							</view>
+							<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
+							<image v-if="point == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
+						</view>
+					</view> -->
 					
 					<view class="popupBottom">
 						<view class="newAdd" @click="addAddress">
@@ -240,13 +280,15 @@
 			</view>
 		</uni-popup>
 		
-		<add-admin ref="addAdmin"></add-admin>
+		<!-- <add-admin ref="addAdmin"></add-admin> -->
+		<new-add ref="newAdd" @fatherMethod="fatherMethod"></new-add>
 		<my-popup ref="myPopup" :isSuccess="isSuccess" :text="text"></my-popup>
 	</view>
 </template>
 
 <script>
 	import addAdmin from "../common/addAdmin.vue"
+	import newAdd from "../common/newAdd.vue"
 	import myPopup from "../common/myPopup.vue"
 	export default {
 		data() {
@@ -280,19 +322,20 @@
 				// content: "<p>商品介绍</p>",
 				cindex: 0,
 				kindex: 0,
-				userList:[{
-					id: 1,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng',
-					fans: 450,
-					sales: 56263
-				},{
-					id: 2,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng',
-					fans: 450,
-					sales: 56263
-				}],
+				userList: [],
+				// userList:[{
+				// 	id: 1,
+				// 	photo: '../../static/images/home/photo.png',
+				// 	name: 'zhanghaomingcheng',
+				// 	fans: 450,
+				// 	praise_nums: 56263
+				// },{
+				// 	id: 2,
+				// 	photo: '../../static/images/home/photo.png',
+				// 	name: 'zhanghaomingcheng',
+				// 	fans: 450,
+				// 	praise_nums: 56263
+				// }],
 				
 				current: 0,
 				mode: 'default',
@@ -329,11 +372,15 @@
 				// 	detail: "中文中文中文中文中文中文中文中文",
 				// 	is_default: 0,
 				// }],
+				
+				scrollHeight: 0,  //地址
+				scrollHeightAdd: 0,  //tiktok账号
 
 			}
 		},
 		components: {
 			addAdmin,
+			newAdd,
 			myPopup
 		},
 		onLoad(option) {
@@ -341,8 +388,10 @@
 			//如果首页、分类特殊值有值-请求（不与上方同时触发）
 			if (option.id) this.id = option.id
 			this.getHttpLists()
+			this.getUserLists()
 		},
 		onShow() {
+			//console.log(this.scrollHeight)
 			this.getHttpAddress()
 		},
 		mounted() {
@@ -351,6 +400,12 @@
 			this.$forceUpdate()
 		},
 		methods: {
+			fatherMethod() {
+				this.kindex = 0
+				this.cindex = 0
+				this.scrollHeightAdd = 0
+				this.getUserLists()
+			},
 			getHttpAddress() {
 				uni.showLoading({
 					title: 'loading...',
@@ -368,6 +423,39 @@
 						if (res.data.code == 200) {
 							this.list = res.data.data
 								
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
+			getUserLists() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/user/darren',
+						data: {}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							this.userList = res.data.data
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -555,24 +643,32 @@
 				this.cindex = index
 			},
 			open(type) {	
-				this.$refs.addAdmin.open()
+				//this.$refs.addAdmin.open()
+				this.$refs.newAdd.newAddOpen()
 			},
 			
 			confirmed() {
 				this.kindex = this.cindex
+				console.log("用户选择kindex:" + this.kindex)
+				console.log(this.userList[this.kindex])
+				console.log(this.userList[this.kindex].id)
 				this.$refs.popupAdd.close()
 				// 成功获取选择用户信息，此时应该对用户身份进行替换
 			},
 			
 			onUnload() {
 				//页面销毁、清除定时器
-				clearInterval(this.setTime);
-				this.$refs.addAdmin.close()
+				//clearInterval(this.setTime);
+				
+				// this.$refs.addAdmin.close()
+				this.$refs.newAdd.newAddClose()
 			},
 			onBeforeUnload() {
 				//页面销毁、清除定时器
-				clearInterval(this.setTime);
-				this.$refs.addAdmin.close()
+				//clearInterval(this.setTime);
+				
+				// this.$refs.addAdmin.close()
+				this.$refs.newAdd.newAddClose()
 			},
 			/* 免费领样 */
 			openCollection() {
@@ -595,17 +691,35 @@
 			},
 			addAddress() {
 				console.log("新增收货地址")
-				uni.navigateTo({
-					url: "/pages/user/address"
-				});
+				this.scrollHeight = 0
+				this.cPoint = 0
+				this.point = 0
+				this.$nextTick(()=>{
+					uni.navigateTo({
+						url: "/pages/user/address"
+					});
+				})
 			},
 			confirmedCollection() {
 				this.cPoint = this.point
-				console.log("选择地址id:" + this.cPoint)
+				console.log("选择地址cPoint:" + this.cPoint)
 				console.log(this.list[this.cPoint])
 				console.log(this.list[this.cPoint].id)
 				this.$refs.popupCollection.close()
 				// 成功获取选择用户地址，此时应该对用户地址进行替换
+			},
+			
+			
+			
+			scroll(e) {
+				this.scrollHeight = e.detail.scrollTop
+				// console.log(e)
+				// console.log(this.scrollHeight)
+			},
+			scrollAdd(e) {
+				this.scrollHeightAdd = e.detail.scrollTop
+				// console.log(e)
+				// console.log(this.scrollHeightAdd)
 			},
 		}
 	}
@@ -1227,13 +1341,20 @@
 		padding: 30rpx 30rpx 20rpx 30rpx;
 	}
 	.addressList{
-		height: 1080rpx;
+		height: 720rpx;
 		margin: 30rpx 0;
 		box-sizing: border-box;
 		overflow: hidden;
 		overflow-y: auto;
 	}
-	.addressList::-webkit-scrollbar {
+	::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
+	/deep/ ::-webkit-scrollbar {
 		display: none;
 		width: 0 !important;
 		height: 0 !important;

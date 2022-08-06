@@ -84,7 +84,9 @@
 		<image class="cardLogo" v-if="imgUrl" mode="widthFix" :src="imgUrl"></image>
 		
 		<view class="bottom">
+			<view class="underline"></view>
 			<view class="btn">Long press to save the picture</view>
+			<view class="underline"></view>
 			<!-- <view class="btn" @click="save">Long press to save the picture</view> -->
 		</view>
 		
@@ -313,20 +315,29 @@
 		margin: 0 auto;
 		padding: 25rpx 0;
 		background: #FFFFFF;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.underline{
+		width: 100rpx;
+		height: 2rpx;
+		background: #000000;
 	}
 	.btn{
-		width: 670rpx;
+		/* width: 670rpx; */
 		height: 80rpx;
 		line-height: 80rpx;
-		background: #FF7436;
+		/* color: #FFFFFF;
+		background: #FF7436; */
 		border-radius: 8rpx;
 		
-		font-size: 24rpx;
+		font-size: 26rpx;
 		font-family: Arial;
+		color: #000000;
 		font-weight: 400;
-		color: #FFFFFF;
 		text-align: center;
 		
-		margin: 0 auto;
+		margin: 0 20rpx;
 	}
 </style>

@@ -4,7 +4,9 @@
 		<view class="content" :style="contentHeight">
 			<view v-if="lists.length > 0">
 				<view class="userList" v-for="item,index in lists" :class="{'active': cIndex == index}" @click="choose(index)">
-					<image class="userPhoto" :src="item.photo"></image>
+					<image v-if="item.image" class="userPhoto" :src="item.image"></image>
+					<image v-else class="userPhoto" src="../../static/images/common/photo.png"></image>
+					<!-- <image v-else class="userPhoto" src="../../static/images/home/photo.png"></image> -->
 					<view class="userName">{{item.name}}</view>
 				</view>
 			</view>
@@ -17,37 +19,9 @@
 			<!-- <view class="btn" @click="add">New TIKTOK account</view> -->
 			<view class="btn" @click="open('bottom')">New TIKTOK account</view>
 		</view>
-		<!-- <view class="mask" v-if="isShowMask" @click="close"> -->
-		<!-- <uni-popup ref="popup" background-color="#fff" @maskClick="close">
-			<view class="popup-content">
-				<view class="card" @click.stop="noClose">
-					<view class="close" @click="close">X</view>
-					<view class="cardTitle">TIKTOK APP SCAN code access</view>
-					<view class="cardTip">Please make sure you scan the TIK Tok account for at least one public video</view>
-					<image class="cardEwm" src="../../static/images/home/demo.png"></image>
-					<view class="cardTime">Expired after {{time}}s</view>
-					<view class="service">With authorization, you can:</view>
-					<view class="serviceDes">
-						<view class="serviceText">
-							<view class="circle">1</view>
-							<view class="text">Synchronize Account Base Information and view account operation data.</view>
-						</view>
-						<view class="serviceText">
-							<view class="circle">2</view>
-							<view class="text">Post view video list.</view>
-						</view>
-						<view class="serviceText">
-							<view class="circle">3</view>
-							<view class="text">Get the league’s sales order data.</view>
-						</view>
-					</view>
-				</view>
-			</view>
-		</uni-popup> -->
-		<!-- </view> -->
 		
 		<!-- <add-admin ref="addAdmin"></add-admin> -->
-		<new-add ref="newAdd"></new-add>
+		<new-add ref="newAdd" @fatherMethod="fatherMethod"></new-add>
 	</view>
 </template>
 
@@ -61,52 +35,7 @@
 				time: 59,
 				setTime: null,
 				cIndex: 0,
-				// lists: [],
-				lists:[{
-					id: 1,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 2,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 3,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 4,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 5,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 6,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 7,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 8,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 9,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 10,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				},{
-					id: 11,
-					photo: '../../static/images/home/photo.png',
-					name: 'zhanghaomingcheng'
-				}],
+				lists: [],
 				contentHeight: {
 					'height': '1080rpx'
 				},
@@ -136,9 +65,47 @@
 		},
 		mounted() {
 			//关闭计时器，避免重复调用
-			clearInterval(this.setTime)
+			//clearInterval(this.setTime)
+			
+			this.getHttpLists()
 		},
 		methods: {
+			fatherMethod() {
+				this.getHttpLists()
+			},
+			getHttpLists() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/user/darren',
+						data: {}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							this.lists = res.data.data
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			back() {
 				window.history.go(-1)
 			},
@@ -146,44 +113,25 @@
 				if(this.cIndex == index) return
 				this.cIndex = index
 			},
-			openTimer() {
-				//计时器计算倒计时
-				this.setTime = setInterval(()=>{
-					if (this.time > 0) {
-						this.time = this.time - 1
-					} else{
-						this.time = 59
-						clearInterval(this.setTime);
-						//此时需要操作，展示0s 或者 替换二维码 重新开始计算。
-					} 
-				}, 1000);
-			},
-			open(type) {
-				// open 方法传入参数 等同在 uni-popup 组件上绑定 type属性
-				// this.$refs.popup.open(type)
-				// this.time = 59
-				// this.openTimer()
-				
+
+			open(type) {		
 				//this.$refs.addAdmin.open()
-				this.$refs.newAdd.open()
+				this.$refs.newAdd.newAddOpen()
 			},
-			close() {
-				// this.$refs.popup.close()
-				// clearInterval(this.setTime)
-				this.$refs.addAdmin.close()
-			},
-			noClose() {
-				// 防止点击图片关闭遮罩
-			},
+
 			onUnload() {
 				//页面销毁、清除定时器
-				clearInterval(this.setTime);
-				this.$refs.addAdmin.close()
+				//clearInterval(this.setTime);
+				
+				// this.$refs.addAdmin.close()
+				this.$refs.newAdd.newAddClose()
 			},
 			onBeforeUnload() {
 				//页面销毁、清除定时器
-				clearInterval(this.setTime);
-				this.$refs.addAdmin.close()
+				//clearInterval(this.setTime);
+				
+				// this.$refs.addAdmin.close()
+				this.$refs.newAdd.newAddClose()
 			},
 		}
 	}

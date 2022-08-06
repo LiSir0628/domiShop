@@ -144,7 +144,7 @@
 
 		<view class="spList" v-if="spLists.length>0">
 			<view class="sp" v-for="item,index in spLists">
-				<view class="spTop">
+				<view class="spTop" @click="goDetail(index)">
 					<image v-if="item.cover" class="spLogo" :src="item.cover"></image>
 					<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
 					<!-- <image class="spLogo" :src="item.image"></image> -->
@@ -484,6 +484,11 @@
 			goSwitch() {
 				uni.navigateTo({
 					url: './switch'
+				});
+			},
+			goDetail(index) {
+				uni.navigateTo({
+					url: '/pages/product/detail?id=' + this.spLists[index].id
 				});
 			},
 			goAdministration() {

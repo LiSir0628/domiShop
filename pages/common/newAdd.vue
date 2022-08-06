@@ -41,10 +41,10 @@
 			}
 		},
 		mounted() {
-			this.$refs.newAddPopup.open("bottom")
+			//this.$refs.newAddPopup.open("bottom")
 		},
 		methods: {
-			open(){
+			newAddOpen(){
 				this.$refs.newAddPopup.open("bottom")
 			},
 			
@@ -88,14 +88,7 @@
 				});
 			},
 			
-			addAccount() {
-				console.log(this.account)
-				console.log(this.nickname)
-				console.log(this.fans)
-				console.log(this.praise_nums)
-				console.log(this.backend)				
-				return
-				
+			addAccount() {				
 				uni.showLoading({
 					title: 'loading...',
 					mask: true
@@ -114,7 +107,9 @@
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							console.log(res)								
+							console.log(res)		
+							this.$emit('fatherMethod');
+							this.newAddClose()
 						} else {
 							uni.showModal({
 								title: 'TIP',
