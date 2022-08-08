@@ -21,7 +21,7 @@
 				<view class="spContent">
 					<view class="spName">Zhelishi shangpinneirI...</view>
 					<view class="followers">Number of followers≥ 1000</view>
-					<view class="windowSales">Window sales≥ 1000</view>
+					<!-- <view class="windowSales">Window sales≥ 1000</view> -->
 				</view>
 			</view>
 			<view class="salesPrice">$ <text class="price">25632</text></view>
@@ -195,6 +195,42 @@
 			},
 			commit() {
 				console.log(this.remarks)
+				
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'POST',
+						url: 'api/tiktok/product/apply',
+						data: {
+							id: 4,
+							address_id: 6,
+							tiktok_id: 2,
+							notes: "测试申请领样"
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data)						
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
 			}
 		}
 	}

@@ -44,8 +44,14 @@
 		</view>
 		<view class="productList" :class="{productListHeight: isShowTabHeight}" v-if="product_lists.length > 0">
 			<view class="product" v-for="item,index in product_lists" @click="goDetail(index)">
-				<image v-if="item.image" class="productLogo" :src="item.image"></image>
-				<image v-else class="productLogo" src="../../static/images/product/icon18.png"></image>
+				<view class="productImg">
+					<image v-if="item.image" class="productLogo" :src="item.image"></image>
+					<image v-else class="productLogo" src="../../static/images/product/icon18.png"></image>
+					<view v-if="item.is_samples == 1" class="is_sample">
+						<view class="sample">Collectable sample</view>
+						<image class="sampleLogo" src="../../static/images/product/icon19.png"></image>
+					</view>
+				</view>
 				<view class="productMsg">
 					<view class="productMsgTop">
 						<view class="productTitle">{{item.title}}</view>
@@ -56,11 +62,16 @@
 							<view>Price: <text class="price">$<text
 										style="margin-left: 4rpx;">{{item.unit_price}}</text></text></view>
 						</view>
-						<view class="commission">High Commission: {{(item.commission_ratio*100).toFixed()}}%</view>
+						<view class="commission">High Commission: 
+							<text style="margin-left: 2rpx;font-weight: bold;">
+								{{(item.commission_ratio*100).toFixed()}}%
+							</text>
+						</view>
 						<view class="earnedMsg">
-							<image class="priceLogo" src="../../static/images/product/icon06.png"></image>
-							<text class="earned">Earned: $<text
-									style="margin-left: 4rpx;word-break: break-all;">{{item.commission}}</text></text>
+							<!-- <image class="priceLogo" src="../../static/images/product/icon06.png"></image> -->
+							<text class="earned">Earned:
+								<text style="margin-left: 4rpx;word-break: break-all;font-size: 32rpx;font-weight: bold;">${{item.commission}}</text>
+							</text>
 						</view>
 					</view>
 
@@ -307,6 +318,7 @@
 							this.getHttpLists("one")
 							// console.log(this.category_lists)
 						} else {
+							uni.hideLoading();
 							uni.showModal({
 								title: 'TIP',
 								content: res.data.msg,
@@ -460,19 +472,19 @@
 				this.category = this.category_lists[index].id
 				this.page = 1
 				this.product_lists = []
-				this.getHttpLists("one")
-				// console.log(index)
-				// this.$nextTick(()=>{
-				// 	const that = this
-				// 	let view = uni.createSelectorQuery().select(".scroll-view-item-active")
-				// 	view.boundingClientRect(function(data) {
-				// 		console.log(data)
-				// 		that.scrollLeft = parseInt(data.left)
-				// 	}).exec();
-				// })
+				//this.getHttpLists("one")
+				console.log(index)
+				this.$nextTick(()=>{
+					const that = this
+					let view = uni.createSelectorQuery().select(".scroll-view-item-active")
+					view.boundingClientRect(function(data) {
+						console.log(data)
+						that.scrollLeft = that.scrollLeft +  parseInt(data.left) - 15
+					}).exec();
+				})
 			},
 			scroll(e) {
-				// this.scrollLeft = e.detail.scrollLeft
+				this.scrollLeft = e.detail.scrollLeft
 				// console.log(e)
 				// console.log(this.scrollLeft)
 			},
@@ -749,6 +761,14 @@
 		border-bottom-right-radius: 8rpx;
 	}
 
+	.productImg{
+		width: 335rpx;
+		height: 335rpx;
+		border-top-left-radius: 8rpx;
+		border-top-right-radius: 8rpx;
+		position: relative;
+	}
+
 	.productLogo {
 		width: 335rpx;
 		height: 335rpx;
@@ -756,7 +776,32 @@
 		border-top-right-radius: 8rpx;
 		display: block;
 	}
-
+	
+	.is_sample{
+		width: 335rpx;
+		height: 64rpx;
+		background: #FFEFE8;
+		position: absolute;
+		bottom: 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 8rpx 20rpx;
+		box-sizing: border-box;
+	}
+	
+	.sample{
+		font-size: 26rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FF7436;
+	}
+	
+	.sampleLogo{
+		width: 48rpx;
+		height: 48rpx;
+	}
+	
 	.productMsg {
 		padding: 16rpx 11rpx 17rpx;
 		border-bottom-left-radius: 8rpx;
@@ -816,17 +861,26 @@
 
 	.commission {
 		width: max-content;
-		padding: 0 10rpx;
-		height: 40rpx;
+		padding: 0 20rpx;
+		/* height: 40rpx;
 		background: rgba(255, 116, 54, 0.1);
-		border-radius: 20rpx;
+		border-radius: 20rpx; */
+		height: 48rpx;
+		line-height: 48rpx;
+		background: linear-gradient(219deg, #FFEFDB 0%, #FFEFDB 100%);
+		border-radius: 8rpx;
+		
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
-		color: #FF7436;
+		color: #C57700;
 		text-align: center;
-		line-height: 40rpx;
 		margin-top: 19rpx;
+		
+/* 		width: 280px;
+		height: 48px;
+		background: linear-gradient(219deg, #FFEFDB 0%, #FFEFDB 100%);
+		border-radius: 8px; */
 	}
 
 	.earnedMsg {
@@ -843,7 +897,7 @@
 		font-family: Arial;
 		font-weight: bold;
 		color: #FF3838;
-		margin-left: 8rpx;
+		/* margin-left: 8rpx; */
 	}
 
 	/* 下拉框弹窗 */

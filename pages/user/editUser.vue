@@ -6,7 +6,7 @@
 			<view class="editPhoto">
 				<view class="editPhotoModular">
 					<image class="photo" src="../../static/images/home/photo.png"></image>
-					<image class="camera" src="../../static/images/user/icon12.png"></image>
+					<!-- <image class="camera" src="../../static/images/user/icon12.png"></image> -->
 				</view>
 			</view>
 			<view class="name">DUOmihuyu</view>

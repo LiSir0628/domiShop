@@ -387,7 +387,7 @@
 						order = res.data.data.order
 						for(let i in order.orderList){
 							if(order.orderList[i].time){
-								order.orderList[i].time = this.$transformTime(order.orderList[i].time,'mm-dd hh:mm:ss')
+								order.orderList[i].time = this.$transformTime(order.orderList[i].time*1000,'mm-dd hh:mm:ss')
 							}
 						}
 						if(type == "one") {

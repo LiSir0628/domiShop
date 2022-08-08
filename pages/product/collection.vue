@@ -13,28 +13,32 @@
 				<view class="spTop">
 					<view class="timeClock">
 						<image class="clock" src="../../static/images/product/icon17.png"></image>
-						<view>{{item.time}}</view>
+						<view>{{item.addtime}}</view>
 					</view>
-					<view v-if="item.state == 1" class="closed">It’s closed</view>
-					<view v-else-if="item.state == 2" class="received">Delivery received</view>
-					<view v-else-if="item.state == 3" class="shipment">Ready for shipment</view>
-					<view v-else-if="item.state == 4" class="review">Pending review</view>
-					<view v-else-if="item.state == 5" class="progress">Delivery in progress</view>
+					<view v-if="item.status == -2" class="closed">It’s closed</view>
+					<view v-else-if="item.status == -1" class="closed">Audit rejection</view>
+					<view v-else-if="item.status == 3" class="received">Delivery received</view>
+					<view v-else-if="item.status == 1" class="shipment">Ready for shipment</view>
+					<view v-else-if="item.status == 0" class="review">Pending review</view>
+					<view v-else-if="item.status == 2" class="progress">Delivery in progress</view>
 				</view>
 				<view class="spCenter">
-					<image class="spLogo" :src="item.image"></image>
+					<image v-if="item.product_image" class="spLogo" :src="item.product_image"></image>
+					<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
 					<view class="spMsg">
-						<view class="spDes">{{item.name}}</view>
+						<view class="spDes">{{item.product_name}}</view>
 						<view class="spOperation">
-							<view class="price">$ {{item.price}}</view>
-							<view class="commission">High Commission: {{item.commission}}%</view>
+							<view class="price">$ {{item.unit_price}}</view>
+							<view class="commission">High Commission: {{(item.commission_ratio*100).toFixed()}}%</view>
 						</view>
 					</view>
 				</view>
-				<view class="spBtn" v-if="item.state == 3 || item.state == 4 ">Cancellation of application</view>
-				<view class="spBottom" v-if="item.state == 5">
-					<view class="delivery">Delivery Company: ems</view>
-					<view class="number">Odd Number: 1234567891111111</view>
+				<view class="spBtn" v-if="item.status == 0 || item.status == 1" @click="cancel">Cancellation of application</view>
+				<view class="spBottom" v-if="item.status == 2 || item.status == 3">
+					<!-- <view class="delivery">Delivery Company: ems</view>
+					<view class="number">Odd Number: 1234567891111111</view> -->
+					<view class="delivery">Delivery Company: {{item.express_company}}</view>
+					<view class="number">Odd Number: {{item.express_no}}</view>
 				</view>
 			</view>
 		</view>
@@ -52,77 +56,153 @@
 		data() {
 			return {
 				cindex: 0,
+				state: 1,
 				scrollLeft: 0,
 				scrollList: [{
 					id: 1,
-					name: 'All of it (5)'
+					name: 'All of it'
 				}, {
 					id: 2,
-					name: 'Pending review (6)'
+					name: 'Pending review'
 				}, {
 					id: 3,
-					name: 'Ready for shipment (2)'
-				}],
-				// lists: [],
-				lists:[{
-					id: 1,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					price: '25632.00',
-					commission: '56.00',
-					time: '2021-10-18 16:05:20',
-					state: 1
-				},{
-					id: 2,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					price: '300000',
-					commission: '60',
-					time: '2021-10-18 16:05:20',
-					state: 2
-				},{
-					id: 3,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					price: '300000',
-					commission: '60',
-					time: '2021-10-18 16:05:20',
-					state: 3
-				},{
+					name: 'Ready for shipment'
+				}, {
 					id: 4,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					price: '300000',
-					commission: '60',
-					time: '2021-10-18 16:05:20',
-					state: 4
-				},{
+					name: 'Delivery in progress'
+				}, {
 					id: 5,
-					image: '../../static/images/home/photo.png',
-					name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
-					price: '300000',
-					commission: '60',
-					time: '2021-10-18 16:05:20',
-					state: 5
-				}]
+					name: 'Delivery received'
+				}, {
+					id: 6,
+					name: 'It’s done'
+				}],
+				// scrollList: [{
+				// 	id: 1,
+				// 	name: 'All of it'
+				// }, {
+				// 	id: 2,
+				// 	name: 'Pending review (6)'
+				// }, {
+				// 	id: 3,
+				// 	name: 'Ready for shipment (2)'
+				// }],
+				
+				lists: [],
+				// lists:[{
+				// 	id: 1,
+				// 	image: '../../static/images/home/photo.png',
+				// 	name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	price: '25632.00',
+				// 	commission: '56.00',
+				// 	time: '2021-10-18 16:05:20',
+				// 	state: 1
+				// },{
+				// 	id: 2,
+				// 	image: '../../static/images/home/photo.png',
+				// 	name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	price: '300000',
+				// 	commission: '60',
+				// 	time: '2021-10-18 16:05:20',
+				// 	state: 2
+				// },{
+				// 	id: 3,
+				// 	image: '../../static/images/home/photo.png',
+				// 	name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	price: '300000',
+				// 	commission: '60',
+				// 	time: '2021-10-18 16:05:20',
+				// 	state: 3
+				// },{
+				// 	id: 4,
+				// 	image: '../../static/images/home/photo.png',
+				// 	name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	price: '300000',
+				// 	commission: '60',
+				// 	time: '2021-10-18 16:05:20',
+				// 	state: 4
+				// },{
+				// 	id: 5,
+				// 	image: '../../static/images/home/photo.png',
+				// 	name: 'zhelishi shangpinneirongshangpinne shangpinneirongs,zhelishi shangpinneirongshangpinne shangpinneirongs',
+				// 	price: '300000',
+				// 	commission: '60',
+				// 	time: '2021-10-18 16:05:20',
+				// 	state: 5
+				// }]
 			}
+		},
+		onLoad(option) {
+			//如果参数有值，渠道入口-请求
+			//如果首页、分类特殊值有值-请求（不与上方同时触发）
+			if (option.id) this.id = option.id
+			this.getHttpLists()
 		},
 		mounted() {
 
 		},
 		methods: {
+			getHttpLists() {
+				this.lists = []
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/sample/lists',
+						data: {
+							state: this.state,
+							// page: 1,
+							// limit: 20,
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							this.lists = res.data.data
+							
+							for(let i in this.lists){
+								if(this.lists[i].addtime){
+									this.lists[i].addtime = this.$transformTime(this.lists[i].addtime*1000,'yyyy-mm-dd hh:mm:ss')
+								}
+							}
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			back() {
 				window.history.go(-1)
 			},
 			scrollTab(index) {
 				if (this.cindex == index) return
 				this.cindex = index
+				this.state = this.scrollList[this.cindex].id
+				this.getHttpLists()
 				// 根据此navbar 切换下拉框、显示面板
 			},
 			scroll(e) {
 				// this.scrollLeft = e.detail.scrollLeft
 				// console.log(e)
 				// console.log(this.scrollLeft)
+			},
+			cancel() {
+				// 取消领样申请
 			},
 		}
 	}

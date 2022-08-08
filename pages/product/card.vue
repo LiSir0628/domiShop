@@ -3,12 +3,13 @@
 		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Live cell phone cards"></uni-nav-bar>
 		<div v-if="!imgUrl" class="content" id="htmlCanvas" ref="imgCanvas">
 			<view class="spMsg">
-				<img class="spLogo" src="../../static/images/home/photo.png"/>
+				<img v-if="spLogo" class="spLogo" :src="spLogo"/>
+				<img v-else class="spLogo" src="../../static/images/product/icon18.png"></img>
 				<view class="spModular">
-					<view class="spTitle">ZshangpinneirGDHASDI...</view>
+					<view class="spTitle">{{title}}</view>
 					<view class="priceModular">
-						<view class="discountPrice">Closing Price: $562</view>
-						<view class="originalPrice">Original Price:$8569</view>
+						<view class="discountPrice">Closing Price: <!-- $562 -->{{commission}}</view>
+						<view class="originalPrice">Original Price:<!-- $8569 -->{{unit_price}}</view>
 					</view>
 				</view>
 			</view>
@@ -23,8 +24,8 @@
 						<image class="cardLogo" src="../../static/images/detail/icon06.png"></image>
 					</view> -->
 				</view>
-				<view class="liveContent">
-					Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag .
+				<view class="liveContent" v-html="benefits">
+					<!-- Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag . -->
 				</view>
 			</view>
 			
@@ -38,8 +39,8 @@
 						<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
 					</view> -->
 				</view>
-				<view class="sellContent">
-					<view class="sellContentText">1. Chongqing Strength Factory, Douyin hotpot base</view>
+				<view class="sellContent" v-html="selling_point">
+					<!-- <view class="sellContentText">1. Chongqing Strength Factory, Douyin hotpot base</view>
 					<view class="sellContentText">2. Independent Small Packaging, 1 small bag 1 small</view>
 					<view class="sellContentText">3.the praise rate is above 92% , product quality is guaranteed</view>
 					<view class="sellContentText">
@@ -50,7 +51,7 @@
 						5. a multi-purpose, can do hot pot, braised vegetables, Malatan
 						INGREDIENTS: Butter, pepper, Douban, ginger, garlic, edibles
 						seasoning, monosodium glutamate, rock sugar, spices
-					</view>
+					</view> -->
 				</view>
 			</view>
 			
@@ -65,7 +66,7 @@
 					</view> -->
 				</view>
 				<view class="deliveryContent">
-					<view class="deliveryList">
+					<!-- <view class="deliveryList">
 						<view class="deliveryTitle">Place of shipment</view>
 						<view class="deliveryMsg">United Kingdom</view>
 					</view>
@@ -76,6 +77,18 @@
 					<view class="deliveryList">
 						<view class="deliveryTitle">United Kingdom</view>
 						<view class="deliveryMsg">Delivery in 48 hours</view>
+					</view> -->
+					<view class="deliveryList">
+						<view class="deliveryTitle">Place of shipment</view>
+						<view class="deliveryMsg">{{delivery_place}}</view>
+					</view>
+					<view class="deliveryList">
+						<view class="deliveryTitle">Delivery, express delivery</view>
+						<view class="deliveryMsg">{{express_company}}</view>
+					</view>
+					<view class="deliveryList">
+						<view class="deliveryTitle">Delivery Time</view>
+						<view class="deliveryMsg">{{delivery_time}}</view>
 					</view>
 				</view>
 			</view>
@@ -103,17 +116,104 @@
 				isSuccess: '',
 				text: '',
 				imgUrl:"", // 用于存储base64图片
+				
+				id: "",
+				title: "ZshangpinneirGDHASDIZ",
+				banner:[],
+				spLogo: "",
+				
+				left_icon: "货币图标-左边",
+				right_icon: "货币图标-右边",
+				unit_price: "",
+				commission: "",
+				commission_ratio: "",
+				cumulative_sales: "",
+				
+				benefits: "",
+				selling_point: "",
+				delivery_place: "",
+				express_company: "",
+				delivery_time: "",
+				
 			}
 		},
 		components: {
 			myPopup
 		},
+		onLoad(option) {
+			//如果参数有值，渠道入口-请求
+			//如果首页、分类特殊值有值-请求（不与上方同时触发）
+			if (option.id) this.id = option.id
+			this.getHttpLists()
+		},
 		mounted() {
-			setTimeout(()=>{
-				this.save()
-			},200)
+			// setTimeout(()=>{
+			// 	this.save()
+			// },200)
 		},
 		methods: {
+			getHttpLists() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/product/detail',
+						data: {
+							id: this.id
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							let obj = res.data.data;
+							
+							this.title = obj.title ? obj.title : this.title
+							this.banner = obj.banner
+							if(this.banner.length > 0){
+								console.log("有轮播图")
+								this.spLogo = this.banner[0]
+							}
+							this.left_icon = obj.left_icon
+							this.right_icon = obj.right_icon
+							this.unit_price = obj.unit_price
+							this.commission = obj.commission
+							this.commission_ratio = obj.commission_ratio
+							this.cumulative_sales = obj.cumulative_sales
+
+							this.benefits = obj.benefits
+							this.selling_point = obj.selling_point
+							this.delivery_place = obj.delivery_place
+							this.express_company = obj.express_company
+							this.delivery_time = obj.delivery_time
+							
+							setTimeout(()=>{
+								this.save()
+							},200)
+							// this.$nextTick(()=>{
+							// 	this.save()
+							// })
+							
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			back() {
 				window.history.go(-1)
 			},
@@ -172,7 +272,9 @@
 		margin-left: 26rpx;
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
+		flex-direction: column;
+		justify-content: space-between;
+		/* align-items: center; */
 	}
 	.spTitle{
 		font-size: 28rpx;
@@ -181,15 +283,16 @@
 		font-weight: bold;
 		color: #0B0B0B;
 		
-		overflow: hidden;
+		/* overflow: hidden;
 		white-space: nowrap;
 		word-wrap: normal;
 		text-overflow: ellipsis;
-		-o-text-overflow: ellipsis;
+		-o-text-overflow: ellipsis; */
 	}
 	.priceModular{
 		width: 484rpx;
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
 	}

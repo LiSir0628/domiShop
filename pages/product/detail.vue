@@ -15,8 +15,13 @@
 		</uni-swiper-dot>
 
 		<view class="priceTemplate">
-			<view class="price">
-				<text class="priceSpan">$</text>{{unit_price}}
+			<view class="price_modular">
+				<view class="price">
+					<text class="priceSpan">$</text>{{unit_price}}
+				</view>
+				<view v-if="is_samples == 1" class="is_sample">
+					Collectable sample
+				</view>
 			</view>
 			<view class="profit">
 				Estimated profit per unit:
@@ -138,7 +143,8 @@
 				<image class="copyLogo" src="../../static/images/detail/icon03.png"></image>
 				<view class="copy">Copy the link</view>
 			</view>
-			<view class="add" @click="openAdd">Add a window</view>
+			<!-- <view class="add" @click="openAdd">Add a window</view> -->
+			<view class="add" @click="openAdd">administration</view>
 			<view class="collection" @click="openCollection">Free sample collection</view>
 		</view>
 		
@@ -297,6 +303,7 @@
 				isShowLove: false,
 				//info: ["../../static/images/detail/icon08.png","../../static/images/detail/icon08.png","../../static/images/detail/icon08.png"],
 				banner: [{url: "" ,content: ""}],
+				is_samples: "",
 				stock: 1000,
 				is_collection: false,
 				left_icon: "货币图标-左边",
@@ -441,6 +448,14 @@
 						})
 				})
 			},
+			getUserId() {
+				for(let i in this.userList){
+					if(this.userList[i].id == this.$store.state.accountId){
+						this.cindex = i
+						this.kindex = i
+					}
+				}
+			},
 			getUserLists() {
 				uni.showLoading({
 					title: 'loading...',
@@ -456,6 +471,7 @@
 						if (res.data.code == 200) {
 							console.log(res.data.data)
 							this.userList = res.data.data
+							this.getUserId()
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -501,6 +517,7 @@
 							}
 							this.banner = arr // 轮播图数据处理
 							console.log(this.banner)
+							this.is_samples = obj.is_samples
 							this.stock = obj.stock
 							this.is_collection = obj.is_collection == 1 ? true : false
 							console.log(this.is_collection)
@@ -624,7 +641,8 @@
 			},
 			goCard() {
 				uni.navigateTo({
-					url: './card'
+					//url: './card',
+					url: './card?id=' + this.id
 				});
 			},
 			/* 添加窗口 */
@@ -650,10 +668,12 @@
 			confirmed() {
 				this.kindex = this.cindex
 				console.log("用户选择kindex:" + this.kindex)
-				console.log(this.userList[this.kindex])
-				console.log(this.userList[this.kindex].id)
 				this.$refs.popupAdd.close()
-				// 成功获取选择用户信息，此时应该对用户身份进行替换
+		
+				//还需要管理一个 账号id
+				this.$store.commit('editAccountName', this.userList[this.kindex])
+				console.log(this.$store.state.accountName)
+				console.log(this.$store.state.accountId)
 			},
 			
 			onUnload() {
@@ -706,6 +726,10 @@
 				console.log(this.list[this.cPoint])
 				console.log(this.list[this.cPoint].id)
 				this.$refs.popupCollection.close()
+				
+				uni.navigateTo({
+					url: "./car?id=" + this.id
+				});
 				// 成功获取选择用户地址，此时应该对用户地址进行替换
 			},
 			
@@ -781,6 +805,11 @@
 		box-sizing: border-box;
 	}
 
+	.price_modular{
+		display: flex;
+		align-items: center;
+	}
+	
 	.price {
 		font-size: 46rpx;
 		line-height: 28rpx;
@@ -792,6 +821,21 @@
 	.priceSpan {
 		font-size: 24rpx;
 		margin-right: 8rpx;
+	}
+
+	.is_sample{
+		width: 255rpx;
+		height: 60rpx;
+		line-height: 60rpx;
+		text-align: center;
+		background: #FFEFE8;
+		border-radius: 8rpx;
+		
+		font-size: 26rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FF7436;
+		margin-left: 20rpx;
 	}
 
 	.profit {
@@ -847,7 +891,7 @@
 		line-height: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
-		color: #333333;
+		color: #666666;
 		margin-top: 24rpx;
 		display: flex;
 		align-items: center;

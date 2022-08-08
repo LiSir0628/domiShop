@@ -73,6 +73,13 @@
 			fatherMethod() {
 				this.getHttpLists()
 			},
+			getUserId() {
+				for(let i in this.lists){
+					if(this.lists[i].id == this.$store.state.accountId){
+						this.cIndex = i
+					}
+				}
+			},
 			getHttpLists() {
 				uni.showLoading({
 					title: 'loading...',
@@ -88,6 +95,7 @@
 						if (res.data.code == 200) {
 							console.log(res.data.data)
 							this.lists = res.data.data
+							this.getUserId()
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -112,6 +120,11 @@
 			choose(index) {
 				if(this.cIndex == index) return
 				this.cIndex = index
+				
+				//还需要管理一个 账号id
+				this.$store.commit('editAccountName', this.lists[index])
+				console.log(this.$store.state.accountName)
+				console.log(this.$store.state.accountId)
 			},
 
 			open(type) {		
@@ -165,10 +178,10 @@
 		box-sizing: border-box;
 		margin: 0 auto 30rpx auto;
 	}
-	/* .active{
+	.active{
 		background: rgba(255, 116, 54, 0.08);
 		border: 2rpx solid #FF7436;
-	} */
+	}
 	.userPhoto{
 		width: 88rpx;
 		height: 88rpx;

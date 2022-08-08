@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		accountName: "All of them",
-		accountId : "",
+		accountName: "", //账号名称
+		accountId : "", //账号id
 	},
 	mutations: {
 		editAccountName(state,user){
