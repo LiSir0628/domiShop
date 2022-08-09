@@ -74,11 +74,16 @@
 				this.getHttpLists()
 			},
 			getUserId() {
+				let obj = {}
 				for(let i in this.lists){
 					if(this.lists[i].id == this.$store.state.accountId){
-						this.cIndex = i
+						obj = this.lists[i]
+						this.lists.splice(i,1)
+						this.lists.unshift(obj)
+						break
 					}
 				}
+				console.log(this.lists)
 			},
 			getHttpLists() {
 				uni.showLoading({
@@ -123,6 +128,7 @@
 				
 				//还需要管理一个 账号id
 				this.$store.commit('editAccountName', this.lists[index])
+				uni.setStorageSync('accountList', this.lists[index]);
 				console.log(this.$store.state.accountName)
 				console.log(this.$store.state.accountId)
 			},

@@ -36,7 +36,7 @@
 			<view class="tikTok">
 				<view class="tikTokLeft">Application notes</view>
 				<view class="tikTokRight">
-					<input class="remarks" v-model="remarks" placeholder="Application notes"/>
+					<input class="remarks" v-model="notes" placeholder="Application notes"/>
 				</view>
 			</view>
 			<view class="notes">
@@ -125,20 +125,27 @@
 					isDefault: false,
 					address: "中文中文中文中文中文中文中文中文"	
 				}],
-				remarks: "",
-				//des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.<br/>1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform."
-				des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform."
+				//des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.<br/>1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.",
+				des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.",
+			
+				id: '',
+				tiktok_id: '',
+				address_id: '',
+				notes: '',
+				
 			}
 		},
 		onLoad(option) {
-			
+			if (option.id) this.id = option.id
+			this.tiktok_id = this.$store.state.accountId
+			this.address_id = this.$store.state.addressId
 		},
 		mounted() {
 			let that = this;
 			let query = uni.createSelectorQuery();
 			query.select('#addressLists').boundingClientRect(data => {
-				console.log(data)
-				console.log(data.height)
+				// console.log(data)
+				// console.log(data.height)
 				uni.getSystemInfo({
 					success(res) {
 						// #ifdef MP-WEIXIN
@@ -194,7 +201,7 @@
 				// 成功获取选择用户地址，此时应该对用户地址进行替换
 			},
 			commit() {
-				console.log(this.remarks)
+				console.log(this.notes)
 				
 				uni.showLoading({
 					title: 'loading...',
@@ -204,10 +211,10 @@
 						method: 'POST',
 						url: 'api/tiktok/product/apply',
 						data: {
-							id: 4,
-							address_id: 6,
-							tiktok_id: 2,
-							notes: "测试申请领样"
+							id: this.id,
+							tiktok_id: this.tiktok_id,
+							address_id: this.address_id,
+							notes: this.notes
 						}
 					})
 					.then(res => {

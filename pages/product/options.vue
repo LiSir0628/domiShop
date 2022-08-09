@@ -275,6 +275,9 @@
 				console.log("正在请求，无法再次请求")
 			}
 		},
+		// onShow() {
+		// 	console.log("页面出bug了2222")
+		// },
 		mounted() {
 			this.sortLists()
 			//this.getHttpLists("one")
@@ -479,7 +482,7 @@
 					let view = uni.createSelectorQuery().select(".scroll-view-item-active")
 					view.boundingClientRect(function(data) {
 						console.log(data)
-						that.scrollLeft = that.scrollLeft +  parseInt(data.left) - 15
+						// that.scrollLeft = that.scrollLeft +  parseInt(data.left) - uni.upx2px(30)
 					}).exec();
 				})
 			},

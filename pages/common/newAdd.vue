@@ -89,6 +89,28 @@
 			},
 			
 			addAccount() {				
+				if(!this.account){
+					uni.showModal({
+						title: 'TIP',
+						content: "Please enter tiktok account number",
+						showCancel: false,
+					})
+					return
+				} else if(!this.nickname){
+					uni.showModal({
+						title: 'TIP',
+						content: "Please enter tiktok nickname",
+						showCancel: false,
+					})
+					return
+				} else if(!this.backend){
+					uni.showModal({
+						title: 'TIP',
+						content: "Please upload the screenshot of tiktok personal information",
+						showCancel: false,
+					})
+					return
+				}
 				uni.showLoading({
 					title: 'loading...',
 					mask: true

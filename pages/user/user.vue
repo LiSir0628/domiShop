@@ -4,35 +4,35 @@
 			<image class="banner" src="../../static/images/user/icon11.png"></image>
 			<image class="edit" src="../../static/images/user/icon06.png" @click="edit"></image>
 			<image class="photo" src="../../static/images/home/photo.png"></image>
-			<view class="name">DUOmihuyu</view>
+			<view class="name">{{nickname}}</view>
 		</view>
 		<view class="content">
 			<view class="orderList">
 				<view class="orderTop">
 					<view class="collection">Free sample collection</view>
 					<view class="view">
-						<view class="" @click="goView">View all</view>
+						<view class="" @click="goView(1)">View all</view>
 						<image class="arrow" src="../../static/images/user/icon05.png"></image>
 					</view>
 				</view>
 				<view class="orderContent">
-					<view class="orderState">
+					<view class="orderState" @click="goView(2)">
 						<view class="orderNum">15</view>
 						<view class="orderTitle">Pending review</view>
 					</view>
-					<view class="orderState orderStateMiddle">
+					<view class="orderState orderStateMiddle" @click="goView(3)">
 						<view class="orderNum">20</view>
 						<view class="orderTitle">Ready for shipment</view>
 					</view>
-					<view class="orderState">
+					<view class="orderState" @click="goView(5)">
 						<view class="orderNum">20</view>
 						<view class="orderTitle">Delivery received</view>
 					</view>
-					<view class="orderState orderStateMiddle">
+					<view class="orderState orderStateMiddle" @click="goView(4)">
 						<view class="orderNum">20</view>
 						<view class="orderTitle">Delivery in progress</view>
 					</view>
-					<view class="orderState orderStateMiddle">
+					<view class="orderState orderStateMiddle" @click="goView(6)">
 						<view class="orderNum">20</view>
 						<view class="orderTitle">It’s done</view>
 					</view>
@@ -88,6 +88,7 @@
 	export default {
 		data() {
 			return {
+				nickname: "",
 				lists:[{
 					id: 1,
 					image: '../../static/images/user/icon10.png',
@@ -110,6 +111,9 @@
 					url: ''
 				}]
 			}
+		},
+		onShow() {
+			this.nickname = this.$store.state.nickname
 		},
 		methods: {
 			edit() {
@@ -140,9 +144,9 @@
 			noClose() {
 				
 			},
-			goView() {
+			goView(state) {
 				uni.navigateTo({
-					url: './../product/collection'
+					url: './../product/collection?state=' + state
 				});
 			},
 			goIndex() {

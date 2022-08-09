@@ -149,10 +149,7 @@
 					if(res.data.code == 200){
 						console.log(res.data.data);
 						uni.setStorageSync('token', res.data.data.token);
-						//注册成功 跳转数据页。
-						uni.navigateTo({
-							url: '/pages/index/index'
-						});
+						this.getUserList()
 					} else {
 						uni.showModal({
 							title: 'TIP',
@@ -169,6 +166,44 @@
 						//content: err,
 						showCancel: false,
 					})
+				})
+			},
+			getUserList() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'https://user.mini.zhishukongjian.com/user',
+						data: {}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							this.$store.commit('editDuomi', res.data.data)
+							uni.setStorageSync('duomiList', res.data.data);
+							//登录成功 跳转数据页。
+							uni.navigateTo({
+								url: '/pages/index/index'
+							});
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
 				})
 			},
 			onUnload() {

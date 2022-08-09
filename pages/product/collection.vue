@@ -23,8 +23,8 @@
 					<view v-else-if="item.status == 2" class="progress">Delivery in progress</view>
 				</view>
 				<view class="spCenter">
-					<image v-if="item.product_image" class="spLogo" :src="item.product_image"></image>
-					<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
+					<image v-if="item.product_image" class="spLogo" :src="item.product_image" @click="goDetail(index)"></image>
+					<image v-else class="spLogo" src="../../static/images/product/icon18.png" @click="goDetail(index)"></image>
 					<view class="spMsg">
 						<view class="spDes">{{item.product_name}}</view>
 						<view class="spOperation">
@@ -33,7 +33,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="spBtn" v-if="item.status == 0 || item.status == 1" @click="cancel">Cancellation of application</view>
+				<view class="spBtn" v-if="item.status == 0 || item.status == 1" @click="cancel(index)">Cancellation of application</view>
 				<view class="spBottom" v-if="item.status == 2 || item.status == 3">
 					<!-- <view class="delivery">Delivery Company: ems</view>
 					<view class="number">Odd Number: 1234567891111111</view> -->
@@ -135,13 +135,32 @@
 		onLoad(option) {
 			//如果参数有值，渠道入口-请求
 			//如果首页、分类特殊值有值-请求（不与上方同时触发）
-			if (option.id) this.id = option.id
+			if (option.state){
+				this.state = option.state
+				for(let i in this.scrollList){
+					if(this.scrollList[i].id == this.state){
+						this.cindex = i
+						break
+					}
+				}
+			}
 			this.getHttpLists()
 		},
 		mounted() {
-
+			this.$nextTick(()=>{
+				if(this.cindex > 2){
+					this.scrollLeft = uni.upx2px(662)
+					// console.log(this.scrollLeft)
+					this.$forceUpdate()
+				}
+			})
 		},
 		methods: {
+			goDetail(index) {
+				uni.navigateTo({
+					url: './detail?id=' + this.lists[index].pid
+				});
+			},
 			getHttpLists() {
 				this.lists = []
 				uni.showLoading({
@@ -160,7 +179,7 @@
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							console.log(res.data.data)
+							// console.log(res.data.data)
 							this.lists = res.data.data
 							
 							for(let i in this.lists){
@@ -197,12 +216,46 @@
 				// 根据此navbar 切换下拉框、显示面板
 			},
 			scroll(e) {
-				// this.scrollLeft = e.detail.scrollLeft
+				this.scrollLeft = e.detail.scrollLeft
 				// console.log(e)
 				// console.log(this.scrollLeft)
 			},
-			cancel() {
+			cancel(index) {
 				// 取消领样申请
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'POST',
+						url: 'api/tiktok/sample/cancel',
+						data: {
+							id: this.lists[index].id,
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data)
+							this.lists[index].status = -2
+							this.$forceUpdate()
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
 			},
 		}
 	}

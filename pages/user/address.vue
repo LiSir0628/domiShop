@@ -262,16 +262,22 @@
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							uni.showModal({
-								title: 'TIP',
-								content: res.data.msg,
-								showCancel: false,
-							})
+							// uni.showModal({
+							// 	title: 'TIP',
+							// 	content: res.data.msg,
+							// 	showCancel: false,
+							// 	success: function (res) {
+							// 		if (res.confirm) {
+							// 			window.history.go(-1)
+							// 		}
+							// 	}
+							// })
+							
 							//返回上一页
-							history.back()
+							window.history.go(-1)	
 							
-							// window.history.go(-1)
-							
+							//history.back()		
+													
 							// uni.navigateBack({
 							// 	delta:1,
 							// })

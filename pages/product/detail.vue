@@ -145,7 +145,8 @@
 			</view>
 			<!-- <view class="add" @click="openAdd">Add a window</view> -->
 			<view class="add" @click="openAdd">administration</view>
-			<view class="collection" @click="openCollection">Free sample collection</view>
+			<view v-if="is_samples" class="collection" @click="openCollection">Free sample collection</view>
+			<view v-else class="collectionGary">No sampling</view>
 		</view>
 		
 		<view>
@@ -399,6 +400,7 @@
 		},
 		onShow() {
 			//console.log(this.scrollHeight)
+			console.log("页面出bug了1111111")
 			this.getHttpAddress()
 		},
 		mounted() {
@@ -408,8 +410,10 @@
 		},
 		methods: {
 			fatherMethod() {
-				this.kindex = 0
-				this.cindex = 0
+				// this.kindex = 0
+				// this.cindex = 0
+				//this.getUserLists("two")
+				
 				this.scrollHeightAdd = 0
 				this.getUserLists()
 			},
@@ -449,14 +453,20 @@
 				})
 			},
 			getUserId() {
+				let obj = {}
 				for(let i in this.userList){
 					if(this.userList[i].id == this.$store.state.accountId){
-						this.cindex = i
-						this.kindex = i
+						this.cindex = 0
+						this.kindex = 0
+						obj = this.userList[i]
+						this.userList.splice(i,1)
+						this.userList.unshift(obj)
+						break
 					}
 				}
+				console.log(this.userList)
 			},
-			getUserLists() {
+			getUserLists(type) {
 				uni.showLoading({
 					title: 'loading...',
 					mask: true
@@ -472,6 +482,15 @@
 							console.log(res.data.data)
 							this.userList = res.data.data
 							this.getUserId()
+							// if(type == "two"){
+							// 	//还需要管理一个 账号id
+							// 	this.$store.commit('editAccountName', this.userList[this.kindex])
+							// 	console.log(this.$store.state.accountList)
+							// 	console.log(this.$store.state.accountName)
+							// 	console.log(this.$store.state.accountId)
+							// } else {
+							// 	this.getUserId()
+							// }
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -556,6 +575,7 @@
 			},
 			back() {
 				window.history.go(-1)
+				
 				// const pages = getCurrentPages()
 				// if (pages.length === 1) {
 				// 	if (typeof params === 'number') {
@@ -672,6 +692,8 @@
 		
 				//还需要管理一个 账号id
 				this.$store.commit('editAccountName', this.userList[this.kindex])
+				uni.setStorageSync('accountList', this.userList[this.kindex])
+				console.log(this.$store.state.accountList)
 				console.log(this.$store.state.accountName)
 				console.log(this.$store.state.accountId)
 			},
@@ -726,6 +748,11 @@
 				console.log(this.list[this.cPoint])
 				console.log(this.list[this.cPoint].id)
 				this.$refs.popupCollection.close()
+				// vuex值
+				this.$store.commit('editAddress', this.list[this.cPoint])
+				console.log(this.$store.state.addressList)
+				console.log(this.$store.state.addressName)
+				console.log(this.$store.state.addressId)
 				
 				uni.navigateTo({
 					url: "./car?id=" + this.id
@@ -1150,6 +1177,20 @@
 		width: 297rpx;
 		height: 72rpx;
 		background: #FF7436;
+		border-radius: 4rpx;
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 72rpx;
+		margin-left: 12rpx;
+	}
+	
+	.collectionGary{
+		width: 297rpx;
+		height: 72rpx;
+		background: rgba(0, 0, 0, 0.3);
 		border-radius: 4rpx;
 		font-size: 24rpx;
 		font-family: Arial;

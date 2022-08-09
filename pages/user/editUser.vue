@@ -9,12 +9,12 @@
 					<!-- <image class="camera" src="../../static/images/user/icon12.png"></image> -->
 				</view>
 			</view>
-			<view class="name">DUOmihuyu</view>
+			<view class="name">{{nickname}}</view>
 		</view>
 		<view class="content"></view>
 		<view class="menuList">
 			<uni-list :border="false">
-				<uni-list-item v-for="item,index in lists" :border="false">
+				<uni-list-item v-for="item,index in lists" :border="false" @click="goClick(index)" link>
 					<template v-slot:header>
 						<view class="slot-box">
 							<text class="slot-box slot-text">{{item.title}}</text>
@@ -24,8 +24,8 @@
 						
 					</template>
 					<template v-slot:footer>
-						<text class="solt-right" @click="goClick(index)">{{item.value}}</text>
-						<image class="arrow" src="../../static/images/user/icon05.png" @click="goClick(index)"></image>
+						<text class="solt-right">{{item.value}}</text>
+						<image class="arrow" src="../../static/images/user/icon05.png"></image>
 					</template>
 				</uni-list-item>
 			</uni-list>
@@ -41,11 +41,12 @@
 	export default {
 		data() {
 			return {
+				nickname: '',
 				lists:[{
 					id: 1,
 					title: 'Name',
-					//url: './../index/administration',
-					value: 'DUOmihuyu'
+					url: './editName',
+					value: ''
 				},{
 					id: 2,
 					title: 'Sign up for email',
@@ -53,8 +54,8 @@
 					value: '455655556.168.com'
 				},{
 					id: 3,
-					title: 'Access Code',
-					url: '',
+					title: 'Change Password',
+					url: './editPassword',
 					val: ''
 				},{
 					id: 4,
@@ -63,6 +64,10 @@
 					val: ''
 				}]
 			}
+		},
+		onShow() {
+			this.nickname = this.$store.state.nickname
+			this.lists[0].value = this.nickname
 		},
 		methods: {
 			back() {
@@ -227,5 +232,20 @@
 		left: 0;
 		right: 0;
 		margin: 0 auto;
+	}
+	
+	/* 隐藏原生样式 */
+	.uniui-arrowright{
+		display: none;
+	}
+	/deep/ .uniui-arrowright{
+		display: none;
+	}
+	
+	.uni-list-item--hover{
+		background: none;
+	}
+	/deep/ .uni-list-item--hover{
+		background: none;
 	}
 </style>

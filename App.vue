@@ -2,6 +2,12 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			if(uni.getStorageSync('duomiList')){
+				this.$store.commit('editDuomi', uni.getStorageSync('duomiList'))
+			}
+			if(uni.getStorageSync('accountList')){
+				this.$store.commit('editAccountName', uni.getStorageSync('accountList'))
+			}
 		},
 		onShow: function() {
 			console.log('App Show')
