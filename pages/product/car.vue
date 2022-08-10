@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Free sample collection"></uni-nav-bar>
-		<view id="addressLists" class="addressLists">
+		<view id="addressLists" class="addressLists" @click="choose">
 			<view class="addressModular">
 				<image class="site" src="../../static/images/product/icon13.png"></image>
 				<view class="addressContent">
@@ -9,28 +9,32 @@
 						<view class="addressUserName">{{address.name}}</view>
 						<view class="addressTel">{{address.tel}}</view>
 					</view>
-					<view class="address">{{address.address}}</view>
+					<view class="address">{{address.country_name}} {{address.city_name}} {{address.detail}}</view>
 				</view>
-				<image class="chooseLogo" src="../../static/images/product/icon14.png" @click="choose"></image>
+				<image class="chooseLogo" src="../../static/images/product/icon14.png"></image>
 			</view>
 		</view>
 		
 		<view class="content" :style="contentHeight">
 			<view class="spMsg">
-				<image class="spLogo" src="../../static/images/home/photo.png"></image>
+				<image v-if="spLogo" class="spLogo" :src="spLogo"></image>
+				<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
 				<view class="spContent">
-					<view class="spName">Zhelishi shangpinneirI...</view>
-					<view class="followers">Number of followers≥ 1000</view>
+					<view class="spName">{{title}}</view>
+					<view class="followers">Number of followers≥ {{fans}}</view>
 					<!-- <view class="windowSales">Window sales≥ 1000</view> -->
 				</view>
 			</view>
-			<view class="salesPrice">$ <text class="price">25632</text></view>
-			<view class="commission">High Commission: 56%</view>
+			<view class="salesPrice">$ <text class="price">{{unit_price}}</text></view>
+			<view class="commission">High Commission: {{(commission_ratio*100).toFixed()}}%</view>
 			<view class="tikTok">
 				<view class="tikTokLeft">Tik Tok Account</view>
-				<view class="tikTokRight">
-					<image class="userPhoto" src="../../static/images/home/photo.png"></image>
-					<image class="chooseLogo" src="../../static/images/product/icon14.png" @click=""></image>
+				<view class="tikTokRight" @click="goAdministration">
+					<!-- <image class="userPhoto" src="../../static/images/home/photo.png"></image> -->
+					<!-- <image v-if="tiktok_id == 17" class="userPhoto" src="../../static/images/home/photo.png"></image> -->
+					<image v-if="photo" class="userPhoto" :src="photo"></image>
+					<image v-else class="userPhoto" src="../../static/images/common/photo.png"></image>
+					<image class="chooseLogo" src="../../static/images/product/icon14.png"></image>
 				</view>
 			</view>
 			<view class="tikTok">
@@ -62,20 +66,23 @@
 					</view>
 					
 					<view class="addressList">
+					<!-- <scroll-view class="addressList" :scroll-top="scrollHeight" scroll-y="true" @scroll="scroll"
+						:show-scrollbar="false" :style="addresstHeight"> -->
 						<view class="addressModular" :class="{'activeModular': point == index}" v-for="item,index in list" @click="chooseAddress(index)">
-							<image v-if="!point == index" class="addressPhoto" src="../../static/images/user/icon03.png"></image>
-							<image v-else class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
+							<image v-if="point == index" class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
+							<image v-else class="addressPhoto" src="../../static/images/user/icon03.png"></image>
 							<view class="addressContent">
 								<view class="addressUserMsg">
 									<view class="addressUserName">{{item.name}}</view>
 									<view class="addressTel">{{item.tel}}</view>
-									<view v-if="item.isDefault" class="default">Default</view>
+									<view v-if="item.is_default == 1" class="default">Default</view>
 								</view>
-								<view class="address">{{item.address}}</view>
+								<view class="address">{{item.country_name}} {{item.city_name}} {{item.detail}}</view>
 							</view>
-							<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
+							<image class="edit" src="../../static/images/user/icon02.png" @click.stop="edit(index)"></image>
 							<image v-if="point == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
 						</view>
+					<!-- </scroll-view> -->
 					</view>
 					
 					<view class="popupBottom">
@@ -98,47 +105,53 @@
 			return {
 				point: 0, //免费领样指向
 				cPoint: 0 ,			
+				addresstHeight: {
+					'height': '720rpx'
+				},
 				contentHeight: {
 					'height': '880rpx'
 				},
-				address:{
-					id: 1,
-					photo: '../../static/images/home/photo.png',
-					name: 'Name',
-					tel: 12563622222,
-					isDefault: true,
-					// address: "fujiansheng fuzhoushifujiansheng fuzhoushi"
-					address: "fujiansheng fuzhoushi cangshanxian cangsha nxian48hao"	
-				},
-				list:[{
-					id: 1,
-					photo: '../../static/images/home/photo.png',
-					name: 'name',
-					tel: 12563622222,
-					isDefault: true,
-					address: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong"	
-				},{
-					id: 2,
-					photo: '../../static/images/home/photo.png',
-					name: 'name',
-					tel: 12563622222,
-					isDefault: false,
-					address: "中文中文中文中文中文中文中文中文"	
-				}],
+				address:{},
+				list:[],
+				scrollHeight: 0,  //地址
 				//des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.<br/>1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.",
 				des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.",
 			
-				id: '',
+				id: "",
+				title: "ZshangpinneirGDHASDIZ",
+				banner:[],
+				spLogo: "",
+				
+				left_icon: "货币图标-左边",
+				right_icon: "货币图标-右边",
+				unit_price: "",
+				commission: "",
+				commission_ratio: "",
+				cumulative_sales: "",
+				fans: "",
+				
 				tiktok_id: '',
 				address_id: '',
 				notes: '',
+				
+				photo: '',
 				
 			}
 		},
 		onLoad(option) {
 			if (option.id) this.id = option.id
+			this.getHttpLists()
+
+		},
+		onShow() {
+			this.photo = this.$store.state.accountList.image
 			this.tiktok_id = this.$store.state.accountId
+			
+			this.address = this.$store.state.addressList
 			this.address_id = this.$store.state.addressId
+			console.log("账号id:" + this.tiktok_id)
+			console.log("地址id:" + this.address_id)
+			this.getHttpAddress()
 		},
 		mounted() {
 			let that = this;
@@ -167,19 +180,120 @@
 			}).exec()
 		},
 		methods: {
+			getHttpAddress() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/user/address',
+						data: {
+							
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							this.list = res.data.data
+							this.openCollection()			
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
+			getHttpLists() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/product/detail',
+						data: {
+							id: this.id
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							console.log(res.data.data)
+							let obj = res.data.data;
+							
+							this.title = obj.title ? obj.title : this.title
+							this.banner = obj.banner
+							if(this.banner.length > 0){
+								this.spLogo = this.banner[0]
+							}
+							this.left_icon = obj.left_icon
+							this.right_icon = obj.right_icon
+							this.unit_price = obj.unit_price
+							this.commission = obj.commission
+							this.commission_ratio = obj.commission_ratio
+							this.cumulative_sales = obj.cumulative_sales
+							this.fans = obj.fans
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
 			back() {
 				window.history.go(-1)
 			},
 			choose() {
 				this.openCollection()
+				this.$refs.popupCollection.open()
 				console.log("选择地址")
 			},
-			
+			goAdministration() {
+				uni.navigateTo({
+					url: '/pages/index/administration'
+				});
+			},
 			
 			/* 免费领样 */
 			openCollection() {
-				this.point = this.cPoint
-				this.$refs.popupCollection.open()
+				let obj = {}
+				this.scrollHeight = 0
+				for(let i in this.list){
+					if(this.list[i].id == this.$store.state.addressId){
+						this.point = 0
+						this.cPoint = 0
+						obj = this.list[i]
+						this.list.splice(i,1)
+						this.list.unshift(obj)
+						break
+					}
+				}
+				
+				// this.point = this.cPoint
+				// this.$refs.popupCollection.open()
 			},
 			
 			closeCollection() {
@@ -191,15 +305,38 @@
 			},
 			edit(index) {
 				console.log("修改地址" + index)
+				uni.navigateTo({
+					url: '/pages/user/address?id=' + this.list[index].id
+				});
 			},
 			addAddress() {
 				console.log("新增收货地址")
+				this.scrollHeight = 0
+				// this.cPoint = 0
+				// this.point = 0
+				this.$nextTick(()=>{
+					uni.navigateTo({
+						url: "/pages/user/address"
+					});
+				})
 			},
 			confirmedCollection() {
 				this.cPoint = this.point
 				this.$refs.popupCollection.close()
+				this.$store.commit('editAddress', this.list[this.cPoint])
+				uni.setStorageSync('addressList', this.list[this.cPoint])
+				this.address = this.list[this.cPoint]
+				console.log(this.$store.state.addressList)
+				console.log(this.$store.state.addressName)
+				console.log(this.$store.state.addressId)
 				// 成功获取选择用户地址，此时应该对用户地址进行替换
 			},
+			scroll(e) {
+				this.scrollHeight = e.detail.scrollTop
+				// console.log(e)
+				// console.log(this.scrollHeight)
+			},
+			
 			commit() {
 				console.log(this.notes)
 				
@@ -220,7 +357,10 @@
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							console.log(res.data)						
+							console.log(res.data)
+							uni.redirectTo({
+								url: '/pages/product/collection?state=1'
+							});
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -745,4 +885,18 @@
 		margin: 0 auto;
 	}
 	
+	::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
+	/deep/ ::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
 </style>

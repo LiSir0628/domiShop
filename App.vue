@@ -8,6 +8,9 @@
 			if(uni.getStorageSync('accountList')){
 				this.$store.commit('editAccountName', uni.getStorageSync('accountList'))
 			}
+			if(uni.getStorageSync('addressList')){
+				this.$store.commit('editAddress', uni.getStorageSync('addressList'))
+			}
 		},
 		onShow: function() {
 			console.log('App Show')

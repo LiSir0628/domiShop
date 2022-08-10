@@ -145,7 +145,7 @@
 			</view>
 			<!-- <view class="add" @click="openAdd">Add a window</view> -->
 			<view class="add" @click="openAdd">administration</view>
-			<view v-if="is_samples" class="collection" @click="openCollection">Free sample collection</view>
+			<view v-if="is_samples" class="collection" @click="chooseCollection">Free sample collection</view>
 			<view v-else class="collectionGary">No sampling</view>
 		</view>
 		
@@ -159,12 +159,11 @@
 						<image class="addClose" src="../../static/images/detail/icon13.png" @click="closeAdd"></image>
 					</view>
 					
-					<scroll-view class="popupCenter" :scroll-top="scrollHeightAdd" scroll-y="true" @scroll="scrollAdd"
+					<!-- <scroll-view class="popupCenter" :scroll-top="scrollHeightAdd" scroll-y="true" @scroll="scrollAdd"
 						:show-scrollbar="false">
 						<view class="userMsg" :class="{'userMsgActive': cindex == index }" v-for="item,index in userList" @click="chooseTiktok(index)">
 							<image v-if="item.image" class="photo" :src="item.image"></image>
 							<image v-else class="photo" src="../../static/images/common/photo.png"></image>
-							<!-- <image v-else class="photo" src="../../static/images/home/photo.png"></image> -->
 							<view class="useMsg">
 								<view class="userName">{{item.name}}</view>
 								<view class="userFans">
@@ -176,13 +175,12 @@
 										Likes: {{item.praise_nums}}
 									</view>
 								</view>
-								<view class="isFree">Meet the conditions of free sample</view>
-								<!-- <view class="isFree">Meet the conditions of free sample</view> -->											
+								<view class="isFree">Meet the conditions of free sample</view>										
 							</view>
 							<image v-if="cindex == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
 						</view>
-					</scroll-view>
-					<!-- <view class="popupCenter">
+					</scroll-view> -->
+					<view class="popupCenter">
 						<view class="userMsg" :class="{'userMsgActive': cindex == index }" v-for="item,index in userList" @click="chooseTiktok(index)">
 							<image v-if="item.image" class="photo" :src="item.image"></image>
 							<image v-else class="photo" src="../../static/images/home/photo.png"></image>
@@ -194,7 +192,7 @@
 										{{item.fans}}
 									</view>
 									<view class="sales">
-										Window sales: {{item.sales}}
+										Likes: {{item.praise_nums}}
 									</view>
 								</view>
 								<view class="isFree">Meet the conditions of free sample</view>								
@@ -202,7 +200,7 @@
 							</view>
 							<image v-if="cindex == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
 						</view>
-					</view> -->
+					</view>
 					
 					<view class="popupBottom">
 						<view class="newAdd" @click="open('center')">
@@ -224,7 +222,7 @@
 						<view class="addTitle">Select Harvest Address</view>
 						<image class="addClose" src="../../static/images/detail/icon13.png" @click="closeCollection"></image>
 					</view>			
-					<scroll-view class="addressList" :scroll-top="scrollHeight" scroll-y="true" @scroll="scroll"
+					<!-- <scroll-view class="addressList" :scroll-top="scrollHeight" scroll-y="true" @scroll="scroll"
 						:show-scrollbar="false" :style="contentHeight">
 						<view class="addressModular" :class="{'activeModular': point == index}" v-for="item,index in list" @click="chooseAddress(index)">
 							<image v-if="point == index" class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
@@ -237,11 +235,11 @@
 								</view>
 								<view class="address">{{item.country_name}} {{item.city_name}} {{item.detail}}</view>
 							</view>
-							<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
+							<image class="edit" src="../../static/images/user/icon02.png" @click.stop="edit(index)"></image>
 							<image v-if="point == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
 						</view>
-					</scroll-view>
-					<!-- <view class="addressList" :style="contentHeight">
+					</scroll-view> -->
+					<view class="addressList" :style="contentHeight">
 						<view class="addressModular" :class="{'activeModular': point == index}" v-for="item,index in list" @click="chooseAddress(index)">
 							<image v-if="point == index" class="addressPhoto" src="../../static/images/detail/icon15.png"></image>
 							<image v-else class="addressPhoto" src="../../static/images/user/icon03.png"></image>
@@ -256,7 +254,7 @@
 							<image class="edit" src="../../static/images/user/icon02.png" @click="edit(index)"></image>
 							<image v-if="point == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
 						</view>
-					</view> -->
+					</view>
 					
 					<view class="popupBottom">
 						<view class="newAdd" @click="addAddress">
@@ -396,11 +394,11 @@
 			//如果首页、分类特殊值有值-请求（不与上方同时触发）
 			if (option.id) this.id = option.id
 			this.getHttpLists()
-			this.getUserLists()
 		},
 		onShow() {
 			//console.log(this.scrollHeight)
 			console.log("页面出bug了1111111")
+			this.getUserLists()
 			this.getHttpAddress()
 		},
 		mounted() {
@@ -418,6 +416,7 @@
 				this.getUserLists()
 			},
 			getHttpAddress() {
+				// this.list = []
 				uni.showLoading({
 					title: 'loading...',
 					mask: true
@@ -433,7 +432,7 @@
 						uni.hideLoading();
 						if (res.data.code == 200) {
 							this.list = res.data.data
-								
+							this.openCollection()	
 						} else {
 							uni.showModal({
 								title: 'TIP',
@@ -467,6 +466,7 @@
 				console.log(this.userList)
 			},
 			getUserLists(type) {
+				this.userList = []
 				uni.showLoading({
 					title: 'loading...',
 					mask: true
@@ -524,7 +524,7 @@
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							console.log(res.data.data)
+							//console.log(res.data.data)
 							let obj = res.data.data;
 							let arr = [];
 							let arrObj = {};
@@ -535,11 +535,11 @@
 								arr.push(arrObj)
 							}
 							this.banner = arr // 轮播图数据处理
-							console.log(this.banner)
+							//console.log(this.banner)
 							this.is_samples = obj.is_samples
 							this.stock = obj.stock
 							this.is_collection = obj.is_collection == 1 ? true : false
-							console.log(this.is_collection)
+							//console.log(this.is_collection)
 							this.isShowLove = this.is_collection
 							this.left_icon = obj.left_icon
 							this.right_icon = obj.right_icon
@@ -589,7 +589,7 @@
 			},
 			change(e) {
 				this.current = e.detail.current
-				console.log(e)
+				//console.log(e)
 			},
 			sample() {
 				this.$refs.requestPopup.open()
@@ -623,7 +623,7 @@
 			},
 			goLove(type) {
 				this.isShowLove = !this.isShowLove
-				console.log(this.isShowLove)
+				//console.log(this.isShowLove)
 				
 				uni.showLoading({
 					title: 'loading...',
@@ -668,6 +668,8 @@
 			/* 添加窗口 */
 			openAdd() {
 				this.cindex = this.kindex
+				
+				this.getUserId()
 				this.$refs.popupAdd.open()
 			},
 			closeAdd() {
@@ -693,9 +695,9 @@
 				//还需要管理一个 账号id
 				this.$store.commit('editAccountName', this.userList[this.kindex])
 				uni.setStorageSync('accountList', this.userList[this.kindex])
-				console.log(this.$store.state.accountList)
-				console.log(this.$store.state.accountName)
-				console.log(this.$store.state.accountId)
+				// console.log(this.$store.state.accountList)
+				// console.log(this.$store.state.accountName)
+				// console.log(this.$store.state.accountId)
 			},
 			
 			onUnload() {
@@ -713,9 +715,25 @@
 				this.$refs.newAdd.newAddClose()
 			},
 			/* 免费领样 */
-			openCollection() {
-				this.point = this.cPoint
+			chooseCollection() {
+				this.openCollection()
 				this.$refs.popupCollection.open()
+			},
+			openCollection() {
+				let obj = {}
+				for(let i in this.list){
+					if(this.list[i].id == this.$store.state.addressId){
+						this.point = 0
+						this.cPoint = 0
+						obj = this.list[i]
+						this.list.splice(i,1)
+						this.list.unshift(obj)
+						break
+					}
+				}
+				
+				// this.point = this.cPoint
+				// this.$refs.popupCollection.open()
 			},
 			
 			closeCollection() {
@@ -734,8 +752,8 @@
 			addAddress() {
 				console.log("新增收货地址")
 				this.scrollHeight = 0
-				this.cPoint = 0
-				this.point = 0
+				// this.cPoint = 0
+				// this.point = 0
 				this.$nextTick(()=>{
 					uni.navigateTo({
 						url: "/pages/user/address"
@@ -744,16 +762,13 @@
 			},
 			confirmedCollection() {
 				this.cPoint = this.point
-				console.log("选择地址cPoint:" + this.cPoint)
-				console.log(this.list[this.cPoint])
-				console.log(this.list[this.cPoint].id)
 				this.$refs.popupCollection.close()
 				// vuex值
 				this.$store.commit('editAddress', this.list[this.cPoint])
+				uni.setStorageSync('addressList', this.list[this.cPoint])
 				console.log(this.$store.state.addressList)
 				console.log(this.$store.state.addressName)
 				console.log(this.$store.state.addressId)
-				
 				uni.navigateTo({
 					url: "./car?id=" + this.id
 				});

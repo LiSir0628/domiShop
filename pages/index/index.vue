@@ -141,19 +141,22 @@
 				<image class="arrowDown" src="../../static/images/home/icon12.png"></image>
 			</view>
 		</view> -->
-
+		<view class="detailTitle" v-if="spLists.length>0">
+			<view class="underline"></view>
+			Sampling list
+			<view class="underline"></view>
+		</view>
 		<view class="spList" v-if="spLists.length>0">
-			<view class="sp" v-for="item,index in spLists">
+			<!-- <view class="sp" v-for="item,index in spLists">
 				<view class="spTop" @click="goDetail(index)">
 					<image v-if="item.cover" class="spLogo" :src="item.cover"></image>
 					<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
-					<!-- <image class="spLogo" :src="item.image"></image> -->
 					<view class="spMsg">
 						<view class="spDes">{{item.name}}</view>
 						<view class="spOperation">
-							<!-- <view class="state" v-if="item.state == 2">order paid</view>
+							<view class="state" v-if="item.state == 2">order paid</view>
 							<view class="settled" v-else-if="item.state == 4">settled account</view>
-							<view class="stateRefund" v-else-if="item.state == 3">refund/return of order</view> -->
+							<view class="stateRefund" v-else-if="item.state == 3">refund/return of order</view>
 							<view class="time">{{item.time}} payment</view>
 						</view>
 					</view>
@@ -172,11 +175,41 @@
 						<view class="dataNum">${{item.commission}}</view>
 					</view>
 				</view>
-				<!-- 推荐人信息隐藏 -->
-				<!-- <view class="spBottom">
+				<view class="spBottom">
 					<image class="photo" src="../../static/images/home/photo.png"></image>
 					<view class="name">zhanghaomingcheng</view>
-				</view> -->
+				</view>
+			</view> -->
+			<view class="sp" v-for="item,index in spLists">
+				<view class="spTop" @click="goDetail(index)">
+					<image v-if="item.product_image" class="spLogo" :src="item.product_image"></image>
+					<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
+					<view class="spMsg">
+						<view class="spDes">{{item.product_name}}</view>
+						<view class="spOperation">
+							<view class="settled" v-if="item.status == 0">Pending review</view>
+							<view class="state" v-else-if="item.status == 1">To be sent</view>
+							<view class="state" v-else-if="item.status == 2">Sending</view>
+							<view class="state" v-if="item.status == 3">Delivery received</view>
+							<view class="stateRefund" v-else-if="item.status == -1 || item.status == -2">It’s done</view>
+							<view class="time">{{item.addtime}} apply</view>
+						</view>
+					</view>
+				</view>
+				<view class="spMiddle">
+					<view class="spData">
+						<view class="dataTitle">Price</view>
+						<view class="dataNum">${{item.unit_price}}</view>
+					</view>
+					<view class="spData">
+						<view class="dataTitle">Commission ratio</view>
+						<view class="dataNum">{{(item.commission_ratio*100).toFixed()}}%</view>
+					</view>
+					<view class="spData">
+						<view class="dataTitle">Commission</view>
+						<view class="dataNum">${{item.commission}}</view>
+					</view>
+				</view>
 			</view>
 		</view>
 		<view class="spList" v-else>
@@ -350,6 +383,7 @@
 			}
 		},
 		mounted() {
+			this.getHttpFund("one")
 			this.getHttpLists("one")
 			// this.$refs.popup.open("bottom")
 			// 返回不触发，进行触发
@@ -370,43 +404,71 @@
 					mask: true
 				});
 				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/sample/lists',
+						data: {
+							state: this.state,
+							page: this.page,
+							limit: this.limit
+						}
+					})
+					.then(res => {
+						this.isRequest = true
+						uni.hideLoading();
+						if (res.data.code == 200) {					
+							let dataList = res.data.data
+							let arr = dataList.lists
+							for(let i in arr){
+								if(arr[i].addtime){
+									arr[i].addtime = this.$transformTime(arr[i].addtime*1000,'mm-dd hh:mm:ss')
+								}
+							}
+							
+							if (type == "one") {	
+								this.spLists = arr					
+								//this.page = dataList.page
+								this.total_limit = dataList.total_limit
+								this.total_page = Math.ceil(dataList.total_limit / this.limit)
+								console.log(this.total_page)
+							} else {
+								//下拉加载更多								
+								this.spLists = this.spLists.concat(arr)		
+								//this.page = dataList.page
+								this.total_page = Math.ceil(dataList.total_limit / this.limit)
+							}
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						this.isRequest = true
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
+			},
+			getHttpFund(type) {
+				this.$myRequest({
 					method: 'GET',
 					url: 'api/tiktok/index/index',
 					data:{
 						days: this.days,
-						order_page: this.page,
-						order_limit: this.limit,
+						order_page: 1,
+						order_limit: 20,
 					}
 				})
 				.then(res=>{
-					this.isRequest = true
-					uni.hideLoading();
+					if(type != "one") uni.hideLoading();
 					if(res.data.code == 200){
-						//console.log(res.data.data);
-						let order = {};
-						order = res.data.data.order
-						for(let i in order.orderList){
-							if(order.orderList[i].time){
-								order.orderList[i].time = this.$transformTime(order.orderList[i].time*1000,'mm-dd hh:mm:ss')
-							}
-						}
-						if(type == "one") {
-							this.spLists = order.orderList
-							this.fund_data = res.data.data.fund_data
-							//console.log(this.spLists)
-							this.page = order.order_page
-							this.total_limit = order.order_total_limit
-							this.total_page = Math.ceil(order.order_total_limit / order.order_limit)
-							//console.log(this.total_page)
-						} else {
-							//下拉加载更多
-							this.spLists = this.spLists.concat(order.orderList)
-							
-							this.page = order.order_page
-							this.total_page = Math.ceil(order.order_total_limit / order.order_limit)
-						}
-						
-						
+						this.fund_data = res.data.data.fund_data
 					} else {
 						uni.showModal({
 							title: 'TIP',
@@ -416,8 +478,7 @@
 					}
 				})
 				.catch(err=>{
-					this.isRequest = true
-					uni.hideLoading();
+					if(type != "one") uni.hideLoading();
 					uni.showModal({
 						title: 'TIP',
 						content: "Network error, please try again later",
@@ -426,6 +487,69 @@
 					})
 				})
 			},
+			// getHttpLists(type) {
+			// 	this.isRequest = false
+			// 	uni.showLoading({
+			// 		title: 'loading...',
+			// 		mask: true
+			// 	});
+			// 	this.$myRequest({
+			// 		method: 'GET',
+			// 		url: 'api/tiktok/index/index',
+			// 		data:{
+			// 			days: this.days,
+			// 			order_page: this.page,
+			// 			order_limit: this.limit,
+			// 		}
+			// 	})
+			// 	.then(res=>{
+			// 		this.isRequest = true
+			// 		uni.hideLoading();
+			// 		if(res.data.code == 200){
+			// 			//console.log(res.data.data);
+			// 			let order = {};
+			// 			order = res.data.data.order
+			// 			for(let i in order.orderList){
+			// 				if(order.orderList[i].time){
+			// 					order.orderList[i].time = this.$transformTime(order.orderList[i].time*1000,'mm-dd hh:mm:ss')
+			// 				}
+			// 			}
+			// 			if(type == "one") {
+			// 				this.spLists = order.orderList
+			// 				this.fund_data = res.data.data.fund_data
+			// 				//console.log(this.spLists)
+			// 				this.page = order.order_page
+			// 				this.total_limit = order.order_total_limit
+			// 				this.total_page = Math.ceil(order.order_total_limit / order.order_limit)
+			// 				//console.log(this.total_page)
+			// 			} else {
+			// 				//下拉加载更多
+			// 				this.spLists = this.spLists.concat(order.orderList)
+							
+			// 				this.page = order.order_page
+			// 				this.total_page = Math.ceil(order.order_total_limit / order.order_limit)
+			// 			}
+						
+						
+			// 		} else {
+			// 			uni.showModal({
+			// 				title: 'TIP',
+			// 				content: res.data.msg,
+			// 				showCancel: false,
+			// 			})
+			// 		}
+			// 	})
+			// 	.catch(err=>{
+			// 		this.isRequest = true
+			// 		uni.hideLoading();
+			// 		uni.showModal({
+			// 			title: 'TIP',
+			// 			content: "Network error, please try again later",
+			// 			//content: err,
+			// 			showCancel: false,
+			// 		})
+			// 	})
+			// },
 			toggle(type) {
 				// 获取选项索引
 				for(let i in this.orderStateList){
@@ -442,9 +566,17 @@
 				this.cindex = index
 				this.days = this.scrollList[index].value
 				this.scrollTabLeft = 0
-				this.page = 1
-				this.spLists = []
-				this.getHttpLists("one")
+				
+				// this.page = 1
+				// this.spLists = []
+				// this.getHttpLists("one")
+				
+				// 上方时间tab触发表单数据变化
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.getHttpFund()
 			},
 			scroll(e) {
 				//this.scrollLeft = e.detail.scrollLeft
@@ -452,9 +584,16 @@
 				// console.log(this.scrollLeft)
 			},
 			scrollTwo(e) {
-				this.scrollTabLeft = e.detail.scrollLeft
+				//this.scrollTabLeft = e.detail.scrollLeft
+				if(e.detail.scrollLeft > uni.upx2px(1030)){
+					// this.scrollTabLeft = uni.upx2px(1030)
+				} else if(e.detail.scrollLeft <= 0){
+					this.scrollTabLeft = 0
+				} else {
+					this.scrollTabLeft = e.detail.scrollLeft
+				}
 				// console.log(e)
-				// console.log(this.scrollLeft)
+				// console.log(this.scrollTabLeft)
 			},
 			
 			getOrderState(index,name) {
@@ -488,7 +627,8 @@
 			},
 			goDetail(index) {
 				uni.navigateTo({
-					url: '/pages/product/detail?id=' + this.spLists[index].id
+					// url: '/pages/product/detail?id=' + this.spLists[index].id
+					url: '/pages/product/detail?id=' + this.spLists[index].pid
 				});
 			},
 			goAdministration() {
@@ -880,13 +1020,15 @@
 	.spOperation {
 		width: 508rpx;
 		display: flex;
-		/* justify-content: space-between; */
-		justify-content: flex-end;
+		justify-content: space-between;
+		/* justify-content: flex-end; */
 		align-items: end;
 	}
 
 	.state {
-		width: 150rpx;
+		/* width: 150rpx; */
+		width: max-content;
+		padding: 0 24rpx;
 		height: 40rpx;
 		background: rgba(40, 168, 151, 0.1);
 		border-radius: 20rpx;
@@ -898,7 +1040,9 @@
 		line-height: 40rpx;
 	}
 	.settled {
-		width: 200rpx;
+		/* width: 200rpx; */
+		width: max-content;
+		padding: 0 24rpx;
 		height: 40rpx;
 		background: rgba(245, 138, 90, 0.1);
 		border-radius: 20rpx;
@@ -911,7 +1055,9 @@
 		line-height: 40rpx;
 	}
 	.stateRefund{
-		width: 246rpx;
+		/* width: 246rpx; */
+		width: max-content;
+		padding: 0 24rpx;
 		height: 40rpx;
 		background: rgb(51, 51, 51);
 		border-radius: 20rpx;
@@ -1116,5 +1262,30 @@
 	}
 	.navActiveText{
 		color: #FFFFFF;
+	}
+	
+	/* 标题线 */
+	.detailTitle {
+		width: 750rpx;
+		height: 60rpx;
+		line-height: 60rpx;
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #FFFFFF;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 30rpx;
+		box-sizing: border-box;
+		letter-spacing: 2rpx;
+		margin-top: 20rpx;
+	}
+	
+	.underline {
+		width: 100rpx;
+		height: 2rpx;
+		background: #FFFFFF;
+		margin: 0 30rpx;
 	}
 </style>

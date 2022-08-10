@@ -3,7 +3,7 @@ let baseURL='https://fish.mini.zhishukongjian.com/';
 
 function myRequest(options){
 	let headers={}
-	var Token =uni.getStorageSync('token') || '';
+	var Token =uni.getStorageSync('token') || 'NzVVNE5DMC1jX0p1OWd1c3JIQlgtN1RjcFZJaWRHbGlMZDJFRlR1TUtqXzFWLXVzaTZjRzFaM3I5enI1VFdVag==';
 	headers['lang'] = 'zh-cn';
 	headers['platform'] = 3;
 	headers['version'] = 1.01;

@@ -88,6 +88,11 @@
 				// 	name: 'Ready for shipment (2)'
 				// }],
 				
+				isRequest: true,
+				page: 1,
+				limit: 20,
+				total_limit: 0,
+				total_page: 0,
 				lists: [],
 				// lists:[{
 				// 	id: 1,
@@ -144,7 +149,24 @@
 					}
 				}
 			}
-			this.getHttpLists()
+			this.getHttpLists("one")
+		},
+		onReachBottom() {
+			//上拉加载，请求记得限制。
+			if (this.isRequest) {
+				console.log(this.page)
+				console.log(this.total_page)
+				if (this.page < this.total_page) {
+					console.log("选品页触底了,加载一下")
+					this.page = this.page + 1
+					this.getHttpLists()
+				} else {
+					console.log("页码已达到最大，无法再次请求")
+				}
+				this.$forceUpdate()
+			} else {
+				console.log("正在请求，无法再次请求")
+			}
 		},
 		mounted() {
 			this.$nextTick(()=>{
@@ -161,8 +183,9 @@
 					url: './detail?id=' + this.lists[index].pid
 				});
 			},
-			getHttpLists() {
-				this.lists = []
+			getHttpLists(type) {
+				//this.lists = []
+				this.isRequest = false
 				uni.showLoading({
 					title: 'loading...',
 					mask: true
@@ -172,20 +195,33 @@
 						url: 'api/tiktok/sample/lists',
 						data: {
 							state: this.state,
-							// page: 1,
-							// limit: 20,
+							page: this.page,
+							limit: this.limit
 						}
 					})
 					.then(res => {
+						this.isRequest = true
 						uni.hideLoading();
-						if (res.data.code == 200) {
-							// console.log(res.data.data)
-							this.lists = res.data.data
-							
-							for(let i in this.lists){
-								if(this.lists[i].addtime){
-									this.lists[i].addtime = this.$transformTime(this.lists[i].addtime*1000,'yyyy-mm-dd hh:mm:ss')
+						if (res.data.code == 200) {					
+							let dataList = res.data.data
+							let arr = dataList.lists
+							for(let i in arr){
+								if(arr[i].addtime){
+									arr[i].addtime = this.$transformTime(arr[i].addtime*1000,'yyyy-mm-dd hh:mm:ss')
 								}
+							}
+							
+							if (type == "one") {	
+								this.lists = arr					
+								//this.page = dataList.page
+								this.total_limit = dataList.total_limit
+								this.total_page = Math.ceil(dataList.total_limit / this.limit)
+								console.log(this.total_page)
+							} else {
+								//下拉加载更多								
+								this.lists = this.lists.concat(arr)		
+								//this.page = dataList.page
+								this.total_page = Math.ceil(dataList.total_limit / this.limit)
 							}
 						} else {
 							uni.showModal({
@@ -196,6 +232,7 @@
 						}
 					})
 					.catch(err => {
+						this.isRequest = true
 						uni.hideLoading();
 						uni.showModal({
 							title: 'TIP',
@@ -212,7 +249,10 @@
 				if (this.cindex == index) return
 				this.cindex = index
 				this.state = this.scrollList[this.cindex].id
-				this.getHttpLists()
+				
+				this.page = 1
+				this.lists = []
+				this.getHttpLists("one")
 				// 根据此navbar 切换下拉框、显示面板
 			},
 			scroll(e) {

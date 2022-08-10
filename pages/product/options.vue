@@ -475,19 +475,19 @@
 				this.category = this.category_lists[index].id
 				this.page = 1
 				this.product_lists = []
-				//this.getHttpLists("one")
+				this.getHttpLists("one")
 				console.log(index)
-				this.$nextTick(()=>{
-					const that = this
-					let view = uni.createSelectorQuery().select(".scroll-view-item-active")
-					view.boundingClientRect(function(data) {
-						console.log(data)
-						// that.scrollLeft = that.scrollLeft +  parseInt(data.left) - uni.upx2px(30)
-					}).exec();
-				})
+				// this.$nextTick(()=>{
+				// 	const that = this
+				// 	let view = uni.createSelectorQuery().select(".scroll-view-item-active")
+				// 	view.boundingClientRect(function(data) {
+				// 		// console.log(data)
+				// 		// that.scrollLeft = that.scrollLeft +  parseInt(data.left) - uni.upx2px(30)
+				// 	}).exec();
+				// })
 			},
 			scroll(e) {
-				this.scrollLeft = e.detail.scrollLeft
+				// this.scrollLeft = e.detail.scrollLeft
 				// console.log(e)
 				// console.log(this.scrollLeft)
 			},

@@ -17,23 +17,23 @@
 				</view>
 				<view class="orderContent">
 					<view class="orderState" @click="goView(2)">
-						<view class="orderNum">15</view>
+						<view class="orderNum">{{applyList.wait_examine_nums}}</view>
 						<view class="orderTitle">Pending review</view>
 					</view>
 					<view class="orderState orderStateMiddle" @click="goView(3)">
-						<view class="orderNum">20</view>
+						<view class="orderNum">{{applyList.wait_delivery_nums}}</view>
 						<view class="orderTitle">Ready for shipment</view>
 					</view>
 					<view class="orderState" @click="goView(5)">
-						<view class="orderNum">20</view>
+						<view class="orderNum">{{applyList.arrived_nums}}</view>
 						<view class="orderTitle">Delivery received</view>
 					</view>
 					<view class="orderState orderStateMiddle" @click="goView(4)">
-						<view class="orderNum">20</view>
+						<view class="orderNum">{{applyList.shipping_nums}}</view>
 						<view class="orderTitle">Delivery in progress</view>
 					</view>
 					<view class="orderState orderStateMiddle" @click="goView(6)">
-						<view class="orderNum">20</view>
+						<view class="orderNum">{{applyList.complete_nums}}</view>
 						<view class="orderTitle">It’s done</view>
 					</view>
 				</view>
@@ -109,11 +109,13 @@
 					image: '../../static/images/user/icon09.png',
 					title: 'Log out',
 					url: ''
-				}]
+				}],
+				applyList: {},
 			}
 		},
 		onShow() {
 			this.nickname = this.$store.state.nickname
+			this.getHttpLists()
 		},
 		methods: {
 			edit() {
@@ -121,6 +123,40 @@
 				uni.navigateTo({
 					url: './editUser'
 				});
+			},
+			getHttpLists() {
+				uni.showLoading({
+					title: 'loading...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'api/tiktok/sample/lists',
+						data: {
+							state: 1,
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {						
+							this.applyList = res.data.data
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: 'TIP',
+							content: "Network error, please try again later",
+							//content: err,
+							showCancel: false,
+						})
+				})
 			},
 			goClick(index) {
 				// id是3 客服，id是4 退出登錄。

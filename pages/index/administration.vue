@@ -83,7 +83,7 @@
 						break
 					}
 				}
-				console.log(this.lists)
+				//console.log(this.lists)
 			},
 			getHttpLists() {
 				uni.showLoading({
@@ -98,7 +98,7 @@
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							console.log(res.data.data)
+							//console.log(res.data.data)
 							this.lists = res.data.data
 							this.getUserId()
 						} else {
@@ -129,8 +129,8 @@
 				//还需要管理一个 账号id
 				this.$store.commit('editAccountName', this.lists[index])
 				uni.setStorageSync('accountList', this.lists[index]);
-				console.log(this.$store.state.accountName)
-				console.log(this.$store.state.accountId)
+				//console.log(this.$store.state.accountName)
+				//console.log(this.$store.state.accountId)
 			},
 
 			open(type) {		
