@@ -637,12 +637,12 @@
 				});
 			},
 			goOptions() {
-				uni.navigateTo({
+				uni.switchTab({
 					url: './../product/options'
 				});
 			},
 			goIndividuals() {
-				uni.navigateTo({
+				uni.switchTab({
 					url: './../user/user'
 				});
 			}

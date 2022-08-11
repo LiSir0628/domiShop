@@ -171,4 +171,31 @@
 			"background": "#efeff4"
 		}
 	}
+	,
+	"tabBar": {
+		"color": "#B9B8CD",
+		"selectedColor": "#36B274",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"height": "108rpx",
+		"fontSize": "20rpx",
+		"iconWidth": "50rpx",
+		"spacing": "6rpx",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "",
+			"selectedIconPath": "",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/product/options",
+			"iconPath": "",
+			"selectedIconPath": "",
+			"text": "选品页"
+		}, {
+			"pagePath": "pages/user/user",
+			"iconPath": "",
+			"selectedIconPath": "",
+			"text": "个人中心"
+		}]
+	}
 }

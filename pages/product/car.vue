@@ -32,6 +32,7 @@
 				<view class="tikTokRight" @click="goAdministration">
 					<!-- <image class="userPhoto" src="../../static/images/home/photo.png"></image> -->
 					<!-- <image v-if="tiktok_id == 17" class="userPhoto" src="../../static/images/home/photo.png"></image> -->
+					<view class="tiktok_name">{{tiktok_name}}</view>
 					<image v-if="photo" class="userPhoto" :src="photo"></image>
 					<image v-else class="userPhoto" src="../../static/images/common/photo.png"></image>
 					<image class="chooseLogo" src="../../static/images/product/icon14.png"></image>
@@ -131,6 +132,7 @@
 				fans: "",
 				
 				tiktok_id: '',
+				tiktok_name: '',
 				address_id: '',
 				notes: '',
 				
@@ -146,6 +148,7 @@
 		onShow() {
 			this.photo = this.$store.state.accountList.image
 			this.tiktok_id = this.$store.state.accountId
+			this.tiktok_name = this.$store.state.accountName
 			
 			this.address = this.$store.state.addressList
 			this.address_id = this.$store.state.addressId
@@ -488,7 +491,7 @@
 		display: flex;
 		align-items: center;
 		
-		font-size: 26rpx;
+		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
@@ -500,11 +503,21 @@
 		color: #999999;
 		text-align: right;
 	}
-	
+	.tiktok_name{
+		width: 100rpx;
+		
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+		text-align: right;
+	}
 	.userPhoto{
 		width: 64rpx;
 		height: 64rpx;
 		border-radius: 50%;
+		margin-left: 20rpx;
 		margin-right: 20rpx;
 	}
 	

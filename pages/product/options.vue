@@ -521,12 +521,12 @@
 
 			},
 			goIndex() {
-				uni.navigateTo({
+				uni.switchTab({
 					url: './../index/index'
 				});
 			},
 			goIndividuals() {
-				uni.navigateTo({
+				uni.switchTab({
 					url: './../user/user'
 				});
 			}

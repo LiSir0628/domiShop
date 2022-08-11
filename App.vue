@@ -34,4 +34,11 @@
 	page {
 		word-break: break-all
 	}
+	.uni-tabbar-bottom{
+		display: none;
+	}
+	uni-page-wrapper{
+		width: 100%;
+		height: 100% !important;
+	}
 </style>

@@ -186,12 +186,12 @@
 				});
 			},
 			goIndex() {
-				uni.navigateTo({
+				uni.switchTab({
 					url: './../index/index'
 				});
 			},
 			goOptions() {
-				uni.navigateTo({
+				uni.switchTab({
 					url: './../product/options'
 				});
 			},
