@@ -36,7 +36,8 @@
 			</scroll-view>
 		</view> -->
 
-		<view class="merRankList" v-if="cindex == 0 && lists.merchandise_ranking.length>0">
+		<!-- <view class="merRankList" v-if="cindex == 0 && lists.merchandise_ranking.length>0"> -->
+		<scroll-view class="merRankList" v-if="cindex == 0 && lists.merchandise_ranking.length>0" scroll-y="true" scroll-top="scrollViewTop" ower-threshold="100" @scrolltolower="lower()" :style="showListActive">
 			<view class="merRank" :class="{'merRankActive': merIndex == index}" v-for="item,index in lists.merchandise_ranking"
 				@click="merIndexChoose(index)">
 				<view class="userMsg">
@@ -75,7 +76,8 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
+		<!-- </view> -->
 		<view class="merRankList" v-else-if="cindex == 0 && lists.merchandise_ranking.length<=0">
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
@@ -333,6 +335,11 @@
 					// 	bind_account_num: 10
 					// }],
 				},
+				
+				scrollViewTop: 0,
+				showListActive: {
+					'height': '902rpx'
+				},
 			}
 		},
 		onLoad(option) {
@@ -353,23 +360,61 @@
 		},
 		onReachBottom() {
 			//上拉加载，请求记得限制。
-			if (this.isRequest) {
-				if (this.page < this.total_page) {
-					console.log("选品页触底了,加载一下")
-					this.page = this.page + 1
-					this.getHttpLists()
-				} else {
-					console.log("页码已达到最大，无法再次请求")
-				}
-				this.$forceUpdate()
-			} else {
-				console.log("正在请求，无法再次请求")
-			}
+			// if (this.isRequest) {
+			// 	if (this.page < this.total_page) {
+			// 		console.log("选品页触底了,加载一下")
+			// 		this.page = this.page + 1
+			// 		this.getHttpLists()
+			// 	} else {
+			// 		console.log("页码已达到最大，无法再次请求")
+			// 	}
+			// 	this.$forceUpdate()
+			// } else {
+			// 	console.log("正在请求，无法再次请求")
+			// }
 		},
 		mounted() {
+			this.getHeight()
 			this.getHttpLists("one")
 		},
 		methods: {
+			lower() {
+				//上拉加载，请求记得限制。
+				if (this.isRequest) {
+					if (this.page < this.total_page) {
+						console.log("选品页触底了,加载一下")
+						this.page = this.page + 1
+						this.getHttpLists()
+					} else {
+						console.log("页码已达到最大，无法再次请求")
+					}
+					this.$forceUpdate()
+				} else {
+					console.log("正在请求，无法再次请求")
+				}
+			},
+			getHeight() {
+				const query = uni.createSelectorQuery().in(this);
+				query.select('.top').boundingClientRect(data => {
+					// console.log(data.height)
+					var that = this;
+					uni.getSystemInfo({
+						success(res) {
+							// console.log(res.windowHeight)
+							// #ifdef MP-WEIXIN
+							// #endif
+							
+							// #ifdef H5
+								if(res.windowHeight>568){
+									that.showListActive.height = res.windowHeight + "px"
+									// console.log(that.showListActive.height)
+									that.$forceUpdate()
+								}
+							// #endif
+						},
+					})
+				}).exec();
+			},
 			getHttpLists(type) {
 				this.isRequest = false
 				uni.showLoading({
@@ -467,6 +512,7 @@
 					this.days = this.orderStateList[this.citem].value
 					this.page = 1
 					this.lists.merchandise_ranking = []
+					this.scrollViewTop = 0
 					this.getHttpLists("one")
 				}
 			},
@@ -609,6 +655,7 @@
 		/* margin: 88rpx auto 0; */
 		margin: 0 auto;
 		padding: 118rpx 30rpx 30rpx 30rpx;
+		box-sizing: border-box;
 	}
 
 	.merRank {
@@ -682,7 +729,19 @@
 		left: -4rpx;
 		z-index: 2;
 	}
-
+	
+	.merRank:nth-child(-n+9) .rankText{
+		left: -4rpx;
+	}
+	
+	.merRank:nth-child(n+10):nth-child(-n+99) .rankText{
+		left: -8rpx;
+	}
+	
+	.merRank:nth-child(n+100) .rankText{
+		left: -10rpx;
+	}
+	
 	.rankTextAccount {
 		top: 32rpx;
 		left: 5rpx;

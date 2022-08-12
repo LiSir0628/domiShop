@@ -5,9 +5,9 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		duomiList: {},
-		
+		duomiList: {},	
 		nickname: "",
+		mail: "",
 		
 		accountList: {},
 		accountName: "", //账号名称
@@ -26,6 +26,11 @@ const store = new Vuex.Store({
 			state.nickname = name
 			state.duomiList.nickname = name
 		},
+		editEmail(state,email){
+			state.mail = email
+			state.duomiList.mail = email
+		},
+		
 		editAccountName(state,user){
 			state.accountList = user
 			state.accountName = user.name

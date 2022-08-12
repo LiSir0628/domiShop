@@ -106,6 +106,14 @@
 			}
 		}
 	},{
+		"path": "pages/user/love",
+		"style": {
+			"navigationBarTitleText": "收藏商品",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
 		"path": "pages/user/addressList",
 		"style": {
 			"navigationBarTitleText": "Receiving address",

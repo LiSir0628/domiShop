@@ -433,6 +433,7 @@
 						if (res.data.code == 200) {
 							this.list = res.data.data
 							this.openCollection()	
+							this.$forceUpdate()
 						} else {
 							uni.showModal({
 								title: 'TIP',

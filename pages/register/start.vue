@@ -15,7 +15,7 @@
 		},
 		mounted() {
 			setTimeout(()=>{
-				uni.navigateTo({
+				uni.switchTab({
 					url: '/pages/product/options'
 				});
 			},2000)

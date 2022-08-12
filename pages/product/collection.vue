@@ -8,7 +8,8 @@
 					:class="{'scroll-view-item-active':cindex == index}" @click="scrollTab(index)">{{item.name}}</view>
 			</scroll-view>
 		</view>
-		<view class="content" v-if="lists.length > 0">
+		<!-- <view class="content" v-if="lists.length > 0"> -->
+		<scroll-view class="content" v-if="lists.length > 0" scroll-y="true" scroll-top="scrollViewTop" ower-threshold="100" @scrolltolower="lower()" :style="showListActive">
 			<view class="sp" v-for="item,index in lists">
 				<view class="spTop">
 					<view class="timeClock">
@@ -41,7 +42,8 @@
 					<view class="number">Odd Number: {{item.express_no}}</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
+		<!-- </view> -->
 		<view class="content" v-else>
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
@@ -135,6 +137,11 @@
 				// 	time: '2021-10-18 16:05:20',
 				// 	state: 5
 				// }]
+				
+				scrollViewTop: 0,
+				showListActive: {
+					'height': '902rpx'
+				},
 			}
 		},
 		onLoad(option) {
@@ -153,22 +160,23 @@
 		},
 		onReachBottom() {
 			//上拉加载，请求记得限制。
-			if (this.isRequest) {
-				console.log(this.page)
-				console.log(this.total_page)
-				if (this.page < this.total_page) {
-					console.log("选品页触底了,加载一下")
-					this.page = this.page + 1
-					this.getHttpLists()
-				} else {
-					console.log("页码已达到最大，无法再次请求")
-				}
-				this.$forceUpdate()
-			} else {
-				console.log("正在请求，无法再次请求")
-			}
+			// if (this.isRequest) {
+			// 	console.log(this.page)
+			// 	console.log(this.total_page)
+			// 	if (this.page < this.total_page) {
+			// 		console.log("选品页触底了,加载一下")
+			// 		this.page = this.page + 1
+			// 		this.getHttpLists()
+			// 	} else {
+			// 		console.log("页码已达到最大，无法再次请求")
+			// 	}
+			// 	this.$forceUpdate()
+			// } else {
+			// 	console.log("正在请求，无法再次请求")
+			// }
 		},
 		mounted() {
+			this.getHeight()
 			this.$nextTick(()=>{
 				if(this.cindex > 2){
 					this.scrollLeft = uni.upx2px(662)
@@ -178,6 +186,45 @@
 			})
 		},
 		methods: {
+			lower() {
+				//上拉加载，请求记得限制。
+				if (this.isRequest) {
+					console.log(this.page)
+					console.log(this.total_page)
+					if (this.page < this.total_page) {
+						console.log("选品页触底了,加载一下")
+						this.page = this.page + 1
+						this.getHttpLists()
+					} else {
+						console.log("页码已达到最大，无法再次请求")
+					}
+					this.$forceUpdate()
+				} else {
+					console.log("正在请求，无法再次请求")
+				}
+			},
+			getHeight() {
+				const query = uni.createSelectorQuery().in(this);
+				query.select('.top').boundingClientRect(data => {
+					// console.log(data.height)
+					var that = this;
+					uni.getSystemInfo({
+						success(res) {
+							// console.log(res.windowHeight)
+							// #ifdef MP-WEIXIN
+							// #endif
+							
+							// #ifdef H5
+								if(res.windowHeight>568){
+									that.showListActive.height = res.windowHeight - 44 - uni.upx2px(150) + "px"
+									// console.log(that.showListActive.height)
+									that.$forceUpdate()
+								}
+							// #endif
+						},
+					})
+				}).exec();
+			},
 			goDetail(index) {
 				uni.navigateTo({
 					url: './detail?id=' + this.lists[index].pid
@@ -252,12 +299,19 @@
 				
 				this.page = 1
 				this.lists = []
+				this.scrollViewTop = 0
 				this.getHttpLists("one")
 				// 根据此navbar 切换下拉框、显示面板
 			},
 			scroll(e) {
-				this.scrollLeft = e.detail.scrollLeft
-				// console.log(e)
+				if(e.detail.scrollLeft >= uni.upx2px(640)){
+					
+				} else if(e.detail.scrollLeft <=0 ) {
+					this.scrollLeft = 0
+				} else {
+					this.scrollLeft = e.detail.scrollLeft
+				}
+				// console.log(e.detail.scrollLeft)
 				// console.log(this.scrollLeft)
 			},
 			cancel(index) {
@@ -303,7 +357,7 @@
 
 <style scoped>
 	.container {
-		padding-bottom: 42rpx;
+		/* padding-bottom: 42rpx; */
 	}
 	
 	/* 滑动块 */
@@ -366,6 +420,7 @@
 		border: 2rpx solid #CECECE;
 		border-radius: 8rpx;
 		margin-bottom: 20rpx;
+		box-sizing: border-box;
 	}
 	
 	.spTop{

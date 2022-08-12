@@ -157,32 +157,37 @@
 			this.getHttpAddress()
 		},
 		mounted() {
-			let that = this;
-			let query = uni.createSelectorQuery();
-			query.select('#addressLists').boundingClientRect(data => {
-				// console.log(data)
-				// console.log(data.height)
-				uni.getSystemInfo({
-					success(res) {
-						// #ifdef MP-WEIXIN
-						if (res.windowHeight > 568) {
-							// that.showListActive.height = (res.windowHeight - 52 - 90 - 27 - 10) + "px"
-						}
-						// #endif
-				
-						// #ifdef H5
-						if (res.windowHeight > 568) {
-							// 44顶部高度，105地址高度，70为底部按钮高度
-							that.contentHeight.height = res.windowHeight - 44 - data.height - 68 + "px"
-						}
-						// #endif
-						console.log(res.windowHeight)
-						console.log(that.contentHeight.height)
-					},
-				})
-			}).exec()
+			this.getHeight()
 		},
 		methods: {
+			getHeight() {
+				this.$nextTick(()=>{
+					let that = this;
+					let query = uni.createSelectorQuery();
+					query.select('#addressLists').boundingClientRect(data => {
+						// console.log(data)
+						// console.log(data.height)
+						uni.getSystemInfo({
+							success(res) {
+								// #ifdef MP-WEIXIN
+								if (res.windowHeight > 568) {
+									// that.showListActive.height = (res.windowHeight - 52 - 90 - 27 - 10) + "px"
+								}
+								// #endif
+						
+								// #ifdef H5
+								if (res.windowHeight > 568) {
+									// 44顶部高度，105地址高度，70为底部按钮高度
+									that.contentHeight.height = res.windowHeight - 44 - data.height - 68 + "px"
+								}
+								// #endif
+								console.log(res.windowHeight)
+								console.log(that.contentHeight.height)
+							},
+						})
+					}).exec()
+				})
+			},
 			getHttpAddress() {
 				uni.showLoading({
 					title: 'loading...',
@@ -329,6 +334,7 @@
 				this.$store.commit('editAddress', this.list[this.cPoint])
 				uni.setStorageSync('addressList', this.list[this.cPoint])
 				this.address = this.list[this.cPoint]
+				this.getHeight()
 				console.log(this.$store.state.addressList)
 				console.log(this.$store.state.addressName)
 				console.log(this.$store.state.addressId)

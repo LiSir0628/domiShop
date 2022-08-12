@@ -98,7 +98,7 @@
 					id: 2,
 					image: '../../static/images/user/icon08.png',
 					title: 'Merchandise collection',
-					url: './favorite'
+					url: './love'
 				},{
 					id: 3,
 					image: '../../static/images/user/icon07.png',
@@ -125,10 +125,12 @@
 				});
 			},
 			getHttpLists() {
-				uni.showLoading({
-					title: 'loading...',
-					mask: true
-				});
+				if(!this.applyList.wait_examine_nums){
+					uni.showLoading({
+						title: 'loading...',
+						mask: true
+					});
+				}
 				this.$myRequest({
 						method: 'GET',
 						url: 'api/tiktok/sample/lists',

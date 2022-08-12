@@ -64,7 +64,7 @@
 				});
 				this.$myRequest({
 					method: 'POST',
-					url: 'emailcode',
+					url: 'https://user.mini.zhishukongjian.com/emailcode',
 					data:{
 						email: this.account
 					}
@@ -135,7 +135,7 @@
 				});
 				this.$myRequest({
 					method: 'POST',
-					url: 'sign',
+					url: 'https://user.mini.zhishukongjian.com/sign',
 					data:{
 						email: this.account,
 						code: this.code,
@@ -185,7 +185,7 @@
 							this.$store.commit('editDuomi', res.data.data)
 							uni.setStorageSync('duomiList', res.data.data);
 							//登录成功 跳转数据页。
-							uni.navigateTo({
+							uni.switchTab({
 								url: '/pages/index/index'
 							});
 						} else {

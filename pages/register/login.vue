@@ -122,7 +122,7 @@
 							this.$store.commit('editDuomi', res.data.data)
 							uni.setStorageSync('duomiList', res.data.data);
 							//登录成功 跳转数据页。
-							uni.navigateTo({
+							uni.switchTab({
 								url: '/pages/index/index'
 							});
 						} else {

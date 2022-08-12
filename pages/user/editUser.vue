@@ -25,13 +25,13 @@
 					</template>
 					<template v-slot:footer>
 						<text class="solt-right">{{item.value}}</text>
-						<image class="arrow" src="../../static/images/user/icon05.png"></image>
+						<image v-show="item.url" class="arrow" src="../../static/images/user/icon05.png"></image>
 					</template>
 				</uni-list-item>
 			</uni-list>
 		</view>
 		
-		<view class="bottom">
+		<view class="bottom" @click="goBack">
 			Log out
 		</view>
 	</view>
@@ -49,9 +49,9 @@
 					value: ''
 				},{
 					id: 2,
-					title: 'Sign up for email',
-					url: '',
-					value: '455655556.168.com'
+					title: 'Login mailbox',
+					url: './editEmail',
+					value: ''
 				},{
 					id: 3,
 					title: 'Change Password',
@@ -68,17 +68,24 @@
 		onShow() {
 			this.nickname = this.$store.state.nickname
 			this.lists[0].value = this.nickname
+			this.lists[1].value = this.$store.state.duomiList.mail
 		},
 		methods: {
 			back() {
 				window.history.go(-1)
 			},
 			goClick(index) {
-				console.log(index)
+				//console.log(index)
 				uni.navigateTo({
 					url: this.lists[index].url
 				});
 			},
+			goBack() {
+				uni.setStorageSync('token', "");
+				uni.navigateTo({
+					url: '/pages/register/login'
+				});
+			}
 		}
 	}
 </script>

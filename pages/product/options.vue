@@ -475,6 +475,8 @@
 				this.category = this.category_lists[index].id
 				this.page = 1
 				this.product_lists = []
+				this.searchText = ""
+				this.searchValue = ""
 				this.getHttpLists("one")
 				console.log(index)
 				// this.$nextTick(()=>{
