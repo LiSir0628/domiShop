@@ -85,10 +85,10 @@
 			// }
 		},
 		onShow() {
-			this.getHttpLists("one")
+			// this.getHttpLists("one")
 		},
 		mounted() {
-			//this.getHttpLists("one")
+			this.getHttpLists("one")
 			this.getHeight()
 		},
 		methods: {

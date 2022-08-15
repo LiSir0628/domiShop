@@ -119,17 +119,17 @@
 				des: "1.After the delivery system will automatically add to your account window, no manual operation.<br/>2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.<br/>3. Overtime and not completing the job will affect your reputation on the platform.",
 			
 				id: "",
-				title: "ZshangpinneirGDHASDIZ",
+				title: "Commodity title",
 				banner:[],
 				spLogo: "",
 				
 				left_icon: "货币图标-左边",
 				right_icon: "货币图标-右边",
-				unit_price: "",
-				commission: "",
-				commission_ratio: "",
-				cumulative_sales: "",
-				fans: "",
+				unit_price: "0.00",
+				commission: "0.00",
+				commission_ratio: "0",
+				cumulative_sales: "0",
+				fans: "0",
 				
 				tiktok_id: '',
 				tiktok_name: '',
@@ -178,7 +178,7 @@
 								// #ifdef H5
 								if (res.windowHeight > 568) {
 									// 44顶部高度，105地址高度，70为底部按钮高度
-									that.contentHeight.height = res.windowHeight - 44 - data.height - 68 + "px"
+									that.contentHeight.height = res.windowHeight - uni.upx2px(88) - data.height - uni.upx2px(136) + "px"
 								}
 								// #endif
 								console.log(res.windowHeight)
