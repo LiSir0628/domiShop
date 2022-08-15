@@ -76,7 +76,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="noMore" v-if="page == total_page">
+			<view class="noMore" v-if="current_page == total_page">
 				<view class="noMoreUnderline"></view>
 				no more
 				<view class="noMoreUnderline"></view>
@@ -257,6 +257,7 @@
 				rank_type: 1,
 				days: '',
 				isRequest: true,
+				current_page: 1,
 				page: 1,
 				limit: 20,
 				total_limit: 0,
@@ -442,6 +443,7 @@
 						if (res.data.code == 200) {
 							console.log(res.data.data.merchandise_ranking)
 							let dataList = res.data.data.merchandise_ranking
+							this.current_page = this.page
 							if (type == "one") {
 								this.lists.merchandise_ranking = dataList.rank_lists
 

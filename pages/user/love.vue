@@ -20,7 +20,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="noMore" v-if="page == total_page">
+				<view class="noMore" v-if="current_page == total_page">
 					<view class="noMoreUnderline"></view>
 					no more
 					<view class="noMoreUnderline"></view>
@@ -63,6 +63,7 @@
 				// 	is_collection: true
 				// }],
 				isRequest: true,
+				current_page: 1,
 				page: 1,
 				limit: 20,
 				total_limit: 0,
@@ -154,6 +155,7 @@
 						if (res.data.code == 200) {
 							console.log(res.data.data)
 							let dataList = res.data.data
+							this.current_page = this.page
 							if (type == "one") {
 								this.lists = dataList.collection_lists
 			

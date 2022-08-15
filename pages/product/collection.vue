@@ -42,7 +42,7 @@
 					<view class="number">Odd Number: {{item.express_no}}</view>
 				</view>
 			</view>
-			<view class="noMore" v-if="page == total_page">
+			<view class="noMore" v-if="current_page == total_page">
 				<view class="noMoreUnderline"></view>
 				no more
 				<view class="noMoreUnderline"></view>
@@ -96,6 +96,7 @@
 				// }],
 				
 				isRequest: true,
+				current_page: 1,
 				page: 1,
 				limit: 20,
 				total_limit: 0,
@@ -262,7 +263,7 @@
 									arr[i].addtime = this.$transformTime(arr[i].addtime*1000,'yyyy-mm-dd hh:mm:ss')
 								}
 							}
-							
+							this.current_page = this.page
 							if (type == "one") {	
 								this.lists = arr					
 								//this.page = dataList.page

@@ -84,7 +84,7 @@
 				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
-		<view class="noMore" v-if="product_lists.length > 0 && page == total_page">
+		<view class="noMore" v-if="product_lists.length > 0 && current_page == total_page">
 			<view class="noMoreUnderline"></view>
 			no more
 			<view class="noMoreUnderline"></view>
@@ -206,6 +206,7 @@
 				category: '', //分类
 				sort: "", //排序
 				isRequest: true,
+				current_page: 1,
 				page: 1,
 				limit: 20,
 				total_limit: 0,
@@ -367,6 +368,7 @@
 						this.isRequest = true
 						uni.hideLoading();
 						if (res.data.code == 200) {
+							this.current_page = this.page
 							// console.log(res.data.data);
 							if (type == "one") {
 								this.product_lists = res.data.data.product_lists
