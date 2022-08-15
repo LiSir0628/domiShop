@@ -84,6 +84,11 @@
 				<view class="noDataText">It's empty</view>
 			</view>
 		</view>
+		<view class="noMore" v-if="product_lists.length > 0 && page == total_page">
+			<view class="noMoreUnderline"></view>
+			no more
+			<view class="noMoreUnderline"></view>
+		</view>
 
 		<view>
 			<!-- 普通弹窗 -->
@@ -1019,5 +1024,21 @@
 		color: #CECECE;
 		line-height: 24rpx;
 		margin-top: 12rpx;
+	}
+	
+	.noMore{
+		color: #999999;
+		font-size: 24rpx;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto;
+	}
+	.noMoreUnderline{
+		width: 40rpx;
+		height: 2rpx;
+		background: #999999;
+		margin: 0 20rpx;
 	}
 </style>
