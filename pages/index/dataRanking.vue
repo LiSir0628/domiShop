@@ -456,6 +456,7 @@
 							uni.showModal({
 								title: 'TIP',
 								content: res.data.msg,
+								confirmText: "confirm",
 								showCancel: false,
 							})
 						}
@@ -466,6 +467,7 @@
 						uni.showModal({
 							title: 'TIP',
 							content: "Network error, please try again later",
+							confirmText: "confirm",
 							//content: err,
 							showCancel: false,
 						})

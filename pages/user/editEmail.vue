@@ -46,6 +46,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: "Please enter your email",
+						confirmText: "confirm",
 						showCancel: false,
 					})
 					return
@@ -74,6 +75,7 @@
 						uni.showModal({
 							title: 'TIP',
 							content: res.data.msg,
+							confirmText: "confirm",
 							showCancel: false,
 						})
 					}
@@ -85,6 +87,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: "Network error, please try again later",
+						confirmText: "confirm",
 						//content: err,
 						showCancel: false,
 					})
@@ -115,6 +118,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: 'Please enter your email',
+						confirmText: "confirm",
 						showCancel: false,
 					})
 					return
@@ -123,6 +127,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: 'Please enter the verification code',
+						confirmText: "confirm",
 						showCancel: false,
 					})
 					return
@@ -131,6 +136,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: 'Please input a password',
+						confirmText: "confirm",
 						showCancel: false,
 					})
 					return
@@ -139,6 +145,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: 'Please enter a new mailbox',
+						confirmText: "confirm",
 						showCancel: false,
 					})
 					return
@@ -165,6 +172,7 @@
 							uni.showModal({
 								title: 'TIP',
 								content: res.data.msg,
+								confirmText: "confirm",
 								showCancel: false,
 								success: function (res) {
 									if (res.confirm) {
@@ -176,6 +184,7 @@
 							uni.showModal({
 								title: 'TIP',
 								content: res.data.msg,
+								confirmText: "confirm",
 								showCancel: false,
 							})
 						}
@@ -185,6 +194,7 @@
 						uni.showModal({
 							title: 'TIP',
 							content: "Network error, please try again later",
+							confirmText: "confirm",
 							//content: err,
 							showCancel: false,
 						})

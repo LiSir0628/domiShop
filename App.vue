@@ -41,4 +41,25 @@
 		width: 100%;
 		height: 100% !important;
 	}
+	
+	/*  修改文字 */
+	.uni-picker-container .uni-picker-action-cancel{
+		display: flex;
+		align-items: center;
+		flex-direction: row-reverse;
+		color: rgba(255, 255, 255, 0) !important;
+	}
+	
+	.uni-picker-container .uni-picker-action-cancel::after{
+		content: 'cancel';
+		color: #888;
+	}
+	
+	.uni-picker-container .uni-picker-action.uni-picker-action-confirm{
+		color: rgba(255, 255, 255, 0) !important;
+	}
+	.uni-picker-container .uni-picker-action.uni-picker-action-confirm::after{
+		content: 'confirm';
+		color: #007aff;
+	}
 </style>

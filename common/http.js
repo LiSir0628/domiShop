@@ -31,7 +31,8 @@ const http = ({
 					} else if (res.statusCode == 500) {
 						uni.showModal({
 							title: '提示',
-							content: '网络请求错误',
+							content: 'Network error, please try again later',
+							confirmText: "confirm",
 							showCancel: false,
 						})
 						uni.hideLoading()

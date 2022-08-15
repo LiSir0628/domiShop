@@ -55,6 +55,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: "Please fill in the account",
+						confirmText: "confirm",
 						showCancel: false,
 					})
 					return
@@ -62,6 +63,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: "Please fill in the password",
+						confirmText: "confirm",
 						showCancel: false,
 					})
 					return
@@ -91,6 +93,7 @@
 						uni.showModal({
 							title: 'TIP',
 							content: res.data.msg,
+							confirmText: "confirm",
 							showCancel: false,
 						})
 					}
@@ -100,6 +103,7 @@
 					uni.showModal({
 						title: 'TIP',
 						content: "Network error, please try again later",
+						confirmText: "confirm",
 						//content: err,
 						showCancel: false,
 					})
@@ -129,6 +133,7 @@
 							uni.showModal({
 								title: 'TIP',
 								content: res.data.msg,
+								confirmText: "confirm",
 								showCancel: false,
 							})
 						}
@@ -138,6 +143,7 @@
 						uni.showModal({
 							title: 'TIP',
 							content: "Network error, please try again later",
+							confirmText: "confirm",
 							//content: err,
 							showCancel: false,
 						})
