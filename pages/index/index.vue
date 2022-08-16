@@ -191,7 +191,8 @@
 							<view class="state" v-else-if="item.status == 1">To be sent</view>
 							<view class="state" v-else-if="item.status == 2">Sending</view>
 							<view class="state" v-if="item.status == 3">Delivery received</view>
-							<view class="stateRefund" v-else-if="item.status == -1 || item.status == -2">It’s done</view>
+							<view class="stateRefund" v-else-if="item.status == -1 || item.status == -2">It’s done
+							</view>
 							<view class="time">{{item.addtime}} apply</view>
 						</view>
 					</view>
@@ -230,17 +231,19 @@
 				TIKTOK administration
 			</view>
 		</view>
-		
+
 		<view>
 			<!-- 普通弹窗 -->
 			<uni-popup ref="popup" background-color="#fff">
 				<view class="popup-content">
-					<view class="popupChoose" v-for="item,index in orderStateList" :class="{'activePopupChoose': citem == index}" @click="getOrderState(index,item.name)">{{item.name}}</view>
+					<view class="popupChoose" v-for="item,index in orderStateList"
+						:class="{'activePopupChoose': citem == index}" @click="getOrderState(index,item.name)">
+						{{item.name}}</view>
 					<view class="confirmed" @click="confirmed">Confirmed</view>
 				</view>
 			</uni-popup>
 		</view>
-		
+
 		<view class="bottomNavigation">
 			<view class="bottomNav">
 				<!-- <image class="navLogo" src="../../static/images/home/icon06.png"></image> -->
@@ -269,14 +272,14 @@
 				autoplay: true,
 				interval: 60000,
 				duration: 500,
-				
+
 				days: '',
 				cindex: 0, //0代表all 传递空值
 				scrollList: [{
 					id: '',
 					name: 'All',
 					value: ''
-				},{
+				}, {
 					id: 1,
 					name: 'Today',
 					value: 1
@@ -310,25 +313,25 @@
 					name: 'Membership ranking',
 					image: '../../static/images/home/icon10.png'
 				}],
-				
+
 				orderStateList: [{
 					id: 1,
 					name: 'Full state',
 					value: 1
-				},{
+				}, {
 					id: 2,
 					name: 'Order paid',
 					value: 2
-				},{
+				}, {
 					id: 3,
 					name: 'Refund/return of order',
 					value: 3
-				},{
+				}, {
 					id: 4,
 					name: 'Settled Account',
 					value: 4
 				}],
-				
+
 				fund_data: {},
 				spLists: [],
 				isRequest: true,
@@ -365,19 +368,30 @@
 				// 	ratio: '23',
 				// 	commission: '256'
 				// }],
-				
+
 				citem: 0,
 				prepareState: 'Full state',
 				orderState: 'Full state',
-				
+
 				accountName: 'All of them',
 			}
 		},
+		onPullDownRefresh() { //可以感知下拉刷新,刷新后list顺连续改变
+			//console.log('触发了下拉刷新')
+			this.spLists = []
+			this.current_page = 1
+			this.page = 1
+			this.total_limit = 0
+			this.total_page = 0
+			this.getHttpFund("one")
+			this.getHttpLists("one")
+			//uni.stopPullDownRefresh()
+		},
 		onReachBottom() {
 			//上拉加载，请求记得限制。
-			if(this.isRequest){
-				if(this.page < this.total_page){
-					console.log("选品页触底了,加载一下")
+			if (this.isRequest) {
+				if (this.page < this.total_page) {
+					//console.log("选品页触底了,加载一下")
 					this.page = this.page + 1
 					this.getHttpLists()
 				} else {
@@ -385,7 +399,7 @@
 				}
 				this.$forceUpdate()
 			} else {
-				console.log("正在请求，无法再次请求")
+				//console.log("正在请求，无法再次请求")
 			}
 		},
 		mounted() {
@@ -395,7 +409,7 @@
 			// 返回不触发，进行触发
 		},
 		onShow() {
-			if(this.accountName == this.$store.state.accountName){
+			if (this.accountName == this.$store.state.accountName) {
 				// 账号无修改，无需请求
 			} else {
 				// 账号修改，接口请求触发
@@ -421,24 +435,25 @@
 					.then(res => {
 						this.isRequest = true
 						uni.hideLoading();
-						if (res.data.code == 200) {					
+						if (res.data.code == 200) {
 							let dataList = res.data.data
 							let arr = dataList.lists
-							for(let i in arr){
-								if(arr[i].addtime){
-									arr[i].addtime = this.$transformTime(arr[i].addtime*1000,'mm-dd hh:mm:ss')
+							for (let i in arr) {
+								if (arr[i].addtime) {
+									arr[i].addtime = this.$transformTime(arr[i].addtime * 1000, 'mm-dd hh:mm:ss')
 								}
 							}
 							this.current_page = this.page
-							if (type == "one") {	
-								this.spLists = arr					
+							if (type == "one") {
+								this.spLists = arr
 								//this.page = dataList.page
 								this.total_limit = dataList.total_limit
 								this.total_page = Math.ceil(dataList.total_limit / this.limit)
 								console.log(this.total_page)
+								uni.stopPullDownRefresh()
 							} else {
 								//下拉加载更多								
-								this.spLists = this.spLists.concat(arr)		
+								this.spLists = this.spLists.concat(arr)
 								//this.page = dataList.page
 								this.total_page = Math.ceil(dataList.total_limit / this.limit)
 							}
@@ -461,41 +476,41 @@
 							//content: err,
 							showCancel: false,
 						})
-				})
+					})
 			},
 			getHttpFund(type) {
 				this.$myRequest({
-					method: 'GET',
-					url: 'api/tiktok/index/index',
-					data:{
-						days: this.days,
-						order_page: 1,
-						order_limit: 20,
-					}
-				})
-				.then(res=>{
-					if(type != "one") uni.hideLoading();
-					if(res.data.code == 200){
-						this.fund_data = res.data.data.fund_data
-					} else {
+						method: 'GET',
+						url: 'api/tiktok/index/index',
+						data: {
+							days: this.days,
+							order_page: 1,
+							order_limit: 20,
+						}
+					})
+					.then(res => {
+						if (type != "one") uni.hideLoading();
+						if (res.data.code == 200) {
+							this.fund_data = res.data.data.fund_data
+						} else {
+							uni.showModal({
+								title: 'TIP',
+								content: res.data.msg,
+								confirmText: "confirm",
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						if (type != "one") uni.hideLoading();
 						uni.showModal({
 							title: 'TIP',
-							content: res.data.msg,
+							content: "Network error, please try again later",
 							confirmText: "confirm",
+							//content: err,
 							showCancel: false,
 						})
-					}
-				})
-				.catch(err=>{
-					if(type != "one") uni.hideLoading();
-					uni.showModal({
-						title: 'TIP',
-						content: "Network error, please try again later",
-						confirmText: "confirm",
-						//content: err,
-						showCancel: false,
 					})
-				})
 			},
 			// getHttpLists(type) {
 			// 	this.isRequest = false
@@ -535,12 +550,12 @@
 			// 			} else {
 			// 				//下拉加载更多
 			// 				this.spLists = this.spLists.concat(order.orderList)
-							
+
 			// 				this.page = order.order_page
 			// 				this.total_page = Math.ceil(order.order_total_limit / order.order_limit)
 			// 			}
-						
-						
+
+
 			// 		} else {
 			// 			uni.showModal({
 			// 				title: 'TIP',
@@ -562,8 +577,8 @@
 			// },
 			toggle(type) {
 				// 获取选项索引
-				for(let i in this.orderStateList){
-					if(this.orderStateList[i].name == this.orderState){
+				for (let i in this.orderStateList) {
+					if (this.orderStateList[i].name == this.orderState) {
 						this.prepareState = this.orderState
 						this.citem = i
 					}
@@ -576,11 +591,11 @@
 				this.cindex = index
 				this.days = this.scrollList[index].value
 				this.scrollTabLeft = 0
-				
+
 				// this.page = 1
 				// this.spLists = []
 				// this.getHttpLists("one")
-				
+
 				// 上方时间tab触发表单数据变化
 				uni.showLoading({
 					title: 'loading...',
@@ -595,9 +610,9 @@
 			},
 			scrollTwo(e) {
 				//this.scrollTabLeft = e.detail.scrollLeft
-				if(e.detail.scrollLeft > uni.upx2px(1030)){
+				if (e.detail.scrollLeft > uni.upx2px(1030)) {
 					// this.scrollTabLeft = uni.upx2px(1030)
-				} else if(e.detail.scrollLeft <= 0){
+				} else if (e.detail.scrollLeft <= 0) {
 					this.scrollTabLeft = 0
 				} else {
 					this.scrollTabLeft = e.detail.scrollLeft
@@ -605,15 +620,15 @@
 				// console.log(e)
 				// console.log(this.scrollTabLeft)
 			},
-			
-			getOrderState(index,name) {
+
+			getOrderState(index, name) {
 				this.citem = index
 				this.prepareState = name
 				console.log(this.citem)
 				console.log(this.prepareState)
 			},
-			confirmed(){
-				if(this.orderState == this.prepareState){
+			confirmed() {
+				if (this.orderState == this.prepareState) {
 					//相同状态,不再次触发接口请求
 					this.$refs.popup.close()
 				} else {
@@ -621,11 +636,11 @@
 					this.$refs.popup.close()
 				}
 			},
-			goData(id){
+			goData(id) {
 				let style = "";
-				if(id == 0) style = 0
-				if(id == 1) style = 1
-				if(id == 2) style = 2
+				if (id == 0) style = 0
+				if (id == 1) style = 1
+				if (id == 2) style = 2
 				uni.navigateTo({
 					url: './dataRanking?style=' + style
 				});
@@ -734,12 +749,14 @@
 		margin: 20rpx auto 0;
 		text-align: left;
 	}
+
 	.uni-margin-wrap {
 		width: 711rpx;
 		height: 277rpx;
 		margin: 0 auto;
 	}
-	.bannerTitle{
+
+	.bannerTitle {
 		font-size: 32rpx;
 		line-height: 32rpx;
 		font-family: Arial;
@@ -747,11 +764,13 @@
 		color: #FFFFFF;
 		margin-bottom: 20rpx;
 	}
-	.tab{
+
+	.tab {
 		white-space: nowrap;
 		width: 100%;
 	}
-	.dataNumsNew{
+
+	.dataNumsNew {
 		display: inline-block;
 		min-width: 270rpx;
 		height: 223rpx;
@@ -761,12 +780,14 @@
 		box-sizing: border-box;
 		margin-right: 20rpx;
 	}
-	.dataLogoNew{
+
+	.dataLogoNew {
 		width: 56rpx;
 		height: 56rpx;
 		display: block;
 	}
-	.dataPriceNew{
+
+	.dataPriceNew {
 		font-size: 32rpx;
 		line-height: 34rpx;
 		font-family: DIN;
@@ -774,19 +795,20 @@
 		color: #FFFFFF;
 		margin-top: 28rpx;
 	}
-	.dataTitleNew{
+
+	.dataTitleNew {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
 		margin-top: 22rpx;
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	.swiper {
 		height: 277rpx;
 		position: relative;
@@ -889,8 +911,8 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-	
-	.newMerchandise{
+
+	.newMerchandise {
 		width: 710rpx;
 		height: 100rpx;
 		padding: 20rpx 20rpx 20rpx 20rpx;
@@ -901,6 +923,7 @@
 		align-items: center;
 		justify-content: space-between;
 	}
+
 	.merchandiseLeft {
 		display: flex;
 		align-items: center;
@@ -909,12 +932,14 @@
 		font-weight: 400;
 		color: #FFFFFF;
 	}
-	.merchandiseNewLogo{
+
+	.merchandiseNewLogo {
 		width: 56rpx;
 		height: 56rpx;
 		margin-right: 20rpx;
 	}
-	.merchandiseRight{
+
+	.merchandiseRight {
 		width: 32rpx;
 		height: 27rpx;
 	}
@@ -982,7 +1007,7 @@
 	.sp {
 		width: 710rpx;
 		/* 推荐达人模块隐藏，高度减少104rpx */
-		/* height: 400rpx; */  
+		/* height: 400rpx; */
 		height: 296rpx;
 		border-radius: 8rpx;
 		background: #262626;
@@ -1049,6 +1074,7 @@
 		text-align: center;
 		line-height: 40rpx;
 	}
+
 	.settled {
 		/* width: 200rpx; */
 		width: max-content;
@@ -1056,7 +1082,7 @@
 		height: 40rpx;
 		background: rgba(245, 138, 90, 0.1);
 		border-radius: 20rpx;
-		
+
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
@@ -1064,7 +1090,8 @@
 		text-align: center;
 		line-height: 40rpx;
 	}
-	.stateRefund{
+
+	.stateRefund {
 		/* width: 246rpx; */
 		width: max-content;
 		padding: 0 24rpx;
@@ -1145,17 +1172,19 @@
 		color: #FFFFFF;
 		margin-left: 12rpx;
 	}
-	
+
 	/* 无数据展示 */
-	.noData{
+	.noData {
 		text-align: center;
 		margin: 215rpx auto 0;
 	}
-	.noDataLogo{
+
+	.noDataLogo {
 		width: 128rpx;
 		height: 108rpx;
 	}
-	.noDataText{
+
+	.noDataText {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
@@ -1163,7 +1192,7 @@
 		line-height: 24rpx;
 		margin-top: 12rpx;
 	}
-	
+
 	/* 悬浮框 */
 	.suspension {
 		width: 340rpx;
@@ -1190,7 +1219,7 @@
 		font-weight: 400;
 		color: #0B0B0B;
 	}
-	
+
 	/* 下拉框弹窗 */
 	.popup-content {
 		width: 750rpx;
@@ -1203,26 +1232,30 @@
 		text-align: center;
 		position: relative;
 	}
-	.popupChoose{
+
+	.popupChoose {
 		width: 750rpx;
 		height: 78rpx;
-		line-height: 78rpx;		
+		line-height: 78rpx;
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #999999;
 		border-bottom: 2rpx solid #F7F7F7;
 	}
-	.popupChoose:nth-last-child(2){
+
+	.popupChoose:nth-last-child(2) {
 		border-bottom: none;
 	}
-	.activePopupChoose{
+
+	.activePopupChoose {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #161616;
 	}
-	.confirmed{
+
+	.confirmed {
 		width: 670rpx;
 		height: 80rpx;
 		background: #FF7436;
@@ -1238,31 +1271,35 @@
 		margin: 0 auto;
 		bottom: 37rpx;
 	}
-	
+
 	/* 底部导航 */
-	.bottomNavigation{
+	.bottomNavigation {
 		position: fixed;
 		width: 750rpx;
 		height: 97rpx;
 		background: #0B0B0B;
 		bottom: 0;
-		left: 0;	
+		left: 0;
 		display: flex;
 		/* align-items: center; */
 		justify-content: space-around;
 		border-top: 2rpx solid #333333;
 	}
-	.bottomNav{
+
+	.bottomNav {
 		width: 33.3%;
 		text-align: center;
 	}
-	.navLogo{
+
+	.navLogo {
 		width: 42rpx;
 		height: 42rpx;
 		display: block;
 		margin: 13rpx auto 0;
 	}
-	.navText,.navActiveText{
+
+	.navText,
+	.navActiveText {
 		font-size: 20rpx;
 		line-height: 20rpx;
 		font-family: Arial;
@@ -1270,10 +1307,11 @@
 		color: #999999;
 		margin-top: 11rpx;
 	}
-	.navActiveText{
+
+	.navActiveText {
 		color: #FFFFFF;
 	}
-	
+
 	/* 标题线 */
 	.detailTitle {
 		width: 750rpx;
@@ -1291,15 +1329,15 @@
 		letter-spacing: 2rpx;
 		margin-top: 20rpx;
 	}
-	
+
 	.underline {
 		width: 100rpx;
 		height: 2rpx;
 		background: #FFFFFF;
 		margin: 0 30rpx;
 	}
-	
-	.noMore{
+
+	.noMore {
 		color: #999999;
 		font-size: 24rpx;
 		text-align: center;
@@ -1308,7 +1346,8 @@
 		justify-content: center;
 		margin: 0 auto;
 	}
-	.noMoreUnderline{
+
+	.noMoreUnderline {
 		width: 40rpx;
 		height: 2rpx;
 		background: #999999;
