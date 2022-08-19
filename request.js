@@ -1,10 +1,11 @@
-let baseURL='https://fish.mini.zhishukongjian.com/';
+// let baseURL='https://fish.mini.zhishukongjian.com/';
 //let baseURL = 'https://user.mini.zhishukongjian.com/';
+let baseURL='https://api.domefish.com/';
 
 function myRequest(options){
 	let headers={}
-	var Token =uni.getStorageSync('token') || 'OHRDaHNORHBoNjlLLXBndnlkUkZ2d2lMMDdsdS1oSkhNYnVYRnZTOFA1dmppN1g0VWxTVjdINjZGZVBYcUluTA==';
-	headers['lang'] = 'zh-cn';
+	var Token =uni.getStorageSync('token') || '';
+	headers['lang'] = 'en';
 	headers['platform'] = 3;
 	headers['version'] = 1.01;
 	headers['brand'] = '';
