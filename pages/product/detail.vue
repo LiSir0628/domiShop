@@ -699,6 +699,17 @@
 			confirmed() {
 				this.kindex = this.cindex
 				console.log("用户选择kindex:" + this.kindex)
+				
+				//tiktok账号判断
+				if(this.userList.length <= 0){
+					uni.showModal({
+						title: 'TIP',
+						content: "Please add tiktok account first",
+						confirmText: "confirm",
+						showCancel: false,
+					})
+					return
+				}
 				this.$refs.popupAdd.close()
 		
 				//还需要管理一个 账号id
@@ -771,6 +782,18 @@
 			},
 			confirmedCollection() {
 				this.cPoint = this.point
+				
+				//地址判断
+				if(this.list.length <= 0){
+					uni.showModal({
+						title: 'TIP',
+						content: "Please add the receiving address first",
+						confirmText: "confirm",
+						showCancel: false,
+					})
+					return
+				}
+				
 				this.$refs.popupCollection.close()
 				// vuex值
 				this.$store.commit('editAddress', this.list[this.cPoint])
