@@ -195,7 +195,9 @@
 										Likes: {{item.praise_nums}}
 									</view>
 								</view>
-								<view class="isFree">Meet the conditions of free sample</view>								
+								<view v-if="item.status == 1" class="isFree">Meet the conditions of free sample</view>
+								<view v-else-if="item.status == 0" class="isFree wait">To be reviewed</view>
+								<view v-else-if="item.status == -1" class="isFree refuse">The sampling conditions are not met</view>		
 					
 							</view>
 							<image v-if="cindex == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
@@ -396,8 +398,6 @@
 			this.getHttpLists()
 		},
 		onShow() {
-			//console.log(this.scrollHeight)
-			console.log("页面出bug了1111111")
 			this.getUserLists()
 			this.getHttpAddress()
 		},
@@ -465,6 +465,12 @@
 						this.userList.unshift(obj)
 						break
 					}
+				}
+				console.log(this.userList.length)
+				console.log(!this.$store.state.accountId)
+				if(this.userList.length > 0 && !this.$store.state.accountId){
+					this.$store.commit('editAccountName', this.userList[this.kindex])
+					uni.setStorageSync('accountList', this.userList[this.kindex])
 				}
 				console.log(this.userList)
 			},
@@ -788,6 +794,16 @@
 					uni.showModal({
 						title: 'TIP',
 						content: "Please add the receiving address first",
+						confirmText: "confirm",
+						showCancel: false,
+					})
+					return
+				}
+				//tiktok账号判断
+				if(!this.$store.state.accountId){
+					uni.showModal({
+						title: 'TIP',
+						content: "Please select sampling account",
 						confirmText: "confirm",
 						showCancel: false,
 					})
@@ -1357,6 +1373,12 @@
 		color: #39B83C;
 		margin-top: 16rpx;
 	}
+	.wait{
+		color: #28A897;
+	}
+	.refuse{
+		color: #999999;
+	}
 	.noFree{
 		font-size: 14rpx;
 		font-family: Arial;
@@ -1527,6 +1549,7 @@
 	}
 	.addressUserMsg{
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		line-height: 40rpx;
 	}
@@ -1535,13 +1558,14 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
+		margin-right: 20rpx;
 	}
 	.addressTel{
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
-		margin-left: 20rpx;
+		margin-right: 16rpx;
 	}
 	.default{
 		width: 93rpx;
@@ -1555,7 +1579,7 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #FF3838;
-		margin-left: 16rpx;
+		/* margin-left: 16rpx; */
 	}
 	.address{
 		font-size: 24rpx;

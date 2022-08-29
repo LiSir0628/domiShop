@@ -229,11 +229,12 @@
 	/* 主要内容 */
 	.addressContent{
 		/* width: 520rpx; */
-		width: 460rpx;
+		width: 450rpx;
 		padding: 20rpx 0 14rpx;
 	}
 	.addressUserMsg{
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		line-height: 40rpx;
 	}
@@ -242,13 +243,14 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
+		margin-right: 20rpx;
 	}
 	.addressTel{
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
-		margin-left: 20rpx;
+		margin-right: 16rpx;
 	}
 	.default{
 		width: 93rpx;
@@ -262,7 +264,7 @@
 		font-family: Arial;
 		font-weight: 400;
 		color: #FF7436;
-		margin-left: 16rpx;
+		/* margin-left: 16rpx; */
 	}
 	.address{
 		font-size: 24rpx;

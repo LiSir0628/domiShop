@@ -83,6 +83,10 @@
 						break
 					}
 				}
+				if(this.lists.length > 0 && !this.$store.state.accountId){
+					this.$store.commit('editAccountName', this.lists[this.cIndex])
+					uni.setStorageSync('accountList', this.lists[this.cIndex])
+				}
 				//console.log(this.lists)
 			},
 			getHttpLists() {

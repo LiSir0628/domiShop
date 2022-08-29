@@ -196,7 +196,7 @@
 					name: '24 hours'
 				}, {
 					id: 3,
-					name: 'Two hours'
+					name: '2 hours'
 				}],
 				kindex: 0,
 				prepareState: 'sales',

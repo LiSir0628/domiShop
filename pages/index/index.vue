@@ -1078,12 +1078,12 @@
 	.settled {
 		/* width: 200rpx; */
 		width: max-content;
-		padding: 0 24rpx;
+		padding: 0 12rpx;
 		height: 40rpx;
 		background: rgba(245, 138, 90, 0.1);
 		border-radius: 20rpx;
 
-		font-size: 24rpx;
+		font-size: 20rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #F58A5A;
