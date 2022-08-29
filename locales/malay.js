@@ -61,24 +61,26 @@ export const lang = {
 		"Commission": "Komis",
 		"no more": "tiada lagi"
 	},
-	"排行页": {
+	"rank": {
 		"confirm": "sahkan",
 		"It's empty": "Ia kosong",
 		"loading": "memuatkan",
 		"Merchandise ranking": "Pengarahan barang",
-		"All": "Semua",
 		"Unit Price": "Harga Unit",
 		"Commission ratio": "Nisbah komisi",
 		"Cumulative sales:": "Cumulative sales:",
 		"Accumulated Commission:": "Kumpulan Kumpulan:",
+		"All": "Semua",
+		"Today": "Hari ini",
+		"Yesterday": "Semalam",
 		"7 hari": "7 hari",
 		"30 days": "30 hari",
 		"60 days": "60 hari",
-		"Confirmed": "Dikonfirmasikan"
+		"Confirmed": "Dikonfirmasikan",
+		"no more": "tiada lagi"
 	},
-	"产品详情页": {
+	"pro_detail": {
 		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
 		"loading": "memuatkan",
 		"Product details": "Perincian produk",
 		"Collectable sample": "Sampel boleh dikumpulkan",
@@ -98,19 +100,20 @@ export const lang = {
 		"Link replication successful": "Pengulangan pautan berjaya",
 		"Network error, please try again later": "Ralat rangkaian, sila cuba lagi kemudian",
 		"Default": "Default",
-		"High Commission": "Komisi Tinggi"
+		"Please add tiktok account first": "Sila tambah akaun tiktok dahulu",
+		"Please add the receiving address first": "Sila tambah alamat penerima dahulu",
+		"Please select sampling account": "Sila pilih akaun pengumpulan"
 	},
-	"购物卡片": {
+	"car": {
 		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
 		"loading": "memuatkan",
 		"Free sample collection": "Koleksi sampel bebas",
 		"Number of followers": "Bilangan pengikut",
+		"High Commission": "Komisi Tinggi"
 		"Tik Tok Account": "Akaun Tik Tok",
 		"Application notes": "Nota aplikasi",
 		"Guidance notes for application": "Nota panduan untuk aplikasi",
-		"Submission of application": "Penghantaran aplikasi",
-		"You have requested a sample, please wait for review": "Anda telah meminta sampel, sila tunggu ulasan"
+		"Submission of application": "Penghantaran aplikasi"
 	},
 	"账号管理": {
 		"confirm": "sahkan",

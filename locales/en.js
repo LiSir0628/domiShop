@@ -61,24 +61,26 @@ export const lang = {
 		"Commission": "Commission",
 		"no more": "no more"
 	},
-	"排行页": {
+	"rank": {
 		"confirm": "confirm",
 		"It's empty": "It's empty",
 		"loading": "loading",
 		"Merchandise ranking": "Merchandise ranking",
-		"All": "All",
 		"Unit Price": "Unit Price",
 		"Commission ratio": "Commission ratio",
 		"Cumulative sales:": "Cumulative sales:",
 		"Accumulated Commission:": "Accumulated Commission:",
+		"All": "All",
+		"Today": "Today",
+		"Yesterday": "Yesterday",
 		"7 hari": "7 hari",
 		"30 days": "30 days",
 		"60 days": "60 days",
-		"Confirmed": "Confirmed"
+		"Confirmed": "Confirmed",
+		"no more": "no more"
 	},
-	"产品详情页": {
+	"pro_detail": {
 		"confirm": "confirm",
-		"It's empty": "It's empty",
 		"loading": "loading",
 		"Product details": "Product details",
 		"Collectable sample": "Collectable sample",
@@ -98,19 +100,20 @@ export const lang = {
 		"Link replication successful": "Link replication successful",
 		"Network error, please try again later": "Network error, please try again later",
 		"Default": "Default",
-		"High Commission": "High Commission"
+		"Please add tiktok account first": "Please add tiktok account first",
+		"Please add the receiving address first": "Sila tambah alamat penerima dahulu",
+		"Please select sampling account": "Please select sampling account"
 	},
-	"购物卡片": {
+	"car": {
 		"confirm": "confirm",
-		"It's empty": "It's empty",
 		"loading": "loading",
 		"Free sample collection": "Free sample collection",
 		"Number of followers": "Number of followers",
+		"High Commission": "High Commission"
 		"Tik Tok Account": "Tik Tok Account",
 		"Application notes": "Application notes",
 		"Guidance notes for application": "Guidance notes for application",
-		"Submission of application": "Submission of application",
-		"You have requested a sample, please wait for review": "You have requested a sample, please wait for review"
+		"Submission of application": "Submission of application"
 	},
 	"账号管理": {
 		"confirm": "confirm",
