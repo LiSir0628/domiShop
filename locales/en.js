@@ -59,8 +59,8 @@ export const lang = {
 		"Merchandise_ranking": "Merchandise ranking",
 		"Unit_Price": "Unit Price",
 		"Commission_ratio": "Commission ratio",
-		"Cumulative_sales:": "Cumulative sales:",
-		"Accumulated_Commission:": "Accumulated Commission:",
+		"Cumulative_sales": "Cumulative sales",
+		"Accumulated_Commission": "Accumulated Commission",
 		"All": "All",
 		"Today": "Today",
 		"Yesterday": "Yesterday",
@@ -73,8 +73,8 @@ export const lang = {
 	"pro_detail": {
 		"Product_details": "Product details",
 		"Collectable_sample": "Collectable sample",
-		"unit:": "Estimated profit per unit:",
-		"Commission_rate:": "Commission rate:",
+		"unit": "Estimated profit per unit",
+		"Commission_rate": "Commission rate",
 		"Total_sales": "Total sales",
 		"request": "Sample request: Number of followers",
 		"LIVE_BENEFITS": "LIVE BENEFITS",
@@ -95,7 +95,7 @@ export const lang = {
 	"car": {
 		"collection": "Free sample collection",
 		"Number": "Number of followers",
-		"High_Commission": "High Commission"
+		"High_Commission": "High Commission",
 		"Account": "Tik Tok Account",
 		"notes": "Application notes",
 		"Guidance_application": "Guidance notes for application",

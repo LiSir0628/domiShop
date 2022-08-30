@@ -34,7 +34,7 @@
 			<view class="totalSales">
 				<view>Total sales: {{cumulative_sales}}</view>
 				<view class="logoSubject">
-					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')">
+					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy(product_link)">
 					</image>
 					<!-- <image v-if="isShowLove" class="loveLogo" src="../../static/images/detail/icon04.png" @click="goLove"></image>
 					<image v-else class="loveLogo" src="../../static/images/detail/icon16.png" @click="goLove"></image> -->
@@ -61,11 +61,11 @@
 					<view class="liveTitle">LIVE BENEFITS</view>
 				</view>
 				<view class="logoSubject">
-					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')"></image>
+					<image class="linkLogo" src="../../static/images/detail/icon03.png" v-if="benefits" @click="copy(benefits, 'val')"></image>
 					<image class="cardLogo" src="../../static/images/detail/icon06.png" @click="goCard"></image>
 				</view>
 			</view>
-			<view class="liveContent" v-html="benefits">
+			<view ref="benefits" class="liveContent" v-html="benefits">
 				<!-- Price: 1.50 yuan per bag (bidding starts at 10 bag at 10 bags)，Price: 1.50 yuan per bag . -->
 			</view>
 		</view>
@@ -77,7 +77,7 @@
 					<view class="liveTitle">SELLING POINT</view>
 				</view>
 				<view class="logoSubject">
-					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')"></image>
+					<image class="linkLogo" src="../../static/images/detail/icon03.png" v-if="selling_point" @click="copy(selling_point, 'val')"></image>
 				</view>
 			</view>
 			<view class="sellContent" v-html="selling_point">
@@ -102,9 +102,9 @@
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
 					<view class="liveTitle">DELIVERY LOGISTICS</view>
 				</view>
-				<view class="logoSubject">
+				<!-- <view class="logoSubject">
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')"></image>
-				</view>
+				</view> -->
 			</view>
 			<view class="deliveryContent">
 				<view class="deliveryList">
@@ -139,7 +139,7 @@
 		</view> -->
 
 		<view class="bottomCar">
-			<view class="copyLine" @click="copy('复制连接')">
+			<view class="copyLine" @click="copy(product_link)">
 				<image class="copyLogo" src="../../static/images/detail/icon03.png"></image>
 				<view class="copy">Copy the link</view>
 			</view>
@@ -314,6 +314,7 @@
 				commission_ratio: "0",
 				cumulative_sales: "0",
 				fans: "0",
+				product_link: "",
 				show_window: "0",
 				
 				benefits: "",
@@ -559,6 +560,7 @@
 							this.commission_ratio = obj.commission_ratio
 							this.cumulative_sales = obj.cumulative_sales
 							this.fans = obj.fans
+							this.product_link = obj.product_link
 							this.benefits = obj.benefits
 							this.selling_point = obj.selling_point
 							this.delivery_place = obj.delivery_place
@@ -607,7 +609,10 @@
 			sample() {
 				this.$refs.requestPopup.open()
 			},
-			copy(text) {
+			copy(text,val) {
+				if(val){
+					text = text.replace(/<[^>]+>/g, '').replace(/&nbsp;/ig, '').replace(/\s/g, '')
+				}
 				// #ifdef H5
 				this.$copyText(text).then(
 					res => {

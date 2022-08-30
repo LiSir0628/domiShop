@@ -9,6 +9,27 @@ Vue.prototype.$store = store
 // 复制
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
+// 语法切换
+import VueI18n from 'vue-i18n'
+Vue.use(VueI18n);
+
+const i18n = new VueI18n({ 
+	// #ifdef MP 	
+	locale: 'malay', //初始化,保证刷新页面也保留
+	// #endif
+	// #ifdef APP-PLUS
+	locale: plus.storage.getItem('locale') || 'malay', //初始化,保证刷新页面也保留
+	// #endif
+	// #ifdef H5
+	locale: localStorage.getItem('locale') || 'malay', //初始化,保证刷新页面也保留
+	// #endif
+	// 加载语言文件的内容
+	messages: { 
+		'en': require('./locales/en.js').lang,
+		'malay': require('./locales/malay.js').lang
+	}
+})
+Vue.prototype._i18n = i18n
 
 import utils from './common/util.js'
 Vue.prototype.$utils = utils;
@@ -36,6 +57,7 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 const app = new Vue({
+	i18n,
     ...App
 })
 app.$mount()
