@@ -6,6 +6,7 @@
 				<input class="searchText" v-model="searchText" @confirm="search"
 					placeholder="Search for products you want" />
 			</view>
+			<image class="model" src="../../static/images/product/icon20.png"></image>
 		</view>
 		<view class="navbar">
 			<scroll-view class="scroll-view_H" :scroll-left="scrollLeft" scroll-x="true" @scroll="scroll"
@@ -569,19 +570,23 @@
 		left: 0;
 		background: #FFFFFF;
 		z-index: 101;
-		padding-bottom: 20rpx;
+		padding: 17rpx 0 20rpx 0;
+		display: flex;
+		align-items: center;
+		
 	}
 
 	.search {
-		width: 690rpx;
+		width: 622rpx;
 		height: 80rpx;
 		background: #F7F7F7;
 		border-radius: 40rpx;
-		margin: 17rpx 30rpx 0 30rpx;
+		/* margin: 17rpx 30rpx 0 30rpx; */
+		margin: 0 30rpx 0 30rpx;
 		display: flex;
 		align-items: center;
 	}
-
+	
 	.searchLogo {
 		width: 32rpx;
 		height: 32rpx;
@@ -589,7 +594,7 @@
 	}
 
 	.searchText {
-		width: 580rpx;
+		width: 510rpx;
 		height: 80rpx;
 		font-size: 26rpx;
 		font-family: Arial;
@@ -597,7 +602,12 @@
 		color: #666666;
 		line-height: 80rpx;
 	}
-
+	
+	.model {
+		width: 48rpx;
+		height: 48rpx;
+	}
+	
 	/* 滑动块 */
 	.navbar {
 		padding: 8rpx 0 20rpx 30rpx;

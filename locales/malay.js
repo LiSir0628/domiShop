@@ -8,8 +8,7 @@ export const lang = {
 		"Register now": "Daftar sekarang",
 		"Please fill in the account": "Sila isi akaun",
 		"Please fill in the password": "Sila isi kata laluan",
-		"confirm": "sahkan",
-		"loading": "memuatkan"
+		"log_in": "log in"
 	},
 	"register": {
 		"Hello": "Hello",
@@ -24,14 +23,9 @@ export const lang = {
 		"privacy terms": "privacy terms",
 		"Sign up for an account": "Sign up for an account",
 		"Please fill in the email address": "Sila isi alamat e-mel",
-		"Please fill in the password": "Sila isi kata laluan",
-		"confirm": "sahkan",
-		"loading": "memuatkan",
+		"Please fill in the password": "Sila isi kata laluan"
 	},
 	"index": {
-		"confirm": "sahkan",
-		"loading": "memuatkan",
-		"It's empty": "Ia kosong",
 		"All": "Semua",
 		"Today": "Hari ini",
 		"Yesterday": "Semalam",
@@ -62,9 +56,6 @@ export const lang = {
 		"no more": "tiada lagi"
 	},
 	"rank": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
 		"Merchandise ranking": "Pengarahan barang",
 		"Unit Price": "Harga Unit",
 		"Commission ratio": "Nisbah komisi",
@@ -80,13 +71,11 @@ export const lang = {
 		"no more": "tiada lagi"
 	},
 	"pro_detail": {
-		"confirm": "sahkan",
-		"loading": "memuatkan",
 		"Product details": "Perincian produk",
 		"Collectable sample": "Sampel boleh dikumpulkan",
 		"Estimated profit per unit:": "Gaji dianggap per unit:",
 		"Commission rate:": "Kadar komisi:",
-		"Total sales:": "Jumlah jualan:",
+		"Total sales": "Jumlah jualan",
 		"Sample request: Number of followers": "Permintaan sampel: Bilangan pengikut",
 		"LIVE BENEFITS": "BENEFIT LIVE",
 		"SELLING POINT": "SELUM POINT",
@@ -99,14 +88,11 @@ export const lang = {
 		"Free sample collection": "Koleksi sampel bebas",
 		"Link replication successful": "Pengulangan pautan berjaya",
 		"Network error, please try again later": "Ralat rangkaian, sila cuba lagi kemudian",
-		"Default": "Default",
 		"Please add tiktok account first": "Sila tambah akaun tiktok dahulu",
 		"Please add the receiving address first": "Sila tambah alamat penerima dahulu",
 		"Please select sampling account": "Sila pilih akaun pengumpulan"
 	},
 	"car": {
-		"confirm": "sahkan",
-		"loading": "memuatkan",
 		"Free sample collection": "Koleksi sampel bebas",
 		"Number of followers": "Bilangan pengikut",
 		"High Commission": "Komisi Tinggi"
@@ -115,35 +101,27 @@ export const lang = {
 		"Guidance notes for application": "Nota panduan untuk aplikasi",
 		"Submission of application": "Penghantaran aplikasi"
 	},
-	"账号管理": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"pro_detail_account": {
 		"Select the TIKTOK": "Pilih TIKTOK",
 		"New TIKTOK": "TIKTOK Baru",
 		"Confirmed": "Dikonfirmasikan",
+		"To be reviewed": "Untuk diulang",
+		"The sampling conditions are not met": "Keadaan pemilihan sampel tidak dipenuhi",
+		"Meet the conditions of free sample": "Sempurna syarat sampel bebas",
 		"Add TIKTOK account": "Tambah akaun TIKTOK",
 		"Tiktok Account": "Akaun Tiktok",
 		"Account Name": "Account Name",
 		"Number of followers": "Bilangan pengikut",
 		"Likes": "Suka",
-		"Add an account": "Tambah akaun",
-		"To be reviewed": "Untuk diulang",
-		"The sampling conditions are not met": "Keadaan pemilihan sampel tidak dipenuhi",
-		"Meet the conditions of free sample": "Sempurna syarat sampel bebas"
+		"Add an account": "Tambah akaun"
 	},
-	"选择地址页": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"pro_detail_address": {
 		"Select Harvest Address": "Pilih Alamat Harvest",
+		"Default": "Default",
 		"New receiving address": "Alamat penerimaan baru",
 		"Confirmed": "Dikonfirmasikan"
 	},
-	"地址页": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"address": {
 		"Name of consignee": "Nama penerima",
 		"enter the name of the consignee": "masukkan nama penerima",
 		"Contact": "Kenalan",
@@ -153,30 +131,26 @@ export const lang = {
 		"Detailed address": "Alamat terperinci",
 		"Please enter a detailed address": "Sila masukkan alamat terperinci",
 		"To the default address": "Ke alamat lalai",
-		"Save": "Simpan",
-		"Please fill in your name": "Sila isi nama anda"
+		"Save": "Simpan"
 	},
-	"选择页": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"options": {
 		"Search for products you want": "Cari produk yang anda mahu",
 		"Closing Price": "Hadiah Penutup",
 		"Commission ratio": "Nisbah komisi",
 		"Amount of commission": "Jumlah komisi",
 		"sales": "jualan",
+		"Total sales": "Jumlah jualan",
 		"24 hours": "24 jam",
 		"2 hours": "2 jam",
+		"Cancels": "Batal",
 		"Collectable sample": "Sampel boleh dikumpulkan",
-		"Sales:": "Jual:",
-		"Price:": "Harga:",
-		"High Commission:": "Komisi Tinggi:",
-		"Earned:": "Didapatkan:"
+		"Sales": "Jual",
+		"Price": "Harga",
+		"High Commission": "Komisi Tinggi",
+		"Earned": "Didapatkan",
+		"no more": "tiada lagi"
 	},
-	"个人页": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"user": {
 		"Free sample collection": "Koleksi sampel bebas",
 		"View all": "Lihat semua",
 		"Pending review": "Sambungan tunggu",
@@ -189,65 +163,56 @@ export const lang = {
 		"Contact your own customer service": "Hubungi perkhidmatan pelanggan anda sendiri",
 		"Log out": "Log keluar"
 	},
-	"修改信息": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"editUser": {
 		"Name": "Name",
 		"Login mailbox": "Peti mel masuk",
 		"Change Password": "Ubah Katalaluan",
 		"Address Management": "Pengurusan Alamat"
 	},
-	"名字修改": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"editName": {
+		"Change Name": "Ubah Nama",
 		"Please enter your name": "Sila masukkan nama anda",
-		"Change Name": "Ubah Nama"
+		"Confirmed": "Dikonfirmasikan"
 	},
-	"邮箱修改": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"editEmail": {
 		"Change Login mailbox": "Ubah kotak mel masuk",
 		"Please enter your email": "Sila masukkan e-mel anda",
 		"Please enter the verification code": "Sila masukkan kod pengesahan",
 		"Verification Code": "Kod Pengesahan",
 		"Please input a password": "Sila masukkan kata laluan",
-		"Please enter a new mailbox": "Sila masukkan kotak mel baru"
+		"Please enter a new mailbox": "Sila masukkan kotak mel baru",
+		"Confirmed": "Dikonfirmasikan"
 	},
-	"密码修改": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"editPassword": {
 		"Change Login Password": "Ubah Kata Laluan Masuk",
+		"Please enter your email": "Sila masukkan e-mel anda",
+		"Please enter the verification code": "Sila masukkan kod pengesahan",
+		"Verification Code": "Kod Pengesahan",
 		"Please enter the new password": "Sila masukkan kata laluan baru",
-		"Please enter the confirmation password": "Sila masukkan kata laluan pengesahan"
+		"Please enter the confirmation password": "Sila masukkan kata laluan pengesahan",
+		"The two password inputs are inconsistent": "Kedua input kata laluan tidak konsisten",
+		"Confirmed": "Dikonfirmasikan"
 	},
-	"地址列表": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"addressList": {
 		"Receiving address": "Menerima alamat",
 		"New receiving address": "Alamat penerimaan baru",
 		"Default": "Default"
 	},
-	"账号管理页": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"administration": {
 		"TIKTOK administration": "Pengurusan TIKTOK",
 		"New TIKTOK account": "Akaun TIKTOK Baru"
 	},
-	"收藏页": {
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
-		"Favorite list": "Senarai Kegemaran"
+	"love": {
+		"Favorite list": "Senarai Kegemaran",
+		"High Commission": "Komisi Tinggi"
 	},
-	"客服提示": {
-		"confirm": "sahkan",
-		"It's empty": "Ia kosong",
-		"loading": "memuatkan",
+	"service": {
 		"Customer Service Mailbox": "Peti Mel Servis Pelanggan"
+	},
+	"common": {
+		"confirm": "sahkan",
+		"loading": "memuatkan",
+		"It's empty": "Ia kosong",
+		"Tip": "Tip"
 	}
 }
