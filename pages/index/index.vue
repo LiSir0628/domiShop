@@ -11,7 +11,7 @@
 
 		<view class="banner">
 			<view class="uni-margin-wrap">
-				<view class="bannerTitle">Data Overview</view>
+				<view class="bannerTitle">{{ $t('index.Data_Overview') }}</view>
 				<scroll-view class="tab" :scroll-left="scrollTabLeft" scroll-x="true" @scroll="scrollTwo"
 					:show-scrollbar="false">
 					<view class="dataNumsNew">
@@ -403,17 +403,19 @@
 			}
 		},
 		mounted() {
-			this.getHttpFund("one")
-			this.getHttpLists("one")
+			if(uni.getStorageSync('index_is_refresh') != 1){
+				this.getHttpFund("one")
+				this.getHttpLists("one")
+			}
 			// this.$refs.popup.open("bottom")
 			// 返回不触发，进行触发
 		},
 		onShow() {
-			if (this.accountName == this.$store.state.accountName) {
-				// 账号无修改，无需请求
-			} else {
-				// 账号修改，接口请求触发
-				this.accountName = this.$store.state.accountName
+			if(uni.getStorageSync('index_is_refresh') == 1){
+				console.log("我是更新，我触发了")
+				this.getHttpFund("one")
+				this.getHttpLists("one")
+				uni.setStorageSync('index_is_refresh', "0");
 			}
 		},
 		methods: {

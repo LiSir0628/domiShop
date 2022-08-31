@@ -16,6 +16,8 @@ const store = new Vuex.Store({
 		addressList: {},
 		addressName: "",
 		addressId: "",
+		
+		langText: ""
 	},
 	mutations: {
 		editDuomi(state,duomi) {
@@ -40,6 +42,10 @@ const store = new Vuex.Store({
 			state.addressList = address
 			state.addressName = address.country_name + address.city_name + address.detail
 			state.addressId = address.id
+		},
+		
+		editLanguage(state,name){
+			state.langText = name
 		}
 	},
 	actions: {

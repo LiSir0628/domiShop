@@ -31,6 +31,7 @@ function myRequest(options){
 				} else if(data.data.code==401){
 					//需要权限验证, token未传或错误
 					uni.setStorageSync('token', "");
+					uni.setStorageSync('index_is_refresh', "1");
 					uni.redirectTo({url:'/pages/register/login'});
 					return false;
 				} else if(data.data.code==404){

@@ -2,6 +2,7 @@
 	<view class="container">
 		<view class="userMsg">
 			<image class="banner" src="../../static/images/user/icon11.png"></image>
+			<view class="language" @click="langChange">{{langText}}</view>
 			<image class="edit" src="../../static/images/user/icon06.png" @click="edit"></image>
 			<image class="photo" src="../../static/images/home/photo.png"></image>
 			<view class="name">{{nickname}}</view>
@@ -81,10 +82,13 @@
 				<view class="email">kefu@gmail.com</view>
 			</view>
 		</uni-popup>
+		
+		<new-lang ref="newLang" @langSwitch="langSwitch"></new-lang>
 	</view>
 </template>
 
 <script>
+	import newLang from "../common/language.vue"
 	export default {
 		data() {
 			return {
@@ -111,13 +115,26 @@
 					url: ''
 				}],
 				applyList: {},
+				
+				langText: "English", //语法展示，缓存中获取
 			}
+		},
+		components: {
+			newLang
 		},
 		onShow() {
 			this.nickname = this.$store.state.nickname
 			this.getHttpLists()
 		},
 		methods: {
+			langChange() {
+				this.$refs.newLang.langOpen()
+			},
+			
+			langSwitch(name){
+				this.langText = name
+			},
+			
 			edit() {
 				console.log("修改个人资料")
 				uni.navigateTo({
@@ -166,6 +183,7 @@
 				// id是3 客服，id是4 退出登錄。
 				if(this.lists[index].id == 4){
 					//退出登录，清空token值，跳转登录页
+					uni.setStorageSync('index_is_refresh', "1");
 					uni.setStorageSync('token', "");
 					uni.navigateTo({
 						url: '/pages/register/login'
@@ -217,6 +235,16 @@
 		height: 366rpx;
 		display: block;
 	}
+	.language{
+		font-size: 26rpx;
+		font-family: Arial-Regular, Arial;
+		font-weight: 400;
+		color: #333333;
+		position: absolute;
+		top: 33rpx;
+		left: 28rpx;
+	}
+	
 	.edit{
 		width: 38rpx;
 		height: 38rpx;

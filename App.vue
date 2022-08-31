@@ -11,6 +11,9 @@
 			if(uni.getStorageSync('addressList')){
 				this.$store.commit('editAddress', uni.getStorageSync('addressList'))
 			}
+			if(uni.getStorageSync('language')){
+				this.$store.commit('editLanguage', uni.getStorageSync('language'))
+			}
 		},
 		onShow: function() {
 			console.log('App Show')
