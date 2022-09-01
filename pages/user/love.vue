@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Favorite list"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" :title="$t('love.Favorite_list')"></uni-nav-bar>
 		<!-- <view class="content"> -->
 		<scroll-view class="content" scroll-y="true" scroll-top="scrollViewTop" ower-threshold="100" @scrolltolower="lower()" :style="showListActive">
 			<view v-if="lists.length > 0">
@@ -13,7 +13,7 @@
 							<view class="spOperation">
 								<view class="price">$ {{item.unit_price}}</view>
 								<view class="favorite">
-									<view class="commission">High Commission: {{(item.commission_ratio*100).toFixed()}}%</view>
+									<view class="commission">{{ $t('love.High_Commission') }}: {{(item.commission_ratio*100).toFixed()}}%</view>
 									<image class="love" src="../../static/images/detail/icon16.png" @click.stop="remove(index)"></image>
 								</view>
 							</view>
@@ -22,14 +22,14 @@
 				</view>
 				<view class="noMore" v-if="current_page == total_page">
 					<view class="noMoreUnderline"></view>
-					no more
+					{{ $t('love.no_more') }}
 					<view class="noMoreUnderline"></view>
 				</view>
 			</view>
 			<view v-else>
 				<view class="noData">
 					<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
-					<view class="noDataText">It's empty</view>
+					<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 				</view>
 			</view>
 		</scroll-view>
@@ -138,7 +138,7 @@
 			getHttpLists(type) {
 				this.isRequest = false
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -173,9 +173,9 @@
 							
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -184,9 +184,9 @@
 						this.isRequest = true
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -202,7 +202,7 @@
 			},
 			remove(index) {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -220,9 +220,9 @@
 							console.log(res.data)
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -230,9 +230,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="top">
-			<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Merchandise ranking">
+			<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('rank.Merchandise_ranking')">
 			</uni-nav-bar>
 			<view class="newSort" @click="toggle('bottom')">
 				<view class="newSortText">{{orderState}}</view>
@@ -59,18 +59,18 @@
 					<view class="merRankTop">
 						<view class="spTitle ellip">{{item.title}}</view>
 						<view class="profit">
-							<view class="price">Unit Price: ${{item.unit_price}}</view>
-							<view class="ratio">Commission ratio: {{(item.commission_ratio*100).toFixed()}}%</view>
+							<view class="price">{{ $t('rank.Unit_Price') }}: ${{item.unit_price}}</view>
+							<view class="ratio">{{ $t('rank.Commission_ratio') }}: {{(item.commission_ratio*100).toFixed()}}%</view>
 						</view>
 					</view>
 					<view class="merRankBottom">
 						<view class="sales">
 							<image class="salesLogo" src="../../static/images/rank/icon08.png"></image>
-							<view>Cumulative sales:<text class="weight">${{item.cumulative_sales}}</text></view>
+							<view>{{ $t('rank.Cumulative_sales') }}:<text class="weight">${{item.cumulative_sales}}</text></view>
 						</view>
 						<view class="commission">
 							<image class="commissionLogo" src="../../static/images/rank/icon06.png"></image>
-							<view>Accumulated Commission:<text class="weight">${{item.accumulated_commission}}</text>
+							<view>{{ $t('rank.Accumulated_Commission') }}:<text class="weight">${{item.accumulated_commission}}</text>
 							</view>
 						</view>
 					</view>
@@ -78,7 +78,7 @@
 			</view>
 			<view class="noMore" v-if="current_page == total_page">
 				<view class="noMoreUnderline"></view>
-				no more
+				{{ $t('rank.no_more') }}
 				<view class="noMoreUnderline"></view>
 			</view>
 		</scroll-view>
@@ -86,7 +86,7 @@
 		<view class="merRankList" v-else-if="cindex == 0 && lists.merchandise_ranking.length<=0">
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
-				<view class="noDataText">It's empty</view>
+				<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 			</view>
 		</view>
 		<view class="merRankList" v-else-if="cindex == 1 && lists.account_ranking.length>0">
@@ -118,11 +118,11 @@
 					<view class="accountBottom">
 						<view class="sales">
 							<image class="salesLogo" src="../../static/images/rank/icon08.png"></image>
-							<view>Cumulative sales:<text class="weight">${{item.cumulative_sales}}</text></view>
+							<view>{{ $t('rank.Cumulative_sales') }}:<text class="weight">${{item.cumulative_sales}}</text></view>
 						</view>
 						<view class="commission">
 							<image class="commissionLogo" src="../../static/images/rank/icon06.png"></image>
-							<view>Accumulated Commission:<text class="weight">${{item.accumulated_commission}}</text>
+							<view>{{ $t('rank.Accumulated_Commission') }}:<text class="weight">${{item.accumulated_commission}}</text>
 							</view>
 						</view>
 					</view>
@@ -133,7 +133,7 @@
 		<view class="merRankList" v-else-if="cindex == 1 && lists.account_ranking.length<=0">
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
-				<view class="noDataText">It's empty</view>
+				<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 			</view>
 		</view>
 		<view class="merRankList" v-else-if="cindex == 2 && lists.membership_ranking.length>0">
@@ -158,7 +158,7 @@
 					<view class="merRankTop">
 						<view class="spTitle ellip">{{item.name}}</view>
 						<view class="profit">
-							<view class="cumulative">Cumulative sales: ${{item.cumulative_sales}}</view>
+							<view class="cumulative">{{ $t('rank.Cumulative_sales') }}: ${{item.cumulative_sales}}</view>
 							<!-- <view class="ratio">Commission ratio: {{item.commission_ratio}}%</view> -->
 						</view>
 					</view>
@@ -178,7 +178,7 @@
 		<view class="merRankList" v-else-if="cindex == 2 && lists.membership_ranking.length<=0">
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
-				<view class="noDataText">It's empty</view>
+				<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 			</view>
 		</view>
 
@@ -190,7 +190,7 @@
 						:class="{'activePopupChoose': citem == index}" @click="getOrderState(index,item.name)">
 						{{item.name}}
 					</view>
-					<view class="confirmed" @click="confirmed">Confirmed</view>
+					<view class="confirmed" @click="confirmed">{{ $t('rank.Confirmed') }}</view>
 				</view>
 			</uni-popup>
 		</view>
@@ -205,7 +205,7 @@
 				scrollLeft: 0,
 				scrollList: [{
 					id: 1,
-					name: 'Merchandise ranking'
+					name: this.$t('rank').Merchandise_ranking
 				}, {
 					id: 2,
 					name: 'Account ranking'
@@ -215,31 +215,31 @@
 				}],
 				orderStateList: [{
 					id: '',
-					name: 'All',
+					name: this.$t('rank').All,
 					value: ''
 				},{
 					id: 1,
-					name: 'Today',
+					name: this.$t('rank').Today,
 					value: 1
 				}, {
 					id: 2,
-					name: 'Yesterday',
+					name: this.$t('rank').Yesterday,
 					value: 2
 				}, {
 					id: 3,
 					// name: 'Nearly seven days',
-					name: '7 days',
+					name: this.$t('rank').A7_hari,
 					value: 7
 					
 				}, {
 					id: 4,
 					// name: 'Nearly 30 days',
-					name: '30 days',
+					name: this.$t('rank').A30_days,
 					value: 30
 				}, {
 					id: 5,
 					// name: 'Nearly 60 days',
-					name: '60 days',
+					name: this.$t('rank').A60_days,
 					value: 60
 				}],
 
@@ -247,8 +247,8 @@
 				isShowTabHeight: false,
 
 				citem: 0,
-				prepareState: 'All',
-				orderState: 'All',
+				prepareState: this.$t('rank').All,
+				orderState: this.$t('rank').All,
 				accountName: 'All of them',
 
 				merIndex: 0,
@@ -424,7 +424,7 @@
 			getHttpLists(type) {
 				this.isRequest = false
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -461,9 +461,9 @@
 							
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -472,9 +472,9 @@
 						this.isRequest = true
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

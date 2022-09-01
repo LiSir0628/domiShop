@@ -1,26 +1,26 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="New receiving address"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('pro_detail_address.New_receiving_address')"></uni-nav-bar>
 		<view class="example">
 			<view class="modular">
-				<view class="modularTitle">Name of consignee</view>
-				<input class="uni-input" v-model="name" placeholder="enter the name of the consignee" />
+				<view class="modularTitle">{{ $t('address.Name_of_consignee') }}</view>
+				<input class="uni-input" v-model="name" :placeholder="$t('address.consignee')" />
 			</view>
 
 			<view class="modular">
-				<view class="modularTitle">Contact</view>
-				<input class="uni-input" v-model="tel" placeholder="enter your contact information" />
+				<view class="modularTitle">{{ $t('address.Contact') }}</view>
+				<input class="uni-input" v-model="tel" :placeholder="$t('address.information')" />
 			</view>
 			
 			<view class="modular">
-				<view class="modularTitle">In the area</view>
+				<view class="modularTitle">{{ $t('address.In_the_area') }}</view>
 				<picker v-if="array.length > 0" @change="bindPickerChange" :value="index" range-key="name" :range="array">
 					<view class="uni-input">{{array[index].name}}</view>
 				</picker>
 			</view>
 			
 			<view class="modular">
-				<view class="modularTitle">In the city</view>
+				<view class="modularTitle">{{ $t('address.In_the_city') }}</view>
 				<picker v-if="arrayCity.length > 0" @change="bindPickerCaityChange" :value="cindex" range-key="name" :range="arrayCity">
 					<view class="uni-input">{{arrayCity[cindex].name}}</view>
 				</picker>
@@ -28,17 +28,17 @@
 			</view>
 
 			<view class="modular modularAddress">
-				<view class="modularTitle">Detailed address</view>
+				<view class="modularTitle">{{ $t('address.Detailed_address') }}</view>
 				<!-- <textarea v-model="address" placeholder="Please enter a detailed address" /> -->
-				<input class="uni-input" v-model="detail" placeholder="Please enter a detailed address" />
+				<input class="uni-input" v-model="detail" :placeholder="$t('address.detailed_address')" />
 			</view>
 
 			<view class="modular modularSwitch">
-				<view class="modularTitle">To the default address</view>
+				<view class="modularTitle">{{ $t('address.default_address') }}</view>
 				<!-- <uni-data-checkbox v-model="sex" :localdata="sexs" /> -->
 				<switch :checked="is_default" color="#FF7436" @change="switchChange" />
 			</view>
-			<view class="btn" @click="submit">Save</view>
+			<view class="btn" @click="submit">{{ $t('address.Save') }}</view>
 		</view>
 	</view>
 </template>
@@ -92,7 +92,7 @@
 			},
 			getHttpLists() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -118,9 +118,9 @@
 							this.getCountry("one")
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -128,9 +128,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -138,7 +138,7 @@
 			},
 			getCountry(type) {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -169,9 +169,9 @@
 							}
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -179,9 +179,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -193,7 +193,7 @@
 				this.cindex = 0
 				this.arrayCity = []
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -221,9 +221,9 @@
 							this.city_name = this.arrayCity[this.cindex].name
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -231,9 +231,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -247,7 +247,7 @@
 			},
 			submit() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -269,7 +269,7 @@
 						uni.hideLoading();
 						if (res.data.code == 200) {
 							// uni.showModal({
-							// 	title: 'TIP',
+							// 	title: this.$t('common').Tip,
 							// 	content: res.data.msg,
 							// 	showCancel: false,
 							// 	success: function (res) {
@@ -290,9 +290,9 @@
 							
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -300,9 +300,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

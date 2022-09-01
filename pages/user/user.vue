@@ -10,32 +10,32 @@
 		<view class="content">
 			<view class="orderList">
 				<view class="orderTop">
-					<view class="collection">Free sample collection</view>
+					<view class="collection">{{ $t('user.Freesample_collection') }}</view>
 					<view class="view">
-						<view class="" @click="goView(1)">View all</view>
+						<view class="" @click="goView(1)">{{ $t('user.View_all') }}</view>
 						<image class="arrow" src="../../static/images/user/icon05.png"></image>
 					</view>
 				</view>
 				<view class="orderContent">
 					<view class="orderState" @click="goView(2)">
 						<view class="orderNum">{{applyList.wait_examine_nums}}</view>
-						<view class="orderTitle">Pending review</view>
+						<view class="orderTitle">{{ $t('user.Pending_review') }}</view>
 					</view>
 					<view class="orderState orderStateMiddle" @click="goView(3)">
 						<view class="orderNum">{{applyList.wait_delivery_nums}}</view>
-						<view class="orderTitle">Ready for shipment</view>
+						<view class="orderTitle">{{ $t('user.Ready_for_shipment') }}</view>
 					</view>
 					<view class="orderState" @click="goView(5)">
 						<view class="orderNum">{{applyList.arrived_nums}}</view>
-						<view class="orderTitle">Delivery received</view>
+						<view class="orderTitle">{{ $t('user.Delivery_received') }}</view>
 					</view>
 					<view class="orderState orderStateMiddle" @click="goView(4)">
 						<view class="orderNum">{{applyList.shipping_nums}}</view>
-						<view class="orderTitle">Delivery in progress</view>
+						<view class="orderTitle">{{ $t('user.Delivery_in_progress') }}</view>
 					</view>
 					<view class="orderState orderStateMiddle" @click="goView(6)">
 						<view class="orderNum">{{applyList.complete_nums}}</view>
-						<view class="orderTitle">It’s done</view>
+						<view class="orderTitle">{{ $t('user.It’s_done') }}</view>
 					</view>
 				</view>
 			</view>
@@ -78,7 +78,7 @@
 		<uni-popup ref="popup" background-color="#fff" @maskClick="close">
 			<view class="kefu" @click.stop="noClose">
 				<image class="close" src="../../static/images/detail/icon13.png" @click="close"></image>
-				<view class="emailTip">Customer Service Mailbox</view>
+				<view class="emailTip">{{ $t('service.Customer_Service_Mailbox') }}</view>
 				<view class="email">kefu@gmail.com</view>
 			</view>
 		</uni-popup>
@@ -96,31 +96,36 @@
 				lists:[{
 					id: 1,
 					image: '../../static/images/user/icon10.png',
-					title: 'Tiktok account manager',
+					title: this.$t('user').Tiktok_account_manager,
 					url: './../index/administration'
 				},{
 					id: 2,
 					image: '../../static/images/user/icon08.png',
-					title: 'Merchandise collection',
+					title: this.$t('user').Merchandise_collection,
 					url: './love'
 				},{
 					id: 3,
 					image: '../../static/images/user/icon07.png',
-					title: 'Contact your own customer service',
+					title: this.$t('user').service,
 					url: ''
 				},{
 					id: 4,
 					image: '../../static/images/user/icon09.png',
-					title: 'Log out',
+					title: this.$t('user').Log_out,
 					url: ''
 				}],
 				applyList: {},
 				
-				langText: "English", //语法展示，缓存中获取
+				langText: "Malay", //语法展示，缓存中获取English
 			}
 		},
 		components: {
 			newLang
+		},
+		created() {
+			if(localStorage.getItem('language')){
+				this.langText = localStorage.getItem('language')
+			}
 		},
 		onShow() {
 			this.nickname = this.$store.state.nickname
@@ -133,6 +138,11 @@
 			
 			langSwitch(name){
 				this.langText = name
+				this.lists[0].title = this.$t('user').Tiktok_account_manager
+				this.lists[1].title = this.$t('user').Merchandise_collection
+				this.lists[2].title = this.$t('user').service
+				this.lists[3].title = this.$t('user').Log_out
+				this.$forceUpdate()
 			},
 			
 			edit() {
@@ -144,7 +154,7 @@
 			getHttpLists() {
 				if(!this.applyList.wait_examine_nums){
 					uni.showLoading({
-						title: 'loading...',
+						title: this.$t('common').loading + '...',
 						mask: true
 					});
 				}
@@ -161,9 +171,9 @@
 							this.applyList = res.data.data
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -171,9 +181,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

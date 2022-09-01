@@ -4,14 +4,14 @@
 			<view class="newAdd-popup-content">
 				<view class="newAddCard">
 					<view class="newAddCardTitle">
-						<view class="newAddCardTip">Add TIKTOK account</view>
+						<view class="newAddCardTip">{{ $t('pro_detail_account.Add_account') }}</view>
 						<image class="newAddClose" src="../../static/images/detail/icon13.png" @click="newAddClose"></image>
 					</view>
-					<input class="newAddAccount" v-model="account" placeholder="Tiktok Account"/>
-					<input class="newAddName" v-model="nickname" placeholder="Account Name"/>
+					<input class="newAddAccount" v-model="account" :placeholder="$t('pro_detail_account.Tiktok_Account')"/>
+					<input class="newAddName" v-model="nickname" :placeholder="$t('pro_detail_account.Account_Name')"/>
 					<view class="newAddAccountMsg">
-						<input class="newAddFollower" v-model="fans" placeholder="Number of followers"/>
-						<input class="newAddLikes" v-model="praise_nums" placeholder="Likes"/>
+						<input class="newAddFollower" v-model="fans" :placeholder="$t('pro_detail_account.Number')"/>
+						<input class="newAddLikes" v-model="praise_nums" :placeholder="$t('pro_detail_account.Likes')"/>
 					</view>
 										
 					<view class="imageUpload" @click="photo">
@@ -20,7 +20,7 @@
 						
 					</view>					
 					
-					<view class="newAddBtn" @click="addAccount">Add an account</view>
+					<view class="newAddBtn" @click="addAccount">{{ $t('pro_detail_account.Add_an_account') }}</view>
 				</view>
 			</view>
 		</uni-popup>
@@ -91,31 +91,31 @@
 			addAccount() {				
 				if(!this.account){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please enter tiktok account number",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('pro_detail_account').number,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.nickname){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please enter tiktok nickname",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('pro_detail_account').nickname,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.backend){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please upload the screenshot of tiktok personal information",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('pro_detail_account').information,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				}
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -137,9 +137,9 @@
 							this.newAddClose()
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -147,9 +147,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

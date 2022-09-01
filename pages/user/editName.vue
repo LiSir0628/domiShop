@@ -1,11 +1,11 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Change Name"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('editName.Change_Name')"></uni-nav-bar>
 		<view class="example">
 			<view class="modular">
-				<input class="uni-input" v-model="name" placeholder="Please enter your name" />
+				<input class="uni-input" v-model="name" :placeholder="$t('editName.Please_enter_your_name')" />
 			</view>
-			<view class="btn" @click="submit">Confirmed</view>
+			<view class="btn" @click="submit">{{ $t('editName.Confirmed') }}</view>
 		</view>
 	</view>
 </template>
@@ -26,9 +26,9 @@
 				if(!this.name){
 					//未输入名称
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please enter your name',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editName').Please_enter_your_name,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
@@ -50,9 +50,9 @@
 							this.$store.commit('editName', this.name)
 							uni.setStorageSync('duomiList', this.$store.state.duomiList);
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 								success: function (res) {
 									if (res.confirm) {
@@ -62,9 +62,9 @@
 							})
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -72,9 +72,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

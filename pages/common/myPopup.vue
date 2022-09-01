@@ -26,7 +26,8 @@
 			},
 			text:{
 				type: String,
-				default: 'Link replication successful'
+				default: "successful"
+				//default: this.$t('pro_detail').successful
 			}
 		},
 		created() {

@@ -1,26 +1,26 @@
 <template>
 	<view class="container">
-		<view class="hello">Hello!</view>
-		<view class="des">Registration</view>
+		<view class="hello">{{ $t('register.Hello') }}!</view>
+		<view class="des">{{ $t('register.Registration') }}</view>
 		<view class="content">
-			<input class="account" v-model="account" placeholder="Please enter your account number" />
+			<input class="account" v-model="account" :placeholder="$t('register.account_number')" />
 			<view class="codeText">
-				<input class="code" v-model="code" placeholder="the authentication code" />
+				<input class="code" v-model="code" :placeholder="$t('register.code')" />
 				<view class="codeBtn" @click="getCode">
 					{{timeTitle}}
 				</view>
 			</view>
-			<input class="password" v-model="passWord" placeholder="please set your password" />
+			<input class="password" v-model="passWord" :placeholder="$t('register.set_password')" />
 		</view>
 		<view class="prompt">
 			<text class="label">*</text>
-			<text>By registering, you agree to</text>
-			<text class="underline">the Dome Service Agreement</text>
-			<text>and</text>
-			<text class="underline">privacy terms</text>
+			<text>{{ $t('register.agree') }}</text>
+			<text class="underline">{{ $t('register.Agreement') }}</text>
+			<text>{{ $t('register.and') }}</text>
+			<text class="underline">{{ $t('register.privacy_terms') }}</text>
 		</view>
 		<view class="btn" @click="sumbit">
-			<text>Sign up for an account</text>
+			<text>{{ $t('register.Sign_up') }}</text>
 			<image class="arrow" src="../../static/images/register/icon03.png"></image>
 		</view>
 	</view>
@@ -36,7 +36,7 @@
 				
 				time: 59,
 				setTime: null,
-				timeTitle: "Verification Code",
+				timeTitle: this.$t('register').Verification_Code,
 				isSumbit: true,
 			}
 		},
@@ -48,9 +48,9 @@
 			getCode(){
 				if(!this.account){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please fill in the email address",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('register').Verification_Code,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
@@ -60,7 +60,7 @@
 				
 				this.isSumbit = false
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -77,9 +77,9 @@
 					} else {
 						this.isSumbit = true
 						uni.showModal({
-							title: 'TIP',
+							title: this.$t('common').Tip,
 							content: res.data.msg,
-							confirmText: "confirm",
+							confirmText: this.$t('common').confirm,
 							showCancel: false,
 						})
 					}
@@ -89,9 +89,9 @@
 					this.isSumbit = true
 					uni.hideLoading();
 					uni.showModal({
-						title: 'TIP',
-						content: "Network error, please try again later",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
 						//content: err,
 						showCancel: false,
 					})
@@ -108,7 +108,7 @@
 						this.time = this.time - 1
 						this.isSumbit = false
 					} else{
-						this.timeTitle = "Verification Code"
+						this.timeTitle = this.$t('register').Verification_Code
 						this.time = 59
 						this.isSumbit = true
 						clearInterval(this.setTime);
@@ -118,24 +118,24 @@
 			sumbit() {
 				if(!this.account){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please fill in the email address",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('register').fill_email_address,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.passWord) {
 					uni.showModal({
-						title: 'TIP',
-						content: "Please fill in the password",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('register').fill_password,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				}
 				
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -157,9 +157,9 @@
 						this.getUserList()
 					} else {
 						uni.showModal({
-							title: 'TIP',
+							title: this.$t('common').Tip,
 							content: res.data.msg,
-							confirmText: "confirm",
+							confirmText: this.$t('common').confirm,
 							showCancel: false,
 						})
 					}
@@ -167,9 +167,9 @@
 				.catch(err=>{
 					uni.hideLoading();
 					uni.showModal({
-						title: 'TIP',
-						content: "Network error, please try again later",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
 						//content: err,
 						showCancel: false,
 					})
@@ -177,7 +177,7 @@
 			},
 			getUserList() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -197,9 +197,9 @@
 							});
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -207,9 +207,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

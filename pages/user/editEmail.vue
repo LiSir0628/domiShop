@@ -1,23 +1,23 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Change Login mailbox"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('editEmail.Change_Login_mailbox')"></uni-nav-bar>
 		<view class="example">
 			<view class="modular">
-				<input class="uni-input" v-model="email" placeholder="Please enter your email" />
+				<input class="uni-input" v-model="email" :placeholder="$t('editEmail.email')" />
 			</view>
 			<view class="modular">
-				<input class="uni-input" v-model="code" placeholder="Please enter the verification code" />
+				<input class="uni-input" v-model="code" :placeholder="$t('editEmail.enter_the_verification_code')" />
 				<view class="codeBtn" @click="getCode">
 					{{timeTitle}}
 				</view>
 			</view>
 			<view class="modular">
-				<input class="uni-input" v-model="password" placeholder="Please input a password" />
+				<input class="uni-input" v-model="password" :placeholder="$t('editEmail.password')" />
 			</view>
 			<view class="modular">
-				<input class="uni-input" v-model="new_email" placeholder="Please enter a new mailbox" />
+				<input class="uni-input" v-model="new_email" :placeholder="$t('editEmail.new_mailbox')" />
 			</view>
-			<view class="btn" @click="submit">Confirmed</view>
+			<view class="btn" @click="submit">{{ $t('editEmail.Confirmed') }}</view>
 		</view>
 	</view>
 </template>
@@ -33,7 +33,7 @@
 				
 				time: 59,
 				setTime: null,
-				timeTitle: "Verification Code",
+				timeTitle: this.$t('editEmail').Verification_Code,
 				isSumbit: true,
 			}
 		},
@@ -44,9 +44,9 @@
 			getCode(){
 				if(!this.email){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please enter your email",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editEmail').email,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
@@ -56,7 +56,7 @@
 				
 				this.isSumbit = false
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -73,9 +73,9 @@
 					} else {
 						this.isSumbit = true
 						uni.showModal({
-							title: 'TIP',
+							title: this.$t('common').Tip,
 							content: res.data.msg,
-							confirmText: "confirm",
+							confirmText: this.$t('common').confirm,
 							showCancel: false,
 						})
 					}
@@ -85,9 +85,9 @@
 					this.isSumbit = true
 					uni.hideLoading();
 					uni.showModal({
-						title: 'TIP',
-						content: "Network error, please try again later",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
 						//content: err,
 						showCancel: false,
 					})
@@ -104,7 +104,7 @@
 						this.time = this.time - 1
 						this.isSumbit = false
 					} else{
-						this.timeTitle = "Verification Code"
+						this.timeTitle = this.$t('editEmail').Verification_Code
 						this.time = 59
 						this.isSumbit = true
 						clearInterval(this.setTime);
@@ -116,42 +116,42 @@
 				if(!this.email){
 					//未输入邮箱
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please enter your email',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editEmail').email,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.code){
 					//未输入验证码
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please enter the verification code',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editEmail').enter_the_verification_code,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.password){
 					//未输入密码
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please input a password',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editEmail').password,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.new_email){
 					//未输入新邮箱
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please enter a new mailbox',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editEmail').new_mailbox,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				}
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -170,9 +170,9 @@
 							this.$store.commit('editEmail', this.new_email)
 							uni.setStorageSync('duomiList', this.$store.state.duomiList);
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 								success: function (res) {
 									if (res.confirm) {
@@ -182,9 +182,9 @@
 							})
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -192,9 +192,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

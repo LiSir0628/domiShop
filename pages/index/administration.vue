@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="TIKTOK administration"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('pro_detail.Product_details')"></uni-nav-bar>
 		<view class="content" :style="contentHeight">
 			<view v-if="lists.length > 0">
 				<view class="userList" v-for="item,index in lists" :class="{'active': cIndex == index}" @click="choose(index)">
@@ -13,11 +13,11 @@
 			<view v-else>
 				<view class="noData">
 					<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
-					<view class="noDataText">It's empty</view>
+					<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 				</view>
 			</view>
 			<!-- <view class="btn" @click="add">New TIKTOK account</view> -->
-			<view class="btn" @click="open('bottom')">New TIKTOK account</view>
+			<view class="btn" @click="open('bottom')">{{ $t('administration.New_TIKTOK_account') }}</view>
 		</view>
 		
 		<!-- <add-admin ref="addAdmin"></add-admin> -->
@@ -91,7 +91,7 @@
 			},
 			getHttpLists() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -107,9 +107,9 @@
 							this.getUserId()
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -117,9 +117,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

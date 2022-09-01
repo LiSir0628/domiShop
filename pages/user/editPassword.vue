@@ -1,23 +1,23 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Change Login Password"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('editPassword.Change_Password')"></uni-nav-bar>
 		<view class="example">
 			<view class="modular">
-				<input class="uni-input" v-model="email" placeholder="Please enter your email" />
+				<input class="uni-input" v-model="email" :placeholder="$t('editPassword.Please_your_email')" />
 			</view>
 			<view class="modular">
-				<input class="uni-input" v-model="code" placeholder="Please enter the verification code" />
+				<input class="uni-input" v-model="code" :placeholder="$t('editPassword.new_password')" />
 				<view class="codeBtn" @click="getCode">
 					{{timeTitle}}
 				</view>
 			</view>
 			<view class="modular">
-				<input class="uni-input" v-model="password" placeholder="Please enter the new password" />
+				<input class="uni-input" v-model="password" :placeholder="$t('editPassword.Please_verification_code')" />
 			</view>
 			<view class="modular">
-				<input class="uni-input" v-model="confirm_password" placeholder="Please enter the confirmation password" />
+				<input class="uni-input" v-model="confirm_password" :placeholder="$t('editPassword.confirmation_password')" />
 			</view>
-			<view class="btn" @click="submit">Confirmed</view>
+			<view class="btn" @click="submit">{{ $t('editPassword.Confirmed') }}</view>
 		</view>
 	</view>
 </template>
@@ -33,7 +33,7 @@
 				
 				time: 59,
 				setTime: null,
-				timeTitle: "Verification Code",
+				timeTitle: this.$t('editPassword').Verification_Code,
 				isSumbit: true,
 			}
 		},
@@ -44,9 +44,9 @@
 			getCode(){
 				if(!this.email){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please enter your email",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editPassword').Please_your_email,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
@@ -56,7 +56,7 @@
 				
 				this.isSumbit = false
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -73,9 +73,9 @@
 					} else {
 						this.isSumbit = true
 						uni.showModal({
-							title: 'TIP',
+							title: this.$t('common').Tip,
 							content: res.data.msg,
-							confirmText: "confirm",
+							confirmText: this.$t('common').confirm,
 							showCancel: false,
 						})
 					}
@@ -85,9 +85,9 @@
 					this.isSumbit = true
 					uni.hideLoading();
 					uni.showModal({
-						title: 'TIP',
-						content: "Network error, please try again later",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
 						//content: err,
 						showCancel: false,
 					})
@@ -104,7 +104,7 @@
 						this.time = this.time - 1
 						this.isSumbit = false
 					} else{
-						this.timeTitle = "Verification Code"
+						this.timeTitle = this.$t('editPassword').Verification_Code
 						this.time = 59
 						this.isSumbit = true
 						clearInterval(this.setTime);
@@ -116,51 +116,51 @@
 				if(!this.email){
 					//未输入邮箱
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please enter your email',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editPassword').Please_your_email,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.code){
 					//未输入验证码
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please enter the verification code',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editPassword').Please_verification_code,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.password){
 					//未输入密码
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please enter the new password',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editPassword').new_password,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(!this.confirm_password){
 					//未输入确认密码
 					uni.showModal({
-						title: 'TIP',
-						content: 'Please enter the confirmation password',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editPassword').confirmation_password,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				} else if(this.password != this.confirm_password){
 					//两次密码不一致
 					uni.showModal({
-						title: 'TIP',
-						content: 'The two password inputs are inconsistent',
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('editPassword').two_password,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
 				}
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -177,9 +177,9 @@
 						if (res.data.code == 200) {
 							uni.setStorageSync('token', res.data.data.token);
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 								success: function (res) {
 									if (res.confirm) {
@@ -189,9 +189,9 @@
 							})
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -199,9 +199,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

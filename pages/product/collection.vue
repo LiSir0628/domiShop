@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Free sample collection"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" :title="$t('collection.Freesample_collection')"></uni-nav-bar>
 		<view class="navbar">
 			<scroll-view class="scroll-view_H" :scroll-left="scrollLeft" scroll-x="true" @scroll="scroll"
 				:show-scrollbar="false">
@@ -16,12 +16,12 @@
 						<image class="clock" src="../../static/images/product/icon17.png"></image>
 						<view>{{item.addtime}}</view>
 					</view>
-					<view v-if="item.status == -2" class="closed">It’s closed</view>
+					<view v-if="item.status == -2" class="closed">{{ $t('collection.It’s_closed') }}</view>
 					<view v-else-if="item.status == -1" class="closed">Audit rejection</view>
-					<view v-else-if="item.status == 3" class="received">Delivery received</view>
-					<view v-else-if="item.status == 1" class="shipment">Ready for shipment</view>
-					<view v-else-if="item.status == 0" class="review">Pending review</view>
-					<view v-else-if="item.status == 2" class="progress">Delivery in progress</view>
+					<view v-else-if="item.status == 3" class="received">{{ $t('collection.Delivery_received') }}</view>
+					<view v-else-if="item.status == 1" class="shipment">{{ $t('collection.Ready_for_shipment') }}</view>
+					<view v-else-if="item.status == 0" class="review">{{ $t('collection.Pending_review') }}</view>
+					<view v-else-if="item.status == 2" class="progress">{{ $t('collection.Delivery_in_progress') }}</view>
 				</view>
 				<view class="spCenter">
 					<image v-if="item.product_image" class="spLogo" :src="item.product_image" @click="goDetail(index)"></image>
@@ -30,21 +30,21 @@
 						<view class="spDes">{{item.product_name}}</view>
 						<view class="spOperation">
 							<view class="price">$ {{item.unit_price}}</view>
-							<view class="commission">High Commission: {{(item.commission_ratio*100).toFixed()}}%</view>
+							<view class="commission">{{ $t('collection.High_Commission') }}: {{(item.commission_ratio*100).toFixed()}}%</view>
 						</view>
 					</view>
 				</view>
-				<view class="spBtn" v-if="item.status == 0 || item.status == 1" @click="cancel(index)">Cancellation of application</view>
+				<view class="spBtn" v-if="item.status == 0 || item.status == 1" @click="cancel(index)">{{ $t('collection.Cancellation_of_application') }}</view>
 				<view class="spBottom" v-if="item.status == 2 || item.status == 3">
 					<!-- <view class="delivery">Delivery Company: ems</view>
 					<view class="number">Odd Number: 1234567891111111</view> -->
-					<view class="delivery">Delivery Company: {{item.express_company}}</view>
-					<view class="number">Odd Number: {{item.express_no}}</view>
+					<view class="delivery">{{ $t('collection.Delivery_Company') }}: {{item.express_company}}</view>
+					<view class="number">{{ $t('collection.Odd_Number') }}: {{item.express_no}}</view>
 				</view>
 			</view>
 			<view class="noMore" v-if="current_page == total_page">
 				<view class="noMoreUnderline"></view>
-				no more
+				{{ $t('collection.no_more') }}
 				<view class="noMoreUnderline"></view>
 			</view>
 		</scroll-view>
@@ -52,7 +52,7 @@
 		<view class="content" v-else>
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
-				<view class="noDataText">It's empty</view>
+				<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 			</view>
 		</view>
 	</view>
@@ -67,22 +67,22 @@
 				scrollLeft: 0,
 				scrollList: [{
 					id: 1,
-					name: 'All of it'
+					name: this.$t('collection').All_of_it
 				}, {
 					id: 2,
-					name: 'Pending review'
+					name: this.$t('collection').Pending_review
 				}, {
 					id: 3,
-					name: 'Ready for shipment'
+					name: this.$t('collection').Ready_for_shipment
 				}, {
 					id: 4,
-					name: 'Delivery in progress'
+					name: this.$t('collection').Delivery_in_progress
 				}, {
 					id: 5,
-					name: 'Delivery received'
+					name: this.$t('collection').Delivery_received
 				}, {
 					id: 6,
-					name: 'It’s done'
+					name: this.$t('collection').done
 				}],
 				// scrollList: [{
 				// 	id: 1,
@@ -240,7 +240,7 @@
 				//this.lists = []
 				this.isRequest = false
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -278,9 +278,9 @@
 							}
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -289,9 +289,9 @@
 						this.isRequest = true
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -325,7 +325,7 @@
 			cancel(index) {
 				// 取消领样申请
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -343,9 +343,9 @@
 							this.$forceUpdate()
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -353,9 +353,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

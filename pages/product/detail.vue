@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :fixed="true"
-			title="Product details">
+			:title="$t('pro_detail.Product_details')">
 		</uni-nav-bar>
 
 		<uni-swiper-dot class="uni-swiper-dot-box" :info="banner" :current="current" mode="nav" :dots-styles="dotsStyles"
@@ -20,19 +20,19 @@
 					<text class="priceSpan">$</text>{{unit_price}}
 				</view>
 				<view v-if="is_samples == 1" class="is_sample">
-					Collectable sample
+					{{ $t('pro_detail.Collectable_sample') }}
 				</view>
 			</view>
 			<view class="profit">
-				Estimated profit per unit:
+				{{ $t('pro_detail.unit') }}:
 				<text class="profitPrice">${{commission}}</text>
 			</view>
 			<view class="rate">
 				<image class="hotLogo" src="../../static/images/detail/icon02.png"></image>
-				Commission rate: <text class="rateNum">{{(commission_ratio*100).toFixed()}}%</text>
+				{{ $t('pro_detail.Commission_rate') }}: <text class="rateNum">{{(commission_ratio*100).toFixed()}}%</text>
 			</view>
 			<view class="totalSales">
-				<view>Total sales: {{cumulative_sales}}</view>
+				<view>{{ $t('pro_detail.Total_sales') }}: {{cumulative_sales}}</view>
 				<view class="logoSubject">
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy(product_link)">
 					</image>
@@ -49,7 +49,7 @@
 			<view class="sample" @click="sample">
 				<image class="menuLogo" src="../../static/images/detail/icon17.png"></image>
 				<view class="priceContent">
-					Sample request: Number of followers {{fans}}   <!-- 2.Window sales in recent 30 days :{{show_window}} -->
+					{{ $t('pro_detail.request') }} {{fans}}   <!-- 2.Window sales in recent 30 days :{{show_window}} -->
 				</view>
 			</view>
 		</view>
@@ -58,7 +58,7 @@
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-					<view class="liveTitle">LIVE BENEFITS</view>
+					<view class="liveTitle">{{ $t('pro_detail.LIVE_BENEFITS') }}</view>
 				</view>
 				<view class="logoSubject">
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" v-if="benefits" @click="copy(benefits, 'val')"></image>
@@ -74,7 +74,7 @@
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-					<view class="liveTitle">SELLING POINT</view>
+					<view class="liveTitle">{{ $t('pro_detail.SELLING_POINT') }}</view>
 				</view>
 				<view class="logoSubject">
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" v-if="selling_point" @click="copy(selling_point, 'val')"></image>
@@ -100,7 +100,7 @@
 			<view class="liveModular">
 				<view class="liveSubject">
 					<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-					<view class="liveTitle">DELIVERY LOGISTICS</view>
+					<view class="liveTitle">{{ $t('pro_detail.DELIVERY_LOGISTICS') }}</view>
 				</view>
 				<!-- <view class="logoSubject">
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy('复制连接')"></image>
@@ -108,15 +108,15 @@
 			</view>
 			<view class="deliveryContent">
 				<view class="deliveryList">
-					<view class="deliveryTitle">Place of shipment</view>
+					<view class="deliveryTitle">{{ $t('pro_detail.shipment') }}</view>
 					<view class="deliveryMsg">{{delivery_place}}</view>
 				</view>
 				<view class="deliveryList">
-					<view class="deliveryTitle">Delivery, express delivery</view>
+					<view class="deliveryTitle">{{ $t('pro_detail.express_delivery') }}</view>
 					<view class="deliveryMsg">{{express_company}}</view>
 				</view>
 				<view class="deliveryList">
-					<view class="deliveryTitle">Delivery Time</view>
+					<view class="deliveryTitle">{{ $t('pro_detail.Delivery_Time') }}</view>
 					<view class="deliveryMsg">{{delivery_time}}</view>
 				</view>
 			</view>
@@ -124,7 +124,7 @@
 
 		<view class="detailTitle" v-if="content">
 			<view class="underline"></view>
-			Product details
+			{{ $t('pro_detail.Product_details') }}
 			<view class="underline"></view>
 		</view>
 		
@@ -141,11 +141,11 @@
 		<view class="bottomCar">
 			<view class="copyLine" @click="copy(product_link)">
 				<image class="copyLogo" src="../../static/images/detail/icon03.png"></image>
-				<view class="copy">Copy the link</view>
+				<view class="copy">{{ $t('pro_detail.Copy_the_link') }}</view>
 			</view>
 			<!-- <view class="add" @click="openAdd">Add a window</view> -->
-			<view class="add" @click="openAdd">administration</view>
-			<view v-if="is_samples" class="collection" @click="chooseCollection">Free sample collection</view>
+			<view class="add" @click="openAdd">{{ $t('pro_detail.administration') }}</view>
+			<view v-if="is_samples" class="collection" @click="chooseCollection">{{ $t('pro_detail.collection') }}</view>
 			<view v-else class="collectionGary">No sampling</view>
 		</view>
 		
@@ -154,7 +154,7 @@
 			<uni-popup ref="popupAdd" type="bottom" background-color="#fff" @maskClick="closeAdd">
 				<view class="popup-content">
 					<view class="popupTop">
-						<view class="addTitle">Select the TIKTOK</view>
+						<view class="addTitle">{{ $t('pro_detail_account.Select_TIKTOK') }}</view>
 						<!-- <view class="addClose" @click="closeAdd">X</view> -->
 						<image class="addClose" src="../../static/images/detail/icon13.png" @click="closeAdd"></image>
 					</view>
@@ -195,9 +195,9 @@
 										Likes: {{item.praise_nums}}
 									</view>
 								</view>
-								<view v-if="item.status == 1" class="isFree">Meet the conditions of free sample</view>
-								<view v-else-if="item.status == 0" class="isFree wait">To be reviewed</view>
-								<view v-else-if="item.status == -1" class="isFree refuse">The sampling conditions are not met</view>		
+								<view v-if="item.status == 1" class="isFree">{{ $t('pro_detail_account.free_sample') }}</view>
+								<view v-else-if="item.status == 0" class="isFree wait">{{ $t('pro_detail_account.To_be_reviewed') }}</view>
+								<view v-else-if="item.status == -1" class="isFree refuse">{{ $t('pro_detail_account.not_met') }}</view>		
 					
 							</view>
 							<image v-if="cindex == index" class="activeLogo" src="../../static/images/detail/icon10.png"></image>
@@ -206,10 +206,10 @@
 					
 					<view class="popupBottom">
 						<view class="newAdd" @click="open('center')">
-							New TIKTOK
+							{{ $t('pro_detail_account.New_TIKTOK') }}
 						</view>
 						<view class="confirmed" @click="confirmed">
-							Confirmed
+							{{ $t('pro_detail_account.Confirmed') }}
 						</view>
 					</view>
 				</view>
@@ -221,7 +221,7 @@
 			<uni-popup ref="popupCollection" type="bottom" background-color="#fff" @maskClick="closeCollection">
 				<view class="collectionMask">
 					<view class="popupTop">
-						<view class="addTitle">Select Harvest Address</view>
+						<view class="addTitle">{{ $t('pro_detail_address.Select_Address') }}</view>
 						<image class="addClose" src="../../static/images/detail/icon13.png" @click="closeCollection"></image>
 					</view>			
 					<!-- <scroll-view class="addressList" :scroll-top="scrollHeight" scroll-y="true" @scroll="scroll"
@@ -260,10 +260,10 @@
 					
 					<view class="popupBottom">
 						<view class="newAdd" @click="addAddress">
-							New receiving address
+							{{ $t('pro_detail_address.New_receiving_address') }}
 						</view>
 						<view class="confirmed" @click="confirmedCollection">
-							Confirmed
+							{{ $t('pro_detail_account.Confirmed') }}
 						</view>
 					</view>
 				</view>
@@ -419,7 +419,7 @@
 			getHttpAddress() {
 				// this.list = []
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -437,9 +437,9 @@
 							this.$forceUpdate()
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -447,9 +447,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -478,7 +478,7 @@
 			getUserLists(type) {
 				this.userList = []
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -503,9 +503,9 @@
 							// }
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -513,9 +513,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -523,7 +523,7 @@
 			},
 			getHttpLists() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -570,9 +570,9 @@
 							
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -580,9 +580,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -620,7 +620,7 @@
 						// 	title: '复制成功'
 						// })
 						this.isSuccess = true
-						this.text = 'Link replication successful'
+						this.text = this.$t('pro_detail').successful
 						this.$refs.myPopup.open()
 					}
 				)
@@ -633,7 +633,7 @@
 						// 	title: '复制成功'
 						// })
 						this.isSuccess = true
-						this.text = 'Link replication successful'
+						this.text = this.$t('pro_detail').successful
 						this.$refs.myPopup.open()
 					}
 				})
@@ -644,7 +644,7 @@
 				//console.log(this.isShowLove)
 				
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -661,9 +661,9 @@
 							console.log(res.data)						
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -671,9 +671,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -714,9 +714,9 @@
 				//tiktok账号判断
 				if(this.userList.length <= 0){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please add tiktok account first",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('pro_detail').add_account,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
@@ -797,9 +797,9 @@
 				//地址判断
 				if(this.list.length <= 0){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please add the receiving address first",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('pro_detail').add_address,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
@@ -807,9 +807,9 @@
 				//tiktok账号判断
 				if(!this.$store.state.accountId){
 					uni.showModal({
-						title: 'TIP',
-						content: "Please select sampling account",
-						confirmText: "confirm",
+						title: this.$t('common').Tip,
+						content: this.$t('pro_detail').select_account,
+						confirmText: this.$t('common').confirm,
 						showCancel: false,
 					})
 					return
@@ -919,7 +919,8 @@
 	}
 
 	.is_sample{
-		width: 255rpx;
+		min-width: 235rpx;
+		padding: 0 10rpx;
 		height: 60rpx;
 		line-height: 60rpx;
 		text-align: center;

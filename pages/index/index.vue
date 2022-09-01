@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="title">Order board</view>
+		<view class="title">{{ $t('index.Order_board') }}</view>
 		<view class="navbar">
 			<scroll-view class="scroll-view_H" :scroll-left="scrollLeft" scroll-x="true" @scroll="scroll"
 				:show-scrollbar="false">
@@ -17,32 +17,32 @@
 					<view class="dataNumsNew">
 						<image class="dataLogoNew" src="../../static/images/home/icon17.png"></image>
 						<view class="dataPriceNew">${{fund_data.total_sales}}</view>
-						<view class="dataTitleNew">Total sales</view>
+						<view class="dataTitleNew">{{ $t('index.Total_sales') }}</view>
 					</view>
 					<view class="dataNumsNew">
 						<image class="dataLogoNew" src="../../static/images/home/icon18.png"></image>
 						<view class="dataPriceNew">${{fund_data.effective_sales}}</view>
-						<view class="dataTitleNew">Effective sales</view>
+						<view class="dataTitleNew">{{ $t('index.Effective_sales') }}</view>
 					</view>
 					<view class="dataNumsNew">
 						<image class="dataLogoNew" src="../../static/images/home/icon19.png"></image>
 						<view class="dataPriceNew">${{fund_data.full_commission}}</view>
-						<view class="dataTitleNew">Full Commission</view>
+						<view class="dataTitleNew">{{ $t('index.Full_Commission') }}</view>
 					</view>
 					<view class="dataNumsNew">
 						<image class="dataLogoNew" src="../../static/images/home/icon20.png"></image>
 						<view class="dataPriceNew">${{fund_data.effective_commission}}</view>
-						<view class="dataTitleNew">Effective Commission</view>
+						<view class="dataTitleNew">{{ $t('index.Effective_Commission') }}</view>
 					</view>
 					<view class="dataNumsNew">
 						<image class="dataLogoNew" src="../../static/images/home/icon21.png"></image>
 						<view class="dataPriceNew">{{fund_data.all_singular}}</view>
-						<view class="dataTitleNew">All singular</view>
+						<view class="dataTitleNew">{{ $t('index.All_singular') }}</view>
 					</view>
 					<view class="dataNumsNew">
 						<image class="dataLogoNew" src="../../static/images/home/icon22.png"></image>
 						<view class="dataPriceNew">{{fund_data.effective_singular}}</view>
-						<view class="dataTitleNew">Effective singular</view>
+						<view class="dataTitleNew">{{ $t('index.Effective_singular') }}</view>
 					</view>
 				</scroll-view>
 				<!-- <swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay"
@@ -117,7 +117,7 @@
 			<view class="newMerchandise" @click="goData(0)">
 				<view class="merchandiseLeft">
 					<image class="merchandiseNewLogo" src="../../static/images/home/icon16.png"></image>
-					<view>Merchandise ranking</view>
+					<view>{{ $t('index.Merchandise_ranking') }}</view>
 				</view>
 				<image class="merchandiseRight" src="../../static/images/home/icon05.png"></image>
 			</view>
@@ -143,7 +143,7 @@
 		</view> -->
 		<view class="detailTitle" v-if="spLists.length>0">
 			<view class="underline"></view>
-			Sampling list
+			{{ $t('index.Sampling_list') }}
 			<view class="underline"></view>
 		</view>
 		<view class="spList" v-if="spLists.length>0">
@@ -187,48 +187,49 @@
 					<view class="spMsg">
 						<view class="spDes">{{item.product_name}}</view>
 						<view class="spOperation">
-							<view class="settled" v-if="item.status == 0">Pending review</view>
-							<view class="state" v-else-if="item.status == 1">To be sent</view>
+							<view class="settled" v-if="item.status == 0">{{ $t('index.Pending_review') }}</view>
+							<view class="state" v-else-if="item.status == 1">{{ $t('index.To_be_sent') }}</view>
 							<view class="state" v-else-if="item.status == 2">Sending</view>
-							<view class="state" v-if="item.status == 3">Delivery received</view>
-							<view class="stateRefund" v-else-if="item.status == -1 || item.status == -2">It’s done
+							<view class="state" v-if="item.status == 3">{{ $t('index.Delivery_received') }}</view>
+							<view class="stateRefund" v-else-if="item.status == -1 || item.status == -2">{{ $t('index.It’s_done') }}
 							</view>
-							<view class="time">{{item.addtime}} apply</view>
+							<!-- <view class="time">{{item.addtime}} {{ $t('index.apply') }}</view> -->
+							<view class="time">{{item.addtime}}</view>
 						</view>
 					</view>
 				</view>
 				<view class="spMiddle">
 					<view class="spData">
-						<view class="dataTitle">Price</view>
+						<view class="dataTitle">{{ $t('index.Price') }}</view>
 						<view class="dataNum">${{item.unit_price}}</view>
 					</view>
 					<view class="spData">
-						<view class="dataTitle">Commission ratio</view>
+						<view class="dataTitle">{{ $t('index.Commission_ratio') }}</view>
 						<view class="dataNum">{{(item.commission_ratio*100).toFixed()}}%</view>
 					</view>
 					<view class="spData">
-						<view class="dataTitle">Commission</view>
+						<view class="dataTitle">{{ $t('index.Commission') }}</view>
 						<view class="dataNum">${{item.commission}}</view>
 					</view>
 				</view>
 			</view>
 			<view class="noMore" v-if="current_page == total_page">
 				<view class="noMoreUnderline"></view>
-				no more
+				{{ $t('index.no_more') }}
 				<view class="noMoreUnderline"></view>
 			</view>
 		</view>
 		<view class="spList" v-else>
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon01.png"></image>
-				<view class="noDataText">It's empty</view>
+				<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 			</view>
 		</view>
 
 		<view class="suspension" @click="goAdministration">
 			<image class="suspensionLogo" src="../../static/images/home/icon13.png"></image>
 			<view class="suspensionText">
-				TIKTOK administration
+				{{ $t('index.TIKTOK_administration') }}
 			</view>
 		</view>
 
@@ -239,7 +240,7 @@
 					<view class="popupChoose" v-for="item,index in orderStateList"
 						:class="{'activePopupChoose': citem == index}" @click="getOrderState(index,item.name)">
 						{{item.name}}</view>
-					<view class="confirmed" @click="confirmed">Confirmed</view>
+					<view class="confirmed" @click="confirmed">{{ $t('index.Confirmed') }}</view>
 				</view>
 			</uni-popup>
 		</view>
@@ -248,15 +249,15 @@
 			<view class="bottomNav">
 				<!-- <image class="navLogo" src="../../static/images/home/icon06.png"></image> -->
 				<image class="navLogo" src="../../static/images/home/icon07.png"></image>
-				<view class="navActiveText">Order form</view>
+				<view class="navActiveText">{{ $t('index.Order_form') }}</view>
 			</view>
 			<view class="bottomNav" @click="goOptions">
 				<image class="navLogo" src="../../static/images/home/icon08.png"></image>
-				<view class="navText">Options</view>
+				<view class="navText">{{ $t('index.Options') }}</view>
 			</view>
 			<view class="bottomNav" @click="goIndividuals">
 				<image class="navLogo" src="../../static/images/home/icon14.png"></image>
-				<view class="navText">Individuals</view>
+				<view class="navText">{{ $t('index.Individuals') }}</view>
 			</view>
 		</view>
 	</view>
@@ -277,27 +278,27 @@
 				cindex: 0, //0代表all 传递空值
 				scrollList: [{
 					id: '',
-					name: 'All',
+					name: this.$t('index').All,
 					value: ''
 				}, {
 					id: 1,
-					name: 'Today',
+					name: this.$t('index').Today,
 					value: 1
 				}, {
 					id: 2,
-					name: 'Yesterday',
+					name: this.$t('index').Yesterday,
 					value: 2
 				}, {
 					id: 3,
-					name: 'Nearly seven days',
+					name: this.$t('index').seven_days,
 					value: 7
 				}, {
 					id: 4,
-					name: 'Nearly 30 days',
+					name: this.$t('index').A30_days,
 					value: 30
 				}, {
 					id: 5,
-					name: 'Nearly 60 days',
+					name: this.$t('index').A60_days,
 					value: 60
 				}],
 				rankList: [{
@@ -410,19 +411,32 @@
 			// this.$refs.popup.open("bottom")
 			// 返回不触发，进行触发
 		},
-		onShow() {
+		onShow() {		
+			this.scrollList[0].name = this.$t('index').All
+			this.scrollList[1].name = this.$t('index').Today
+			this.scrollList[2].name = this.$t('index').Yesterday
+			this.scrollList[3].name = this.$t('index').seven_days
+			this.scrollList[4].name = this.$t('index').A30_days
+			this.scrollList[5].name = this.$t('index').A60_days
+			
 			if(uni.getStorageSync('index_is_refresh') == 1){
 				console.log("我是更新，我触发了")
 				this.getHttpFund("one")
 				this.getHttpLists("one")
 				uni.setStorageSync('index_is_refresh', "0");
 			}
+			// if (this.accountName == this.$store.state.accountName) {
+			// 	// 账号无修改，无需请求
+			// } else {
+			// 	// 账号修改，接口请求触发
+			// 	this.accountName = this.$store.state.accountName
+			// }
 		},
 		methods: {
 			getHttpLists(type) {
 				this.isRequest = false
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -461,9 +475,9 @@
 							}
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -472,9 +486,9 @@
 						this.isRequest = true
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -496,9 +510,9 @@
 							this.fund_data = res.data.data.fund_data
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -506,9 +520,9 @@
 					.catch(err => {
 						if (type != "one") uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -517,7 +531,7 @@
 			// getHttpLists(type) {
 			// 	this.isRequest = false
 			// 	uni.showLoading({
-			// 		title: 'loading...',
+			// 		title: this.$t('common').loading + '...',
 			// 		mask: true
 			// 	});
 			// 	this.$myRequest({
@@ -560,7 +574,7 @@
 
 			// 		} else {
 			// 			uni.showModal({
-			// 				title: 'TIP',
+			// 				title: this.$t('common').Tip,
 			// 				content: res.data.msg,
 			// 				showCancel: false,
 			// 			})
@@ -570,7 +584,7 @@
 			// 		this.isRequest = true
 			// 		uni.hideLoading();
 			// 		uni.showModal({
-			// 			title: 'TIP',
+			// 			title: this.$t('common').Tip,
 			// 			content: "Network error, please try again later",
 			// 			//content: err,
 			// 			showCancel: false,
@@ -600,7 +614,7 @@
 
 				// 上方时间tab触发表单数据变化
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.getHttpFund()

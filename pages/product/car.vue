@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Free sample collection"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('car.collection')"></uni-nav-bar>
 		<view id="addressLists" class="addressLists" @click="choose">
 			<view class="addressModular">
 				<image class="site" src="../../static/images/product/icon13.png"></image>
@@ -21,14 +21,14 @@
 				<image v-else class="spLogo" src="../../static/images/product/icon18.png"></image>
 				<view class="spContent">
 					<view class="spName">{{title}}</view>
-					<view class="followers">Number of followers≥ {{fans}}</view>
+					<view class="followers">{{ $t('car.Number') }}≥ {{fans}}</view>
 					<!-- <view class="windowSales">Window sales≥ 1000</view> -->
 				</view>
 			</view>
 			<view class="salesPrice">$ <text class="price">{{unit_price}}</text></view>
-			<view class="commission">High Commission: {{(commission_ratio*100).toFixed()}}%</view>
+			<view class="commission">{{ $t('car.High_Commission') }}: {{(commission_ratio*100).toFixed()}}%</view>
 			<view class="tikTok">
-				<view class="tikTokLeft">Tik Tok Account</view>
+				<view class="tikTokLeft">{{ $t('car.Account') }}</view>
 				<view class="tikTokRight" @click="goAdministration">
 					<!-- <image class="userPhoto" src="../../static/images/home/photo.png"></image> -->
 					<!-- <image v-if="tiktok_id == 17" class="userPhoto" src="../../static/images/home/photo.png"></image> -->
@@ -39,22 +39,22 @@
 				</view>
 			</view>
 			<view class="tikTok">
-				<view class="tikTokLeft">Application notes</view>
+				<view class="tikTokLeft">{{ $t('car.notes') }}</view>
 				<view class="tikTokRight">
-					<input class="remarks" v-model="notes" placeholder="Application notes"/>
+					<input class="remarks" v-model="notes" :placeholder="$t('pro_detail.Product_details')"/>
 				</view>
 			</view>
 			<view class="notes">
 				<view class="noteModular">
 					<image class="noteLogo" src="../../static/images/product/icon12.png"></image>
-					<view class="noteTitle">Guidance notes for application</view>
+					<view class="noteTitle">{{ $t('car.Guidance_application') }}</view>
 				</view>
 				<view class="des" v-html="des"></view>
 			</view>
 		</view>
 		
 		<view class="bottom" @click="commit">
-			Submission of application
+			{{ $t('car.Submission_application') }}
 		</view>
 		
 		<view>
@@ -190,7 +190,7 @@
 			},
 			getHttpAddress() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -207,9 +207,9 @@
 							this.openCollection()			
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -217,9 +217,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -227,7 +227,7 @@
 			},
 			getHttpLists() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -257,9 +257,9 @@
 							this.fans = obj.fans
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -267,9 +267,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -354,7 +354,7 @@
 				console.log(this.notes)
 				
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -371,14 +371,15 @@
 						uni.hideLoading();
 						if (res.data.code == 200) {
 							console.log(res.data)
+							uni.setStorageSync('index_is_refresh', "1");
 							uni.redirectTo({
 								url: '/pages/product/collection?state=1'
 							});
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -386,9 +387,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

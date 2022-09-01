@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" title="Receiving address"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('addressList.Receiving_address')"></uni-nav-bar>
 		<view class="addressList" :style="contentHeight" v-if="lists.length > 0">
 			<view class="addressModular" :class="{'activeModular': item.is_default == 1}" v-for="item,index in lists">
 				<image v-if="item.is_default == 1" class="addressPhoto" src="../../static/images/user/icon04.png"></image>
@@ -9,7 +9,7 @@
 					<view class="addressUserMsg">
 						<view class="addressUserName">{{item.name}}</view>
 						<view class="addressTel">{{item.tel}}</view>
-						<view v-if="item.is_default == 1" class="default">Default</view>
+						<view v-if="item.is_default == 1" class="default">{{ $t('addressList.Default') }}</view>
 					</view>
 					<view class="address">{{item.country_name}} {{item.city_name}} {{item.detail}}</view>
 				</view>
@@ -20,11 +20,11 @@
 		<view class="addressList" :style="contentHeight" v-else>
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
-				<view class="noDataText">It's empty</view>
+				<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 			</view>
 		</view>
 		<view class="newAddress" @click="newAdd">
-			New receiving address
+			{{ $t('addressList.New_receiving_address') }}
 		</view>
 	</view>
 </template>
@@ -87,7 +87,7 @@
 		methods: {
 			getHttpLists() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -105,9 +105,10 @@
 								
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								
+title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -115,9 +116,10 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							
+title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -129,7 +131,7 @@
 			del(index) {
 				//默认地址不允许删除
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -146,9 +148,10 @@
 							this.lists.splice(index,1)
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								
+title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -156,9 +159,10 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							
+title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

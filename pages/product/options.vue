@@ -4,7 +4,7 @@
 			<view class="search">
 				<image class="searchLogo" src="../../static/images/home/icon02.png" @click="search"></image>
 				<input class="searchText" v-model="searchText" @confirm="search"
-					placeholder="Search for products you want" />
+					:placeholder="$t('options.Search')" />
 			</view>
 			<image class="model" src="../../static/images/product/icon20.png"></image>
 		</view>
@@ -49,7 +49,7 @@
 					<image v-if="item.image" class="productLogo" :src="item.image"></image>
 					<image v-else class="productLogo" src="../../static/images/product/icon18.png"></image>
 					<view v-if="item.is_samples == 1" class="is_sample">
-						<view class="sample">Collectable sample</view>
+						<view class="sample">{{ $t('options.Collectable_sample') }}</view>
 						<image class="sampleLogo" src="../../static/images/product/icon19.png"></image>
 					</view>
 				</view>
@@ -59,18 +59,18 @@
 					</view>
 					<view class="productMsgBottom">
 						<view class="pricePlan">
-							<view>Sales: <text class="sales">{{item.cumulative_sales}}</text></view>
-							<view>Price: <text class="price">$<text
+							<view>{{ $t('options.Sales') }}: <text class="sales">{{item.cumulative_sales}}</text></view>
+							<view>{{ $t('options.Price') }}: <text class="price">$<text
 										style="margin-left: 4rpx;">{{item.unit_price}}</text></text></view>
 						</view>
-						<view class="commission">High Commission: 
+						<view class="commission">{{ $t('options.High_Commission') }}: 
 							<text style="margin-left: 2rpx;font-weight: bold;">
 								{{(item.commission_ratio*100).toFixed()}}%
 							</text>
 						</view>
 						<view class="earnedMsg">
 							<!-- <image class="priceLogo" src="../../static/images/product/icon06.png"></image> -->
-							<text class="earned">Earned:
+							<text class="earned">{{ $t('options.Earned') }}:
 								<text style="margin-left: 4rpx;word-break: break-all;font-size: 32rpx;font-weight: bold;">${{item.commission}}</text>
 							</text>
 						</view>
@@ -82,12 +82,12 @@
 		<view class="productList" :class="{productListHeight: isShowTabHeight}" v-else>
 			<view class="noData">
 				<image class="noDataLogo" src="../../static/images/common/icon02.png"></image>
-				<view class="noDataText">It's empty</view>
+				<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
 			</view>
 		</view>
 		<view class="noMore" v-if="product_lists.length > 0 && current_page == total_page">
 			<view class="noMoreUnderline"></view>
-			no more
+			{{ $t('options.no_more') }}
 			<view class="noMoreUnderline"></view>
 		</view>
 
@@ -98,7 +98,7 @@
 					<view class="popupChoose" v-for="item,index in orderStateList"
 						:class="{'activePopupChoose': kindex == index}" @click="getOrderState(index,item.name)">
 						{{item.name}}</view>
-					<view class="confirmed" @click="confirmed">Cancels</view>
+					<view class="confirmed" @click="confirmed">{{ $t('options.Cancels') }}</view>
 				</view>
 			</uni-popup>
 		</view>
@@ -173,17 +173,17 @@
 				scrollTabLeft: 0,
 				scrollTabList: [{
 					id: 1,
-					name: 'Closing Price',
+					name: this.$t('options').Closing_Price,
 					rise: false,
 					drop: false
 				}, {
 					id: 2,
-					name: 'Commission ratio',
+					name: this.$t('options').Commission_ratio,
 					rise: false,
 					drop: false
 				}, {
 					id: 3,
-					name: 'Amount of commission',
+					name: this.$t('options').Amount_of_commission,
 					rise: false,
 					drop: false
 				}],
@@ -191,17 +191,17 @@
 
 				orderStateList: [{
 					id: 1,
-					name: 'Total sales'
+					name: this.$t('options').Total_sales,
 				}, {
 					id: 2,
-					name: '24 hours'
+					name: this.$t('options').A24_hours,
 				}, {
 					id: 3,
-					name: '2 hours'
+					name: this.$t('options').A2_hours,
 				}],
 				kindex: 0,
-				prepareState: 'sales',
-				orderState: 'sales',
+				prepareState: this.$t('options').sales,
+				orderState: this.$t('options').sales,
 
 				//productList:[],
 				category: '', //分类
@@ -282,9 +282,15 @@
 				console.log("正在请求，无法再次请求")
 			}
 		},
-		// onShow() {
-		// 	console.log("页面出bug了2222")
-		// },
+		onShow() {
+			this.scrollTabList[0].name = this.$t('options').Closing_Price
+			this.scrollTabList[1].name = this.$t('options').Commission_ratio
+			this.scrollTabList[2].name = this.$t('options').Amount_of_commission
+			
+			this.orderStateList[0].name = this.$t('options').Total_sales
+			this.orderStateList[1].name = this.$t('options').A24_hours
+			this.orderStateList[2].name = this.$t('options').A2_hours
+		},
 		mounted() {
 			this.sortLists()
 			//this.getHttpLists("one")
@@ -303,7 +309,7 @@
 		methods: {
 			sortLists() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -330,9 +336,9 @@
 						} else {
 							uni.hideLoading();
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -340,9 +346,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})
@@ -351,7 +357,7 @@
 			getHttpLists(type) {
 				this.isRequest = false
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -389,9 +395,9 @@
 
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -400,9 +406,9 @@
 						this.isRequest = true
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

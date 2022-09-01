@@ -22,22 +22,30 @@
 					id: 2,
 					name: 'Malay'
 				}],
-				langIndex: 0
+				langIndex: 1
 			}
 		},
 		methods: {
 			langOpen() {
+				if(localStorage.getItem('language')){
+					for(let i in this.langList){
+						if(this.langList[i].name == localStorage.getItem('language')){
+							this.langIndex = i
+							break
+						}
+					}
+				}
 				this.$refs.popupLang.open("bottom")
 			},
 			langState(index, name) {
 				this.$refs.popupLang.close()
 				if(this.langIndex == index) return
 				this.langIndex = index
-				this.$emit('langSwitch', name);
 				
 				this.$i18n.locale = name;
 				this.$store.commit('editLanguage', name)
 				uni.setStorageSync('language', name)
+				this.$emit('langSwitch', name);
 			},
 			confirmedLang() {
 				//选择关闭

@@ -26,6 +26,7 @@ export const lang = {
 		"fill_password": "Please fill in the password"
 	},
 	"index": {
+		"Order_board": "Order board",
 		"All": "All",
 		"Today": "Today",
 		"Yesterday": "Yesterday",
@@ -53,7 +54,8 @@ export const lang = {
 		"Price": "Price",
 		"Commission_ratio": "Commission ratio",
 		"Commission": "Commission",
-		"no_more": "no more"
+		"no_more": "no more",
+		"Confirmed": "Confirmed"
 	},
 	"rank": {
 		"Merchandise_ranking": "Merchandise ranking",
@@ -64,9 +66,9 @@ export const lang = {
 		"All": "All",
 		"Today": "Today",
 		"Yesterday": "Yesterday",
-		"7_hari": "7 hari",
-		"30_days": "30 days",
-		"60_days": "60 days",
+		"A7_hari": "7 hari",
+		"A30_days": "30 days",
+		"A60_days": "60 days",
 		"Confirmed": "Confirmed",
 		"no_more": "no more"
 	},
@@ -113,7 +115,10 @@ export const lang = {
 		"Account_Name": "Account Name",
 		"Number": "Number of followers",
 		"Likes": "Likes",
-		"Add_an_account": "Add an account"
+		"Add_an_account": "Add an account",
+		"number": "Please enter tiktok account number",
+		"nickname": "Please enter tiktok nickname",
+		"information": "Please upload the screenshot of tiktok personal information"
 	},
 	"pro_detail_address": {
 		"Select_Address": "Select Harvest Address",
@@ -140,8 +145,8 @@ export const lang = {
 		"Amount_of_commission": "Amount of commission",
 		"sales": "sales",
 		"Total_sales": "Total sales",
-		"24_hours": "24 hours",
-		"2_hours": "2 hours",
+		"A24_hours": "24 hours",
+		"A2_hours": "2 hours",
 		"Cancels": "Cancels",
 		"Collectable_sample": "Collectable sample",
 		"Sales": "Sales",
@@ -167,7 +172,8 @@ export const lang = {
 		"Name": "Name",
 		"Login_mailbox": "Login mailbox",
 		"Change_Password": "Change Password",
-		"Address_Management": "Address Management"
+		"Address_Management": "Address Management",
+		"Log_out": "Log out"
 	},
 	"editName": {
 		"Change_Name": "Change Name",
@@ -204,15 +210,32 @@ export const lang = {
 	},
 	"love": {
 		"Favorite_list": "Favorite list",
-		"High_Commission": "High Commission"
+		"High_Commission": "High Commission",
+		"no_more": "no more"
 	},
 	"service": {
 		"Customer_Service_Mailbox": "Customer Service Mailbox"
 	},
+	"collection": {
+		"All_of_it": "All of it",
+		"Pending_review": "Pending review",
+		"Ready_for_shipment": "Ready for shipment",
+		"Delivery_received": "Delivery received",
+		"Delivery_in_progress": "Delivery in progress",
+		"done": "It’s done",
+		"no_more": "no more",
+		"It’s_closed": "It’s closed",
+		"High_Commission": "High Commission",
+		"Cancellation_of_application": "Cancellation of application",
+		"Freesample_collection": "Free sample collection",
+		"Delivery_Company": "Delivery Company",
+		"Odd_Number": "Odd Number"
+	},
 	"common": {
 		"confirm": "confirm",
 		"loading": "loading",
-		"It's_empty": "It's empty",
-		"Tip": "Tip"
+		"It’s_empty": "It's empty",
+		"Tip": "Tip",
+		"Network": "Network error, please try again later"
 	}
 }

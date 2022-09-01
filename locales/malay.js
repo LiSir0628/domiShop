@@ -26,6 +26,7 @@ export const lang = {
 		"fill_password": "Sila isi kata laluan"
 	},
 	"index": {
+		"Order_board": "Papan perintah",
 		"All": "Semua",
 		"Today": "Hari ini",
 		"Yesterday": "Semalam",
@@ -53,20 +54,21 @@ export const lang = {
 		"Price": "Harga",
 		"Commission_ratio": "Nisbah komisi",
 		"Commission": "Komis",
-		"no_more": "tiada lagi"
+		"no_more": "tiada lagi",
+		"Confirmed": "Dikonfirmasikan"
 	},
 	"rank": {
 		"Merchandise_ranking": "Pengarahan barang",
 		"Unit_Price": "Harga Unit",
 		"Commission_ratio": "Nisbah komisi",
-		"Cumulative_sales": "Cumulative sales",
+		"Cumulative_sales": "Penjualan kumulatif",
 		"Accumulated_Commission": "Kumpulan Kumpulan",
 		"All": "Semua",
 		"Today": "Hari ini",
 		"Yesterday": "Semalam",
-		"7_hari": "7 hari",
-		"30_days": "30 hari",
-		"60_days": "60 hari",
+		"A7_hari": "7 hari",
+		"A30_days": "30 hari",
+		"A60_days": "60 hari",
 		"Confirmed": "Dikonfirmasikan",
 		"no_more": "tiada lagi"
 	},
@@ -113,7 +115,10 @@ export const lang = {
 		"Account_Name": "Account Name",
 		"Number": "Bilangan pengikut",
 		"Likes": "Suka",
-		"Add_an_account": "Tambah akaun"
+		"Add_an_account": "Tambah akaun",
+		"number": "Sila masukkan nombor akaun tiktok",
+		"nickname": "Sila masukkan gelaran tiktok",
+		"information": "Sila muat naik gambar skrin maklumat peribadi tiktok"
 	},
 	"pro_detail_address": {
 		"Select_Address": "Pilih Alamat Harvest",
@@ -140,8 +145,8 @@ export const lang = {
 		"Amount_of_commission": "Jumlah komisi",
 		"sales": "jualan",
 		"Total_sales": "Jumlah jualan",
-		"24_hours": "24 jam",
-		"2_hours": "2 jam",
+		"A24_hours": "24 jam",
+		"A2_hours": "2 jam",
 		"Cancels": "Batal",
 		"Collectable_sample": "Sampel boleh dikumpulkan",
 		"Sales": "Jual",
@@ -167,7 +172,8 @@ export const lang = {
 		"Name": "Name",
 		"Login_mailbox": "Peti mel masuk",
 		"Change_Password": "Ubah Katalaluan",
-		"Address_Management": "Pengurusan Alamat"
+		"Address_Management": "Pengurusan Alamat",
+		"Log_out": "Log keluar"
 	},
 	"editName": {
 		"Change_Name": "Ubah Nama",
@@ -204,15 +210,32 @@ export const lang = {
 	},
 	"love": {
 		"Favorite_list": "Senarai Kegemaran",
-		"High_Commission": "Komisi Tinggi"
+		"High_Commission": "Komisi Tinggi",
+		"no_more": "tiada lagi"
 	},
 	"service": {
 		"Customer_Service_Mailbox": "Peti Mel Servis Pelanggan"
 	},
+	"collection": {
+		"All_of_it": "Semua",
+		"Pending_review": "Sambungan tunggu",
+		"Ready_for_shipment": "Siap untuk penghantaran",
+		"Delivery_received": "Penghantaran diterima",
+		"Delivery_in_progress": "Penghantaran dalam proses",
+		"done": "Ia dilakukan",
+		"no_more": "tiada lagi",
+		"It’s_closed": "Ia ditutup",
+		"High_Commission": "Komisi Tinggi",
+		"Cancellation_of_application": "Pembatalan aplikasi",
+		"Freesample_collection": "Koleksi sampel bebas",
+		"Delivery_Company": "Syarikat Penghantaran",
+		"Odd_Number": "Nombor Pelik"
+	},
 	"common": {
 		"confirm": "sahkan",
 		"loading": "memuatkan",
-		"It's_empty": "Ia kosong",
-		"Tip": "Tip"
+		"It’s_empty": "Ia kosong",
+		"Tip": "Tip",
+		"Network": "Ralat rangkaian, sila cuba lagi kemudian"
 	}
 }

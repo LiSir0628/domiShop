@@ -32,7 +32,7 @@
 		</view>
 		
 		<view class="bottom" @click="goBack">
-			Log out
+			{{ $t('editUser.Log_out') }}
 		</view>
 	</view>
 </template>
@@ -44,22 +44,22 @@
 				nickname: '',
 				lists:[{
 					id: 1,
-					title: 'Name',
+					title: this.$t('editUser').Name,
 					url: './editName',
 					value: ''
 				},{
 					id: 2,
-					title: 'Login mailbox',
+					title: this.$t('editUser').Login_mailbox,
 					url: './editEmail',
 					value: ''
 				},{
 					id: 3,
-					title: 'Change Password',
+					title: this.$t('editUser').Change_Password,
 					url: './editPassword',
 					val: ''
 				},{
 					id: 4,
-					title: 'Address Management',
+					title: this.$t('editUser').Address_Management,
 					url: './addressList',
 					val: ''
 				}]
