@@ -6,7 +6,7 @@
 				<input class="searchText" v-model="searchText" @confirm="search"
 					:placeholder="$t('options.Search')" />
 			</view>
-			<image class="model" src="../../static/images/product/icon20.png"></image>
+			<image class="model" src="../../static/images/product/icon20.png" @click="langChange"></image>
 		</view>
 		<view class="navbar">
 			<scroll-view class="scroll-view_H" :scroll-left="scrollLeft" scroll-x="true" @scroll="scroll"
@@ -49,7 +49,7 @@
 					<image v-if="item.image" class="productLogo" :src="item.image"></image>
 					<image v-else class="productLogo" src="../../static/images/product/icon18.png"></image>
 					<view v-if="item.is_samples == 1" class="is_sample">
-						<view class="sample">{{ $t('options.Collectable_sample') }}</view>
+						<view class="sample" :class="{newSample: langText != 'English'}">{{ $t('options.Collectable_sample') }}</view>
 						<image class="sampleLogo" src="../../static/images/product/icon19.png"></image>
 					</view>
 				</view>
@@ -118,10 +118,13 @@
 				<view class="navText">Individuals</view>
 			</view>
 		</view>
+		
+		<new-lang ref="newLang" @langSwitch="langSwitch"></new-lang>
 	</view>
 </template>
 
 <script>
+	import newLang from "../common/language.vue"
 	export default {
 		data() {
 			return {
@@ -213,6 +216,8 @@
 				total_limit: 0,
 				total_page: 0,
 				product_lists: [],
+				
+				langText: "Malay", //语法展示，缓存中获取English
 				// product_lists:[{
 				// 	id: 1,
 				// 	image: '../../static/images/home/photo.png',
@@ -264,6 +269,9 @@
 				// }]
 			}
 		},
+		components: {
+			newLang
+		},
 		onLoad(option) {
 			
 		},
@@ -282,14 +290,14 @@
 				console.log("正在请求，无法再次请求")
 			}
 		},
+		created() {
+
+		},
 		onShow() {
-			this.scrollTabList[0].name = this.$t('options').Closing_Price
-			this.scrollTabList[1].name = this.$t('options').Commission_ratio
-			this.scrollTabList[2].name = this.$t('options').Amount_of_commission
-			
-			this.orderStateList[0].name = this.$t('options').Total_sales
-			this.orderStateList[1].name = this.$t('options').A24_hours
-			this.orderStateList[2].name = this.$t('options').A2_hours
+			if(localStorage.getItem('language')){
+				this.langText = localStorage.getItem('language')
+			}
+			this.switchText()
 		},
 		mounted() {
 			this.sortLists()
@@ -307,6 +315,26 @@
 			})
 		},
 		methods: {
+			langChange() {
+				this.$refs.newLang.langOpen()
+			},
+			
+			langSwitch(name){
+				this.langText = name
+				this.switchText()
+				this.$forceUpdate()
+			},
+			
+			switchText() {
+				this.scrollTabList[0].name = this.$t('options').Closing_Price
+				this.scrollTabList[1].name = this.$t('options').Commission_ratio
+				this.scrollTabList[2].name = this.$t('options').Amount_of_commission
+				
+				this.orderStateList[0].name = this.$t('options').Total_sales
+				this.orderStateList[1].name = this.$t('options').A24_hours
+				this.orderStateList[2].name = this.$t('options').A2_hours
+			},
+			
 			sortLists() {
 				uni.showLoading({
 					title: this.$t('common').loading + '...',
@@ -823,10 +851,14 @@
 	}
 	
 	.sample{
-		font-size: 26rpx;
+		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #FF7436;
+	}
+	
+	.newSample{
+		font-size: 20rpx !important;
 	}
 	
 	.sampleLogo{

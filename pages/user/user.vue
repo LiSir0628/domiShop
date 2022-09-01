@@ -17,23 +17,23 @@
 					</view>
 				</view>
 				<view class="orderContent">
-					<view class="orderState" @click="goView(2)">
+					<view class="orderState" :class="{newOrderState: langText != 'English'}" @click="goView(2)">
 						<view class="orderNum">{{applyList.wait_examine_nums}}</view>
 						<view class="orderTitle">{{ $t('user.Pending_review') }}</view>
 					</view>
-					<view class="orderState orderStateMiddle" @click="goView(3)">
+					<view class="orderState orderStateMiddle" :class="{newOrderState: langText != 'English'}" @click="goView(3)">
 						<view class="orderNum">{{applyList.wait_delivery_nums}}</view>
 						<view class="orderTitle">{{ $t('user.Ready_for_shipment') }}</view>
 					</view>
-					<view class="orderState" @click="goView(5)">
+					<view class="orderState" :class="{newOrderState: langText != 'English'}" @click="goView(5)">
 						<view class="orderNum">{{applyList.arrived_nums}}</view>
 						<view class="orderTitle">{{ $t('user.Delivery_received') }}</view>
 					</view>
-					<view class="orderState orderStateMiddle" @click="goView(4)">
+					<view class="orderState orderStateMiddle" :class="{newOrderState: langText != 'English'}" @click="goView(4)">
 						<view class="orderNum">{{applyList.shipping_nums}}</view>
 						<view class="orderTitle">{{ $t('user.Delivery_in_progress') }}</view>
 					</view>
-					<view class="orderState orderStateMiddle" @click="goView(6)">
+					<view class="orderState orderStateMiddle" :class="{newOrderState: langText != 'English'}" @click="goView(6)">
 						<view class="orderNum">{{applyList.complete_nums}}</view>
 						<view class="orderTitle">{{ $t('user.It’s_done') }}</view>
 					</view>
@@ -123,13 +123,16 @@
 			newLang
 		},
 		created() {
-			if(localStorage.getItem('language')){
-				this.langText = localStorage.getItem('language')
-			}
+
 		},
 		onShow() {
 			this.nickname = this.$store.state.nickname
 			this.getHttpLists()
+			
+			if(localStorage.getItem('language')){
+				this.langText = localStorage.getItem('language')
+			}
+			this.switchText()
 		},
 		methods: {
 			langChange() {
@@ -138,11 +141,15 @@
 			
 			langSwitch(name){
 				this.langText = name
+				this.switchText()
+				this.$forceUpdate()
+			},
+			
+			switchText() {
 				this.lists[0].title = this.$t('user').Tiktok_account_manager
 				this.lists[1].title = this.$t('user').Merchandise_collection
 				this.lists[2].title = this.$t('user').service
 				this.lists[3].title = this.$t('user').Log_out
-				this.$forceUpdate()
 			},
 			
 			edit() {
@@ -152,7 +159,7 @@
 				});
 			},
 			getHttpLists() {
-				if(!this.applyList.wait_examine_nums){
+				if(!this.applyList.wait_examine_nums && this.applyList.wait_examine_nums!== 0){
 					uni.showLoading({
 						title: this.$t('common').loading + '...',
 						mask: true
@@ -340,6 +347,14 @@
 		width: 32.5%;
 		text-align: center;
 		margin-bottom: 48rpx;
+		font-size: 24rpx;
+	}
+	.newOrderState{
+		/* width: auto !important; */
+		font-size: 20rpx;
+	}
+	.newOrderState:nth-child(4){
+		width: 40%;
 	}
 	/* .orderStateMiddle{
 		width: 40%;
@@ -352,7 +367,6 @@
 		line-height: 42rpx;
 	}
 	.orderTitle{
-		font-size: 24rpx;
 		font-family: Arial-Regular, Arial;
 		font-weight: 400;
 		color: #333333;
