@@ -139,6 +139,7 @@ export const lang = {
 		"Save": "Save"
 	},
 	"options": {
+		"All": "All",
 		"Search": "Search for products you want",
 		"Closing_Price": "Closing Price",
 		"Commission_ratio": "Commission ratio",

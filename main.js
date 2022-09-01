@@ -26,6 +26,13 @@ const i18n = new VueI18n({
 	// 加载语言文件的内容
 	messages: { 
 		'en': require('./locales/en.js').lang,
+		'zh-CN': require('./locales/en.js').lang,
+		'zh-TW': require('./locales/en.js').lang,
+		'ja': require('./locales/en.js').lang,
+		'it': require('./locales/en.js').lang,
+		'fr': require('./locales/en.js').lang,
+		'de': require('./locales/en.js').lang,
+		'ru': require('./locales/en.js').lang,
 		'ms': require('./locales/ms.js').lang
 	}
 })

@@ -134,7 +134,7 @@
 				scrollLeft: 0,
 				category_lists: [{
 					id: '',
-					name: 'All of it'
+					name: this.$t('options').All,
 				}],
 				// category_lists: [{
 				// 	id: 1,
@@ -326,6 +326,8 @@
 			},
 			
 			switchText() {
+				this.category_lists[0].name = this.$t('options').All
+				
 				this.scrollTabList[0].name = this.$t('options').Closing_Price
 				this.scrollTabList[1].name = this.$t('options').Commission_ratio
 				this.scrollTabList[2].name = this.$t('options').Amount_of_commission
@@ -333,6 +335,9 @@
 				this.orderStateList[0].name = this.$t('options').Total_sales
 				this.orderStateList[1].name = this.$t('options').A24_hours
 				this.orderStateList[2].name = this.$t('options').A2_hours
+				
+				this.prepareState = this.orderStateList[this.kindex].name
+				this.orderState = this.orderStateList[this.kindex].name
 			},
 			
 			sortLists() {

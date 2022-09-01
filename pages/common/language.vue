@@ -91,7 +91,7 @@
 				if (this.langIndex == index) return
 				this.langIndex = index
 
-				this.$i18n.locale = name;
+				this.$i18n.locale = this.langList[index].iso;
 				this.$store.commit('editLanguage', name)
 				uni.setStorageSync('language', name)
 				uni.setStorageSync('languageIso', this.langList[index].iso)

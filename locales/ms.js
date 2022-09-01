@@ -139,6 +139,7 @@ export const lang = {
 		"Save": "Simpan"
 	},
 	"options": {
+		"All": "Semua",
 		"Search": "Cari produk yang anda mahu",
 		"Closing_Price": "Hadiah Penutup",
 		"Commission_ratio": "Nisbah komisi",
