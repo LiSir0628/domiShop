@@ -118,7 +118,7 @@
 				imgUrl:"", // 用于存储base64图片
 				
 				id: "",
-				title: "ZshangpinneirGDHASDIZ",
+				title: "",
 				banner:[],
 				spLogo: "",
 				
@@ -189,9 +189,9 @@
 							this.express_company = obj.express_company
 							this.delivery_time = obj.delivery_time
 							
-							// setTimeout(()=>{
-							// 	this.save()
-							// },200)
+							setTimeout(()=>{
+								this.save()
+							},200)
 							
 						} else {
 							uni.showModal({
@@ -422,7 +422,7 @@
 		justify-content: center;
 	}
 	.underline{
-		width: 100rpx;
+		width: 60rpx;
 		height: 2rpx;
 		background: #000000;
 	}

@@ -2,6 +2,26 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			this.$myRequest({
+				method: 'GET',
+				url: 'https://user.mini.zhishukongjian.com/langs',
+				data: {
+					
+				}
+			})
+			.then(res => {
+				uni.hideLoading();
+				if (res.data.code == 200) {	
+					//请求语法接口
+					console.log(res.data.data)
+					uni.setStorageSync('langList', res.data.data);
+				}
+			})
+			.catch(err => {
+				uni.hideLoading();
+			})
+			
+			
 			if(uni.getStorageSync('duomiList')){
 				this.$store.commit('editDuomi', uni.getStorageSync('duomiList'))
 			}
@@ -54,7 +74,8 @@
 	}
 	
 	.uni-picker-container .uni-picker-action-cancel::after{
-		content: 'cancel';
+		// content: 'cancel';
+		content: '';
 		color: #888;
 	}
 	
@@ -62,7 +83,7 @@
 		color: rgba(255, 255, 255, 0) !important;
 	}
 	.uni-picker-container .uni-picker-action.uni-picker-action-confirm::after{
-		content: 'confirm';
+		content: 'ok';
 		color: #007aff;
 	}
 </style>

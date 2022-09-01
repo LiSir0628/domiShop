@@ -4,8 +4,8 @@ let baseURL='https://api.domefish.com/';
 
 function myRequest(options){
 	let headers={}
-	var Token =uni.getStorageSync('token') || '';
-	headers['lang'] = 'en';
+	var Token = uni.getStorageSync('token') || '';
+	headers['lang'] = uni.getStorageSync('languageIso') || 'en';
 	headers['platform'] = 3;
 	headers['version'] = 1.01;
 	headers['brand'] = '';

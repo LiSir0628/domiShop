@@ -217,7 +217,7 @@
 				total_page: 0,
 				product_lists: [],
 				
-				langText: "Malay", //语法展示，缓存中获取English
+				langText: "English", //语法展示，缓存中获取English
 				// product_lists:[{
 				// 	id: 1,
 				// 	image: '../../static/images/home/photo.png',

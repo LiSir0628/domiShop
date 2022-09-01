@@ -2,9 +2,12 @@
 	<view class="languageCont">
 		<uni-popup ref="popupLang" background-color="#fff">
 			<view class="popup-content-lang">
-				<view class="popupChooseLang" v-for="item,index in langList"
-					:class="{'activePopupChooseLang': langIndex == index}" @click="langState(index,item.name)">
-					{{item.name}}</view>
+				<view class="langListContent">
+					<view class="popupChooseLang" v-for="item,index in langList"
+						:class="{'activePopupChooseLang': langIndex == index}" @click="langState(index,item.name)">
+						{{item.name}}
+					</view>
+				</view>
 				<view class="confirmedLang" @click="confirmedLang">Cancels</view>
 			</view>
 		</uni-popup>
@@ -17,19 +20,65 @@
 			return {
 				langList: [{
 					id: 1,
-					name: 'English' //马来语 Inggeris,需要进行配置
+					iso: 'en',
+					name: 'English'
 				}, {
-					id: 2,
+					id: 9,
+					iso: 'ms',
 					name: 'Malay'
 				}],
-				langIndex: 1
+				langIndex: 0
 			}
 		},
 		methods: {
+			getLangList(type) {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'https://user.mini.zhishukongjian.com/langs',
+						data: {
+
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							//请求语法接口
+							uni.setStorageSync('langList', res.data.data);
+							if (type == "one") this.langList = uni.getStorageSync('langList')
+						} else {
+							uni.showModal({
+								title: this.$t('common').Tip,
+								content: res.data.msg,
+								confirmText: this.$t('common').confirm,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
+							//content: err,
+							showCancel: false,
+						})
+					})
+			},
 			langOpen() {
-				if(localStorage.getItem('language')){
-					for(let i in this.langList){
-						if(this.langList[i].name == localStorage.getItem('language')){
+				if (uni.getStorageSync('langList')) {
+					this.langList = uni.getStorageSync('langList')
+				} else {
+					this.getLangList("one")
+				}
+
+				if (localStorage.getItem('language')) {
+					for (let i in this.langList) {
+						if (this.langList[i].name == localStorage.getItem('language')) {
 							this.langIndex = i
 							break
 						}
@@ -39,12 +88,13 @@
 			},
 			langState(index, name) {
 				this.$refs.popupLang.close()
-				if(this.langIndex == index) return
+				if (this.langIndex == index) return
 				this.langIndex = index
-				
+
 				this.$i18n.locale = name;
 				this.$store.commit('editLanguage', name)
 				uni.setStorageSync('language', name)
+				uni.setStorageSync('languageIso', this.langList[index].iso)
 				this.$emit('langSwitch', name);
 			},
 			confirmedLang() {
@@ -56,14 +106,13 @@
 </script>
 
 <style scoped>
-	.languageCont {
-		
-	}
-	
+	.languageCont {}
+
 	/* 下拉框弹窗 */
 	.popup-content-lang {
 		width: 750rpx;
-		height: 330rpx;
+		height: 890rpx;
+		/* height: 330rpx; */
 		/* display: flex;
 		align-items: center;
 		justify-content: center; */
@@ -72,7 +121,21 @@
 		text-align: center;
 		position: relative;
 	}
-	
+
+	.langListContent {
+		height: 730rpx;
+		overflow: hidden;
+		overflow-y: auto;
+	}
+
+	::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
+
 	.popupChooseLang {
 		width: 750rpx;
 		height: 78rpx;
@@ -83,18 +146,18 @@
 		color: #999999;
 		border-bottom: 2rpx solid #F7F7F7;
 	}
-	
-	.popupChooseLang:nth-last-child(2) {
+
+	.popupChooseLang:nth-last-child(1) {
 		border-bottom: none;
 	}
-	
+
 	.activePopupChooseLang {
 		font-size: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #111111;
 	}
-	
+
 	.confirmedLang {
 		width: 670rpx;
 		height: 80rpx;

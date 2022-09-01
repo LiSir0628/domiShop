@@ -233,7 +233,7 @@ export const lang = {
 	},
 	"car_grey": {
 		"one": "1.Selepas sistem penghantaran akan secara automatik menambah ke tetingkap akaun anda, tiada operasi manual.",
-		"two": "2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.",
+		"two": "2.Setelah menerima sampel, operasi akan selesai dalam 15 hari untuk memastikan sampel selesai dan dilaksanakan adalah tiktok yang sama.",
 		"three": "3.Beberapa masa dan tidak menyelesaikan tugas akan mempengaruhi reputasi anda di platform."
 	},
 	"card": {

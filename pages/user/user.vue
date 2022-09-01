@@ -116,7 +116,7 @@
 				}],
 				applyList: {},
 				
-				langText: "Malay", //语法展示，缓存中获取English
+				langText: "English", //语法展示，缓存中获取English
 			}
 		},
 		components: {

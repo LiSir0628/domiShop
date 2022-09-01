@@ -15,18 +15,18 @@ Vue.use(VueI18n);
 
 const i18n = new VueI18n({ 
 	// #ifdef MP 	
-	locale: 'Malay', //初始化,保证刷新页面也保留
+	locale: 'en', //初始化,保证刷新页面也保留
 	// #endif
 	// #ifdef APP-PLUS
-	locale: plus.storage.getItem('language') || 'Malay', //初始化,保证刷新页面也保留
+	locale: plus.storage.getItem('languageIso') || 'en', //初始化,保证刷新页面也保留
 	// #endif
 	// #ifdef H5
-	locale: localStorage.getItem('language') || 'Malay', //初始化,保证刷新页面也保留
+	locale: localStorage.getItem('languageIso') || 'en', //初始化,保证刷新页面也保留
 	// #endif
 	// 加载语言文件的内容
 	messages: { 
-		'English': require('./locales/en.js').lang,
-		'Malay': require('./locales/malay.js').lang
+		'en': require('./locales/en.js').lang,
+		'ms': require('./locales/ms.js').lang
 	}
 })
 Vue.prototype._i18n = i18n
