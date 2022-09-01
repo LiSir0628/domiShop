@@ -34,7 +34,7 @@
 					<!-- <image v-if="tiktok_id == 17" class="userPhoto" src="../../static/images/home/photo.png"></image> -->
 					<view class="tiktok_name">{{tiktok_name}}</view>
 					<image v-if="photo" class="userPhoto" :src="photo"></image>
-					<image v-else class="userPhoto" src="../../static/images/common/photo.png"></image>
+					<image v-else class="userPhoto" src="../../static/images/register/icon09.png"></image>
 					<image class="chooseLogo" src="../../static/images/product/icon14.png"></image>
 				</view>
 			</view>

@@ -7,6 +7,7 @@ const store = new Vuex.Store({
 	state: {
 		duomiList: {},	
 		nickname: "",
+		avatar: "",
 		mail: "",
 		
 		accountList: {},
@@ -23,10 +24,15 @@ const store = new Vuex.Store({
 		editDuomi(state,duomi) {
 			state.duomiList = duomi
 			state.nickname = duomi.nickname
+			state.avatar = duomi.avatar
 		},
 		editName(state,name) {
 			state.nickname = name
 			state.duomiList.nickname = name
+		},
+		editAvatar(state,photo) {
+			state.avatar = photo
+			state.duomiList.avatar = photo
 		},
 		editEmail(state,email){
 			state.mail = email

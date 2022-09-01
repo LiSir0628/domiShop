@@ -183,7 +183,7 @@
 					<view class="popupCenter">
 						<view class="userMsg" :class="{'userMsgActive': cindex == index }" v-for="item,index in userList" @click="chooseTiktok(index)">
 							<image v-if="item.image" class="photo" :src="item.image"></image>
-							<image v-else class="photo" src="../../static/images/home/photo.png"></image>
+							<image v-else class="photo" src="../../static/images/register/icon09.png"></image>
 							<view class="useMsg">
 								<view class="userName">{{item.name}}</view>
 								<view class="userFans">
@@ -467,9 +467,8 @@
 						break
 					}
 				}
-				console.log(this.userList.length)
-				console.log(!this.$store.state.accountId)
-				if(this.userList.length > 0 && !this.$store.state.accountId){
+
+				if(this.userList.length > 0){
 					this.$store.commit('editAccountName', this.userList[this.kindex])
 					uni.setStorageSync('accountList', this.userList[this.kindex])
 				}
