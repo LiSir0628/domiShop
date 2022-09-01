@@ -189,12 +189,9 @@
 							this.express_company = obj.express_company
 							this.delivery_time = obj.delivery_time
 							
-							setTimeout(()=>{
-								this.save()
-							},200)
-							// this.$nextTick(()=>{
+							// setTimeout(()=>{
 							// 	this.save()
-							// })
+							// },200)
 							
 						} else {
 							uni.showModal({
