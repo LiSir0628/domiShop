@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+dist/
 a.sh
 upd.txt
 commit.log*
