@@ -1,4 +1,3 @@
-
 // #ifndef VUE3
 import Vue from 'vue'
 import App from './App'
@@ -13,7 +12,7 @@ Vue.use(VueClipboard)
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n);
 
-const i18n = new VueI18n({ 
+const i18n = new VueI18n({
 	// #ifdef MP 	
 	locale: 'en', //初始化,保证刷新页面也保留
 	// #endif
@@ -24,15 +23,15 @@ const i18n = new VueI18n({
 	locale: localStorage.getItem('languageIso') || 'en', //初始化,保证刷新页面也保留
 	// #endif
 	// 加载语言文件的内容
-	messages: { 
+	messages: {
 		'en': require('./locales/en.js').lang,
-		'zh-CN': require('./locales/en.js').lang,
-		'zh-TW': require('./locales/en.js').lang,
-		'ja': require('./locales/en.js').lang,
-		'it': require('./locales/en.js').lang,
-		'fr': require('./locales/en.js').lang,
-		'de': require('./locales/en.js').lang,
-		'ru': require('./locales/en.js').lang,
+		'zh-CN': require('./locales/zh-CN.js').lang,
+		'zh-TW': require('./locales/zh-TW.js').lang,
+		'ja': require('./locales/ja.js').lang,
+		'it': require('./locales/it.js').lang,
+		'fr': require('./locales/fr.js').lang,
+		'de': require('./locales/de.js').lang,
+		'ru': require('./locales/ru.js').lang,
 		'ms': require('./locales/ms.js').lang
 	}
 })
@@ -47,13 +46,22 @@ import wx from './common/weixin.js'
 Vue.prototype.$wx = wx;
 
 
-import {_get,_post,_put,_delete } from './common/http.js'
+import {
+	_get,
+	_post,
+	_put,
+	_delete
+} from './common/http.js'
 Vue.prototype.$_get = _get;
 Vue.prototype.$_post = _post;
 Vue.prototype.$_put = _put;
 Vue.prototype.$_delete = _delete;
 
-import {toast,handleTree,transformTime} from './common/api.js'
+import {
+	toast,
+	handleTree,
+	transformTime
+} from './common/api.js'
 Vue.prototype.$toast = toast;
 Vue.prototype.$handleTree = handleTree;
 Vue.prototype.$transformTime = transformTime;
@@ -65,18 +73,20 @@ App.mpType = 'app'
 
 const app = new Vue({
 	i18n,
-    ...App
+	...App
 })
 app.$mount()
 // #endif
 
 // #ifdef VUE3
-import { createSSRApp } from 'vue'
+import {
+	createSSRApp
+} from 'vue'
 import App from './App.vue'
 export function createApp() {
-  const app = createSSRApp(App)
-  return {
-    app
-  }
+	const app = createSSRApp(App)
+	return {
+		app
+	}
 }
 // #endif
