@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" title="Live cell phone cards"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" :fixed="true" background-color="#ffffff" color="#000000" :title="$t('card.Live_cell_phone_cards')"></uni-nav-bar>
 		<div v-if="!imgUrl" class="content" id="htmlCanvas" ref="imgCanvas">
 			<view class="spMsg">
 				<img v-if="spLogo" class="spLogo" :src="spLogo"/>
@@ -8,8 +8,8 @@
 				<view class="spModular">
 					<view class="spTitle">{{title}}</view>
 					<view class="priceModular">
-						<view class="discountPrice">Closing Price: <!-- $562 -->{{commission}}</view>
-						<view class="originalPrice">Original Price:<!-- $8569 -->{{unit_price}}</view>
+						<view class="discountPrice">{{ $t('card.Closing_Price') }}: <!-- $562 -->{{commission}}</view>
+						<view class="originalPrice">{{ $t('card.Original_Price') }}:<!-- $8569 -->{{unit_price}}</view>
 					</view>
 				</view>
 			</view>
@@ -17,7 +17,7 @@
 				<view class="liveModular">
 					<view class="liveSubject">
 						<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-						<view class="liveTitle">LIVE BENEFITS</view>
+						<view class="liveTitle">{{ $t('card.LIVE_BENEFITS') }}</view>
 					</view>
 					<!-- <view class="logoSubject">
 						<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
@@ -33,7 +33,7 @@
 				<view class="liveModular">
 					<view class="liveSubject">
 						<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-						<view class="liveTitle">SELLING POINT</view>
+						<view class="liveTitle">{{ $t('card.SELLING_POINT') }}</view>
 					</view>
 					<!-- <view class="logoSubject">
 						<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
@@ -59,7 +59,7 @@
 				<view class="liveModular">
 					<view class="liveSubject">
 						<image class="starsLogo" src="../../static/images/detail/icon07.png"></image>
-						<view class="liveTitle">DELIVERY LOGISTICS</view>
+						<view class="liveTitle">{{ $t('card.DELIVERY_LOGISTICS') }}</view>
 					</view>
 					<!-- <view class="logoSubject">
 						<image class="linkLogo" src="../../static/images/detail/icon03.png"></image>
@@ -79,15 +79,15 @@
 						<view class="deliveryMsg">Delivery in 48 hours</view>
 					</view> -->
 					<view class="deliveryList">
-						<view class="deliveryTitle">Place of shipment</view>
+						<view class="deliveryTitle">{{ $t('card.shipment') }}</view>
 						<view class="deliveryMsg">{{delivery_place}}</view>
 					</view>
 					<view class="deliveryList">
-						<view class="deliveryTitle">Delivery, express delivery</view>
+						<view class="deliveryTitle">{{ $t('card.express_delivery') }}</view>
 						<view class="deliveryMsg">{{express_company}}</view>
 					</view>
 					<view class="deliveryList">
-						<view class="deliveryTitle">Delivery Time</view>
+						<view class="deliveryTitle">{{ $t('card.Delivery_Time') }}</view>
 						<view class="deliveryMsg">{{delivery_time}}</view>
 					</view>
 				</view>
@@ -98,7 +98,7 @@
 		
 		<view class="bottom">
 			<view class="underline"></view>
-			<view class="btn">Long press to save the picture</view>
+			<view class="btn">{{ $t('card.Long') }}</view>
 			<view class="underline"></view>
 			<!-- <view class="btn" @click="save">Long press to save the picture</view> -->
 		</view>
@@ -154,7 +154,7 @@
 		methods: {
 			getHttpLists() {
 				uni.showLoading({
-					title: 'loading...',
+					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
@@ -195,9 +195,9 @@
 							
 						} else {
 							uni.showModal({
-								title: 'TIP',
+								title: this.$t('common').Tip,
 								content: res.data.msg,
-								confirmText: "confirm",
+								confirmText: this.$t('common').confirm,
 								showCancel: false,
 							})
 						}
@@ -205,9 +205,9 @@
 					.catch(err => {
 						uni.hideLoading();
 						uni.showModal({
-							title: 'TIP',
-							content: "Network error, please try again later",
-							confirmText: "confirm",
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
 							//content: err,
 							showCancel: false,
 						})

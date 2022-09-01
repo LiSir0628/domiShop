@@ -231,6 +231,23 @@ export const lang = {
 		"Delivery_Company": "Syarikat Penghantaran",
 		"Odd_Number": "Nombor Pelik"
 	},
+	"car_grey": {
+		"one": "1.Selepas sistem penghantaran akan secara automatik menambah ke tetingkap akaun anda, tiada operasi manual.",
+		"two": "2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.",
+		"three": "3.Beberapa masa dan tidak menyelesaikan tugas akan mempengaruhi reputasi anda di platform."
+	},
+	"card": {
+		"Live_cell_phone_cards": "Kad telefon bimbit langsung",
+		"Closing_Price": "Hadiah Penutup",
+		"Original_Price": "Harga Asal",
+		"LIVE_BENEFITS": "BENEFIT LIVE",
+		"SELLING_POINT": "SELUM POINT",
+		"DELIVERY_LOGISTICS": "LOGISTIK PENGESAHAN",
+		"shipment": "Tempat penghantaran",
+		"express_delivery": "Penghantaran, penghantaran ekspres",
+		"Delivery_Time": "Masa Penghantaran",
+		"Long": "Tekan panjang untuk menyimpan gambar"
+	},
 	"common": {
 		"confirm": "sahkan",
 		"loading": "memuatkan",

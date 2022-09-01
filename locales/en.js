@@ -231,6 +231,23 @@ export const lang = {
 		"Delivery_Company": "Delivery Company",
 		"Odd_Number": "Odd Number"
 	},
+	"car_grey": {
+		"one": "1.After the delivery system will automatically add to your account window, no manual operation.",
+		"two": "2.Upon receipt of samples, operations are to be comp-leted within 15 days to ensure that the completed and applied samples are the same tiktok.",
+		"three": "3.Overtime and not completing the job will affect your reputation on the platform."
+	},
+	"card": {
+		"Live_cell_phone_cards": "Live cell phone cards",
+		"Closing_Price": "Closing Price",
+		"Original_Price": "Original Price",
+		"LIVE_BENEFITS": "LIVE BENEFITS",
+		"SELLING_POINT": "SELLING POINT",
+		"DELIVERY_LOGISTICS": "DELIVERY LOGISTICS",
+		"shipment": "Place of shipment",
+		"express_delivery": "Delivery, express delivery",
+		"Delivery_Time": "Delivery Time",
+		"Long": "Long press to save the picture"
+	},
 	"common": {
 		"confirm": "confirm",
 		"loading": "loading",
