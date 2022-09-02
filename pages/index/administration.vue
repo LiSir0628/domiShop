@@ -5,7 +5,7 @@
 			<view v-if="lists.length > 0">
 				<view class="userList" v-for="item,index in lists" :class="{'active': cIndex == index}" @click="choose(index)">
 					<image v-if="item.image" class="userPhoto" :src="item.image"></image>
-					<image v-else class="userPhoto" src="../../static/images/common/photo.png"></image>
+					<image v-else class="userPhoto" src="../../static/images/register/icon09.png"></image>
 					<!-- <image v-else class="userPhoto" src="../../static/images/home/photo.png"></image> -->
 					<view class="userName">{{item.name}}</view>
 				</view>

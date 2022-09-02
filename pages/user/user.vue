@@ -4,7 +4,9 @@
 			<image class="banner" src="../../static/images/user/icon11.png"></image>
 			<view class="language" @click="langChange">{{langText}}</view>
 			<image class="edit" src="../../static/images/user/icon06.png" @click="edit"></image>
-			<image class="photo" src="../../static/images/home/photo.png"></image>
+			<image class="photo" src="../../static/images/register/icon09.png"></image>
+			<!-- <image class="photo" v-if="userList.avatar" :src="userList.avatar"></image>
+			<image class="photo" v-else src="../../static/images/register/icon09.png"></image> -->
 			<view class="name">{{nickname}}</view>
 		</view>
 		<view class="content">
@@ -92,6 +94,7 @@
 	export default {
 		data() {
 			return {
+				userList: {},
 				nickname: "",
 				lists:[{
 					id: 1,
@@ -126,6 +129,7 @@
 
 		},
 		onShow() {
+			this.userList = this.deepClone(this.$store.state.duomiList)
 			this.nickname = this.$store.state.nickname
 			this.getHttpLists()
 			
@@ -135,6 +139,23 @@
 			this.switchText()
 		},
 		methods: {
+			deepClone(obj) {
+				let objClone = Array.isArray(obj) ? [] : {};
+				if(obj && typeof obj === "object") {
+					for(let key in obj) {
+						if(obj.hasOwnProperty(key)) {
+							//判断ojb子元素是否为对象，如果是，递归复制
+							if(obj[key] && typeof obj[key] === "object") {
+								objClone[key] = this.deepClone(obj[key]);
+							} else {
+								//如果不是，简单复制
+								objClone[key] = obj[key];
+							}
+						}
+					}
+				}
+				return objClone;
+			},
 			langChange() {
 				this.$refs.newLang.langOpen()
 			},

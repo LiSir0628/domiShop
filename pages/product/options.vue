@@ -65,7 +65,7 @@
 						</view>
 						<view class="commission">{{ $t('options.High_Commission') }}: 
 							<text style="margin-left: 2rpx;font-weight: bold;">
-								{{(item.commission_ratio*100).toFixed()}}%
+								{{item.commission_ratio}}%
 							</text>
 						</view>
 						<view class="earnedMsg">
