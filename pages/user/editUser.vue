@@ -5,10 +5,10 @@
 			<image class="back" src="../../static/images/user/icon13.png" @click="back"></image>
 			<view class="editPhoto">
 				<view class="editPhotoModular">
-					<!-- <image class="photo" src="../../static/images/register/icon09.png"></image> -->
-					<image class="photo" v-if="userList.avatar" :src="userList.avatar"></image>
+					<image class="photo" src="../../static/images/register/icon09.png"></image>
+					<!-- <image class="photo" v-if="userList.avatar" :src="userList.avatar"></image>
 					<image class="photo" v-else src="../../static/images/register/icon09.png"></image>
-					<image class="camera" src="../../static/images/user/icon12.png" @click="photo"></image>
+					<image class="camera" src="../../static/images/user/icon12.png" @click="photo"></image> -->
 				</view>
 			</view>
 			<view class="name">{{nickname}}</view>

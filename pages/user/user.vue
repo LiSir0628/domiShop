@@ -4,9 +4,9 @@
 			<image class="banner" src="../../static/images/user/icon11.png"></image>
 			<view class="language" @click="langChange">{{langText}}</view>
 			<image class="edit" src="../../static/images/user/icon06.png" @click="edit"></image>
-			<!-- <image class="photo" src="../../static/images/register/icon09.png"></image> -->
-			<image class="photo" v-if="userList.avatar" :src="userList.avatar"></image>
-			<image class="photo" v-else src="../../static/images/register/icon09.png"></image>
+			<image class="photo" src="../../static/images/register/icon09.png"></image>
+			<!-- <image class="photo" v-if="userList.avatar" :src="userList.avatar"></image>
+			<image class="photo" v-else src="../../static/images/register/icon09.png"></image> -->
 			<view class="name">{{nickname}}</view>
 		</view>
 		<view class="content">
