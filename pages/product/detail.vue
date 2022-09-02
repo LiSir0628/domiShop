@@ -29,7 +29,7 @@
 			</view>
 			<view class="rate">
 				<image class="hotLogo" src="../../static/images/detail/icon02.png"></image>
-				{{ $t('pro_detail.Commission_rate') }}: <text class="rateNum">{{(commission_ratio*100).toFixed()}}%</text>
+				{{ $t('pro_detail.Commission_rate') }}: <text class="rateNum">{{commission_ratio}}%</text>
 			</view>
 			<view class="totalSales">
 				<view>{{ $t('pro_detail.Total_sales') }}: {{cumulative_sales}}</view>

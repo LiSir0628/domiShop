@@ -30,7 +30,7 @@
 						<view class="spDes">{{item.product_name}}</view>
 						<view class="spOperation">
 							<view class="price">$ {{item.unit_price}}</view>
-							<view class="commission">{{ $t('collection.High_Commission') }}: {{(item.commission_ratio*100).toFixed()}}%</view>
+							<view class="commission">{{ $t('collection.High_Commission') }}: {{item.commission_ratio}}%</view>
 						</view>
 					</view>
 				</view>

@@ -5,10 +5,10 @@
 			<image class="back" src="../../static/images/user/icon13.png" @click="back"></image>
 			<view class="editPhoto">
 				<view class="editPhotoModular">
-					<image class="photo" src="../../static/images/register/icon09.png"></image>
-					<!-- <image class="photo" v-if="userList.avatar" :src="userList.avatar"></image>
+					<!-- <image class="photo" src="../../static/images/register/icon09.png"></image> -->
+					<image class="photo" v-if="userList.avatar" :src="userList.avatar"></image>
 					<image class="photo" v-else src="../../static/images/register/icon09.png"></image>
-					<image class="camera" src="../../static/images/user/icon12.png" @click="photo"></image> -->
+					<image class="camera" src="../../static/images/user/icon12.png" @click="photo"></image>
 				</view>
 			</view>
 			<view class="name">{{nickname}}</view>
@@ -70,12 +70,29 @@
 			}
 		},
 		onShow() {
-			this.userList = this.$store.state.duomiList
+			this.userList = this.deepClone(this.$store.state.duomiList)
 			this.nickname = this.$store.state.nickname
 			this.lists[0].value = this.nickname
 			this.lists[1].value = this.$store.state.duomiList.mail
 		},
 		methods: {
+			deepClone(obj) {
+				let objClone = Array.isArray(obj) ? [] : {};
+				if(obj && typeof obj === "object") {
+					for(let key in obj) {
+						if(obj.hasOwnProperty(key)) {
+							//判断ojb子元素是否为对象，如果是，递归复制
+							if(obj[key] && typeof obj[key] === "object") {
+								objClone[key] = this.deepClone(obj[key]);
+							} else {
+								//如果不是，简单复制
+								objClone[key] = obj[key];
+							}
+						}
+					}
+				}
+				return objClone;
+			},
 			back() {
 				window.history.go(-1)
 			},
