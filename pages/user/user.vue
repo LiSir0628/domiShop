@@ -65,15 +65,15 @@
 			<view class="bottomNav" @click="goIndex">
 				<!-- <image class="navLogo" src="../../static/images/home/icon06.png"></image> -->
 				<image class="navLogo" src="../../static/images/product/icon01.png"></image>
-				<view class="navText">Order form</view>
+				<view class="navText">{{ $t('index.Order_form') }}</view>
 			</view>
 			<view class="bottomNav" @click="goOptions">
 				<image class="navLogo" src="../../static/images/product/icon16.png"></image>
-				<view class="navText">Options</view>
+				<view class="navText">{{ $t('index.Options') }}</view>
 			</view>
 			<view class="bottomNav">
 				<image class="navLogo" src="../../static/images/product/icon15.png"></image>
-				<view class="navActiveText">Individuals</view>
+				<view class="navActiveText">{{ $t('index.Individuals') }}</view>
 			</view>
 		</view>
 		

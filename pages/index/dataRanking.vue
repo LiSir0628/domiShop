@@ -60,7 +60,7 @@
 						<view class="spTitle ellip">{{item.title}}</view>
 						<view class="profit">
 							<view class="price">{{ $t('rank.Unit_Price') }}: ${{item.unit_price}}</view>
-							<view class="ratio">{{ $t('rank.Commission_ratio') }}: {{item.commission_ratio}}%</view>
+							<view class="ratio">{{ $t('rank.Commission_ratio') }}: {{(item.commission_ratio*100).toFixed()}}%</view>
 						</view>
 					</view>
 					<view class="merRankBottom">
@@ -159,7 +159,7 @@
 						<view class="spTitle ellip">{{item.name}}</view>
 						<view class="profit">
 							<view class="cumulative">{{ $t('rank.Cumulative_sales') }}: ${{item.cumulative_sales}}</view>
-							<!-- <view class="ratio">Commission ratio: {{item.commission_ratio}}%</view> -->
+							<!-- <view class="ratio">Commission ratio: {{(item.commission_ratio*100).toFixed()}}%</view> -->
 						</view>
 					</view>
 					<view class="membershipBottom">

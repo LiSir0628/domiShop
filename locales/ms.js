@@ -92,7 +92,10 @@ export const lang = {
 		"Network": "Ralat rangkaian, sila cuba lagi kemudian",
 		"add_account": "Sila tambah akaun tiktok dahulu",
 		"add_address": "Sila tambah alamat penerima dahulu",
-		"select_account": "Sila pilih akaun pengumpulan"
+		"select_account": "Sila pilih akaun pengumpulan",
+		"No_sampling": "Tiada sampel",
+		"Sample_request": "Permintaan sampel",
+		"followers": "Bilangan pengikut",
 	},
 	"car": {
 		"collection": "Koleksi sampel bebas",
@@ -166,7 +169,7 @@ export const lang = {
 		"It’s_done": "Ia dilakukan",
 		"Tiktok_account_manager": "Pengurus akaun Tiktok",
 		"Merchandise_collection": "Koleksi barang",
-		"service": "Hubungi perkhidmatan pelanggan anda sendiri",
+		"service": "Hubungi perkhidmatan pelanggan",
 		"Log_out": "Log keluar"
 	},
 	"editUser": {

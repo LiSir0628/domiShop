@@ -92,7 +92,10 @@ export const lang = {
 		"Network": "Erreur réseau, Veuillez réessayer plus tard",
 		"add_account": "Veuillez d'abord ajouter un compte tiktok",
 		"add_address": "Veuillez d'abord ajouter l'adresse de réception",
-		"select_account": "Veuillez sélectionner un compte d'échantillonnage"
+		"select_account": "Veuillez sélectionner un compte d'échantillonnage",
+		"No_sampling": "Pas d'échantillonnage",
+		"Sample_request": "Exemple de demande",
+		"followers": "nombre de suiveurs",
 	},
 	"car": {
 		"collection": "Prélèvement gratuit d'échantillons",
@@ -166,7 +169,7 @@ export const lang = {
 		"It’s_done": "C'est fait.",
 		"Tiktok_account_manager": "Tiktok Account Manager",
 		"Merchandise_collection": "Collection de marchandises",
-		"service": "Contactez votre propre service à la clientèle",
+		"service": "Contactez le service à la clientèle",
 		"Log_out": "Passation par profits et pertes"
 	},
 	"editUser": {

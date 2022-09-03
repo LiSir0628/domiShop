@@ -205,7 +205,7 @@
 					</view>
 					<view class="spData">
 						<view class="dataTitle">{{ $t('index.Commission_ratio') }}</view>
-						<view class="dataNum">{{item.commission_ratio}}%</view>
+						<view class="dataNum">{{(item.commission_ratio*100).toFixed()}}%</view>
 					</view>
 					<view class="spData">
 						<view class="dataTitle">{{ $t('index.Commission') }}</view>

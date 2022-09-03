@@ -92,7 +92,10 @@ export const lang = {
 		"Network": "Netzwerkfehler, bitte versuchen Sie es später erneut",
 		"add_account": "Bitte fügen Sie zuerst tiktok-Konto hinzu",
 		"add_address": "Bitte geben Sie zuerst die Empfangsadresse an",
-		"select_account": "Bitte wählen Sie Stichprobenkonto"
+		"select_account": "Bitte wählen Sie Stichprobenkonto",
+		"No_sampling": "Keine Probenahme",
+		"Sample_request": "Musteranfrage",
+		"followers": "Anzahl der Follower",
 	},
 	"car": {
 		"collection": "Kostenlose Probenentnahme",
@@ -166,7 +169,7 @@ export const lang = {
 		"It’s_done": "Es ist erledigt",
 		"Tiktok_account_manager": "Tiktok Account Manager",
 		"Merchandise_collection": "Warensammlung",
-		"service": "Kontaktieren Sie Ihren eigenen Kundenservice",
+		"service": "Kontaktieren Sie den Kundenservice",
 		"Log_out": "Abmelden"
 	},
 	"editUser": {

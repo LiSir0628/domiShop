@@ -65,7 +65,7 @@
 						</view>
 						<view class="commission">{{ $t('options.High_Commission') }}: 
 							<text style="margin-left: 2rpx;font-weight: bold;">
-								{{item.commission_ratio}}%
+								{{(item.commission_ratio*100).toFixed()}}%
 							</text>
 						</view>
 						<view class="earnedMsg">
@@ -107,15 +107,15 @@
 			<view class="bottomNav" @click="goIndex">
 				<!-- <image class="navLogo" src="../../static/images/home/icon06.png"></image> -->
 				<image class="navLogo" src="../../static/images/product/icon01.png"></image>
-				<view class="navText">Order form</view>
+				<view class="navText">{{ $t('index.Order_form') }}</view>
 			</view>
 			<view class="bottomNav">
 				<image class="navLogo" src="../../static/images/product/icon02.png"></image>
-				<view class="navActiveText">Options</view>
+				<view class="navActiveText">{{ $t('index.Options') }}</view>
 			</view>
 			<view class="bottomNav" @click="goIndividuals">
 				<image class="navLogo" src="../../static/images/product/icon10.png"></image>
-				<view class="navText">Individuals</view>
+				<view class="navText">{{ $t('index.Individuals') }}</view>
 			</view>
 		</view>
 		

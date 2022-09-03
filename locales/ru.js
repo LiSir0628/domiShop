@@ -92,7 +92,10 @@ export const lang = {
 		"Network": "Ошибка сети, попробуйте позже",
 		"add_account": "Сначала добавьте учётную запись tiktok",
 		"add_address": "Добавить адрес",
-		"select_account": "Выберите учётную запись"
+		"select_account": "Выберите учётную запись",
+		"No_sampling": "без выборки",
+		"Sample_request": "примерный запрос",
+		"followers": "количество подмандатных лиц",
 	},
 	"car": {
 		"collection": "бесплатный сбор образцов",
@@ -152,7 +155,7 @@ export const lang = {
 		"Collectable_sample": "выборка образцов",
 		"Sales": "объем продаж",
 		"Price": "цена",
-		"High_Commission": "Верховный комиссар",
+		"High_Commission": "много комиссар",
 		"Earned": "заработать",
 		"no_more": "переставать"
 	},
@@ -166,7 +169,7 @@ export const lang = {
 		"It’s_done": "Готово",
 		"Tiktok_account_manager": "менеджер счетов Tiktok",
 		"Merchandise_collection": "сбор товаров",
-		"service": "связаться с вашим клиентом",
+		"service": "контактный халат",
 		"Log_out": "Списание"
 	},
 	"editUser": {

@@ -92,7 +92,10 @@ export const lang = {
 		"Network": "ネットワークエラー、もう一度試してみてください",
 		"add_account": "tiktokアカウントを最初に追加してください",
 		"add_address": "受信アドレスを最初に追加してください",
-		"select_account": "サンプリングアカウントを選択してください"
+		"select_account": "サンプリングアカウントを選択してください",
+		"No_sampling": "サンプリング",
+		"Sample_request": "サンプル要求",
+		"followers": "フォロワーの数",
 	},
 	"car": {
 		"collection": "無料サンプルコレクション",
@@ -166,7 +169,7 @@ export const lang = {
 		"It’s_done": "完了です",
 		"Tiktok_account_manager": "Tiktok アカウントマネージャ",
 		"Merchandise_collection": "商品コレクション",
-		"service": "あなた自身のカスタマーサービスに連絡してください",
+		"service": "カスタマーサービスへの連絡",
 		"Log_out": "ログアウト"
 	},
 	"editUser": {

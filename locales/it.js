@@ -92,7 +92,10 @@ export const lang = {
 		"Network": "Errore di rete, riprova più tardi",
 		"add_account": "Per favore aggiungi prima l'account tiktok",
 		"add_address": "Si prega di aggiungere prima l'indirizzo di ricezione",
-		"select_account": "Selezionare il conto di campionamento"
+		"select_account": "Selezionare il conto di campionamento",
+		"No_sampling": "Nessun campionamento",
+		"Sample_request": "Richiesta di esempio",
+		"followers": "Numero di follower",
 	},
 	"car": {
 		"collection": "Raccolta gratuita di campioni",
@@ -166,7 +169,7 @@ export const lang = {
 		"It’s_done": "E' fatto",
 		"Tiktok_account_manager": "Gestore account Tiktok",
 		"Merchandise_collection": "Raccolta merci",
-		"service": "Contatta il tuo servizio clienti",
+		"service": "Contatta il servizio clienti",
 		"Log_out": "Esci"
 	},
 	"editUser": {

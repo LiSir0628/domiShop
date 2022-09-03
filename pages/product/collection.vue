@@ -30,7 +30,7 @@
 						<view class="spDes">{{item.product_name}}</view>
 						<view class="spOperation">
 							<view class="price">$ {{item.unit_price}}</view>
-							<view class="commission">{{ $t('collection.High_Commission') }}: {{item.commission_ratio}}%</view>
+							<view class="commission">{{ $t('collection.High_Commission') }}: {{(item.commission_ratio*100).toFixed()}}%</view>
 						</view>
 					</view>
 				</view>
@@ -185,7 +185,8 @@
 			this.getHeight()
 			this.$nextTick(()=>{
 				if(this.cindex > 2){
-					this.scrollLeft = uni.upx2px(662)
+					this.scrollLeft = uni.upx2px(1000)
+					// this.scrollLeft = uni.upx2px(662)
 					// console.log(this.scrollLeft)
 					this.$forceUpdate()
 				}

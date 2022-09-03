@@ -29,7 +29,7 @@
 			</view>
 			<view class="rate">
 				<image class="hotLogo" src="../../static/images/detail/icon02.png"></image>
-				{{ $t('pro_detail.Commission_rate') }}: <text class="rateNum">{{commission_ratio}}%</text>
+				{{ $t('pro_detail.Commission_rate') }}: <text class="rateNum">{{(commission_ratio*100).toFixed()}}%</text>
 			</view>
 			<view class="totalSales">
 				<view>{{ $t('pro_detail.Total_sales') }}: {{cumulative_sales}}</view>
@@ -146,7 +146,7 @@
 			<!-- <view class="add" @click="openAdd">Add a window</view> -->
 			<view class="add" @click="openAdd">{{ $t('pro_detail.administration') }}</view>
 			<view v-if="is_samples" class="collection" @click="chooseCollection">{{ $t('pro_detail.collection') }}</view>
-			<view v-else class="collectionGary">No sampling</view>
+			<view v-else class="collectionGary">{{ $t('pro_detail.No_sampling') }}</view>
 		</view>
 		
 		<view>
@@ -274,11 +274,11 @@
 			<view class="request-popup-content">
 				<view class="requestCard">
 					<view class="cardTitle">
-						<view class="cardTip">Sample request:</view>
+						<view class="cardTip">{{ $t('pro_detail.Sample_request') }}:</view>
 						<image class="requestClose" src="../../static/images/detail/icon13.png" @click="requestClose"></image>
 					</view>
 					<view class="followers">
-						1.Number of followers : {{fans}}
+						1.{{ $t('pro_detail.followers') }} : {{fans}}
 					</view>
 					<view class="salesDay">
 						<!-- 2.Window sales in recent 30 days :  {{show_window}} -->

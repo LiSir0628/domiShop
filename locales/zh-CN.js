@@ -78,7 +78,7 @@ export const lang = {
 		"unit": "单位估计利润",
 		"Commission_rate": "佣金率",
 		"Total_sales": "总销售额",
-		"request": "样本请求：追随者数量",
+		"request": "样本请求：粉丝数量",
 		"LIVE_BENEFITS": "生活福利",
 		"SELLING_POINT": "卖点",
 		"DELIVERY_LOGISTICS": "配送物流",
@@ -92,11 +92,14 @@ export const lang = {
 		"Network": "网络错误，请稍后再试",
 		"add_account": "请先添加tiktok帐号",
 		"add_address": "请选择采样帐户",
-		"select_account": "请选择抽样帐户"
+		"select_account": "请选择抽样帐户",
+		"No_sampling": "无抽样",
+		"Sample_request": "样本请求",
+		"followers": "粉丝数量",
 	},
 	"car": {
 		"collection": "免费样本采集",
-		"Number": "追随者数量",
+		"Number": "粉丝数量",
 		"High_Commission": "高佣金",
 		"Account": "Tik Tok账户",
 		"notes": "应用说明",
@@ -166,7 +169,7 @@ export const lang = {
 		"It’s_done": "已完成",
 		"Tiktok_account_manager": "Tiktok客户经理",
 		"Merchandise_collection": "商品收集",
-		"service": "联系您自己的客户服务",
+		"service": "联系客服",
 		"Log_out": "注销"
 	},
 	"editUser": {
