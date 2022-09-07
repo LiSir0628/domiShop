@@ -157,7 +157,13 @@ export const lang = {
 		"Price": "Harga",
 		"High_Commission": "Komisi Tinggi",
 		"Earned": "Didapatkan",
-		"no_more": "tiada lagi"
+		"no_more": "tiada lagi",
+		"Cross_border": "Salin sempadan",
+		"mainland": "mainland",
+		"Send_samples": "Hantar sampel",
+		"No_sample": "Tiada sampel",
+		"All_s": "Semua/Sampel",
+		"All_a": "Semua/julat",
 	},
 	"user": {
 		"Freesample_collection": "Koleksi sampel bebas",

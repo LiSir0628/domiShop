@@ -157,7 +157,14 @@ export const lang = {
 		"Price": "价格",
 		"High_Commission": "高佣金",
 		"Earned": "已赚",
-		"no_more": "没有更多了"
+		"no_more": "没有更多了",
+		"Cross_border": "跨境",
+		"mainland": "本土",
+		"Send_samples": "可领样",
+		"No_sample": "不可领样",
+		"All_s": "全部/领样",
+		"All_a": "全部/区域",
+		
 	},
 	"user": {
 		"Freesample_collection": "免费样本采集",
@@ -230,7 +237,7 @@ export const lang = {
 		"no_more": "没有更多了",
 		"It’s_closed": "已关闭",
 		"High_Commission": "高佣金",
-		"Cancellation_of_application": "取消应用程序",
+		"Cancellation_of_application": "取消申请",
 		"Freesample_collection": "免费样本采集",
 		"Delivery_Company": "交货公司",
 		"Odd_Number": "奇数"

@@ -158,7 +158,14 @@ export const lang = {
 		"Price": "Price",
 		"High_Commission": "High Commission",
 		"Earned": "Earned",
-		"no_more": "no more"
+		"no_more": "no more",
+		"Cross_border": "Cross border",
+		"mainland": "mainland",
+		"Send_samples": "Send samples",
+		"No_sample": "No sample",
+		"All_s": "All/sample",
+		"All_a": "All/range",
+		
 	},
 	"user": {
 		"Freesample_collection": "Free sample collection",

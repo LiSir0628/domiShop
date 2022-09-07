@@ -30,6 +30,14 @@
 			<!-- 升降排序 -->
 			<scroll-view class="tab" :class="{tabHeight: isShowTabHeight}" :scroll-left="scrollTabLeft" scroll-x="true"
 				@scroll="scrollTab" :show-scrollbar="false">
+				<view class="scroll-view-item_Tab" @click="toggleA('bottom')">
+					<view class="sortText">{{sampleState}}</view>
+					<image class="arrowDown" src="../../static/images/product/icon11.png"></image>
+				</view>
+				<view class="scroll-view-item_Tab" @click="toggleB('bottom')">
+					<view class="sortText">{{cbState}}</view>
+					<image class="arrowDown" src="../../static/images/product/icon11.png"></image>
+				</view>
 				<view class="scroll-view-item_Tab" v-for="item,index in scrollTabList"
 					:class="{'scroll-view-item-activeTab':citem == index}" @click="scrollChooseTab(index)">
 					{{item.name}}
@@ -57,6 +65,8 @@
 					<view class="productMsgTop">
 						<view class="productTitle">{{item.title}}</view>
 					</view>
+					<view class="region" v-if="item.cb == 1">{{ $t('options.Cross_border') }}</view>
+					<view class="region" v-else-if="item.cb == 2">{{ $t('options.mainland') }}</view>
 					<view class="productMsgBottom">
 						<view class="pricePlan">
 							<view>{{ $t('options.Sales') }}: <text class="sales">{{item.cumulative_sales}}</text></view>
@@ -102,6 +112,30 @@
 				</view>
 			</uni-popup>
 		</view>
+		
+		<view>
+			<!-- 普通弹窗 -->
+			<uni-popup ref="popup_samples" background-color="#fff">
+				<view class="popup-content">
+					<view class="popupChoose" v-for="item,index in samplesList"
+						:class="{'activePopupChoose': sindex == index}" @click="getSampleState(index,item.name)">
+						{{item.name}}</view>
+					<view class="confirmed" @click="cancel">{{ $t('options.Cancels') }}</view>
+				</view>
+			</uni-popup>
+		</view>
+		
+		<view>
+			<!-- 普通弹窗 -->
+			<uni-popup ref="popup_cb" background-color="#fff">
+				<view class="popup-content">
+					<view class="popupChoose" v-for="item,index in cbList"
+						:class="{'activePopupChoose': cbindex == index}" @click="getCbState(index,item.name)">
+						{{item.name}}</view>
+					<view class="confirmed" @click="cancel">{{ $t('options.Cancels') }}</view>
+				</view>
+			</uni-popup>
+		</view>
 
 		<view class="bottomNavigation">
 			<view class="bottomNav" @click="goIndex">
@@ -136,25 +170,6 @@
 					id: '',
 					name: this.$t('options').All,
 				}],
-				// category_lists: [{
-				// 	id: 1,
-				// 	name: 'All of it'
-				// }, {
-				// 	id: 2,
-				// 	name: 'Food and drink'
-				// }, {
-				// 	id: 3,
-				// 	name: 'SMART home'
-				// }, {
-				// 	id: 4,
-				// 	name: 'General merchandise'
-				// }, {
-				// 	id: 5,
-				// 	name: 'Beauty makeup'
-				// }, {
-				// 	id: 6,
-				// 	name: 'Beauty makeup'
-				// }],
 				banner: [],
 				// banner: [{
 				// 	id: 1,
@@ -205,6 +220,33 @@
 				kindex: 0,
 				prepareState: this.$t('options').sales,
 				orderState: this.$t('options').sales,
+				
+				samplesList:[{
+					id: "",
+					name: this.$t('options').All_s,
+				},{
+					id: 1,
+					name: this.$t('options').Send_samples, //可领样
+				},{
+					id: 0,
+					name: this.$t('options').No_sample, //不可领样
+				}],
+				sindex: 0,
+				sampleState: this.$t('options').All_s,
+				
+				cbList:[{
+					id: 0,
+					name: this.$t('options').All_a,
+				},{
+					id: 1,
+					name: this.$t('options').Cross_border, //跨境
+				},{
+					id: 2,
+					name: this.$t('options').mainland, //本土
+				}],
+				cbindex: 0,
+				cbState: this.$t('options').All_a,
+				
 
 				//productList:[],
 				category: '', //分类
@@ -218,55 +260,6 @@
 				product_lists: [],
 				
 				langText: "English", //语法展示，缓存中获取English
-				// product_lists:[{
-				// 	id: 1,
-				// 	image: '../../static/images/home/photo.png',
-				// 	title: 'zhelishi shangpinbiao tishangpin...',
-				// 	cumulative_sales: 111,
-				// 		unit_price: 111,
-				// 	commission_ratio: 1,
-				// 	commission: 1,
-				// },{
-				// 	id: 2,
-				// 	image: '../../static/images/home/photo.png',
-				// 	title: 'zhelishi shangpinbiao tishangpin...',
-				// 	cumulative_sales: 52366,
-				// 		unit_price: 6525,
-				// 	commission_ratio: 20,
-				// 	commission: 21,
-				// },{
-				// 	id: 3,
-				// 	image: '../../static/images/home/photo.png',
-				// 	title: 'zhelishi shangpinbiao tishangpin...',
-				// 	cumulative_sales: 52366,
-				// 		unit_price: 6525,
-				// 	commission_ratio: 20,
-				// 	commission: 21,
-				// },{
-				// 	id: 4,
-				// 	image: '../../static/images/home/photo.png',
-				// 	title: 'zhelishi shangpinbiao tishangpin...',
-				// 	cumulative_sales: 52366,
-				// 		unit_price: 6525,
-				// 	commission_ratio: 20,
-				// 	commission: 21,
-				// },{
-				// 	id: 5,
-				// 	image: '../../static/images/home/photo.png',
-				// 	title: 'zhelishi shangpinbiao tishangpin...',
-				// 	cumulative_sales: 52366,
-				// 		unit_price: 6525,
-				// 	commission_ratio: 20,
-				// 	commission: 21,
-				// },{
-				// 	id: 6,
-				// 	image: '../../static/images/home/photo.png',
-				// 	title: 'zhelishi shangpinbiao tishangpin...',
-				// 	cumulative_sales: 52366,
-				// 		unit_price: 6525,
-				// 	commission_ratio: 20,
-				// 	commission: 21,
-				// }]
 			}
 		},
 		components: {
@@ -336,6 +329,18 @@
 				this.orderStateList[1].name = this.$t('options').A24_hours
 				this.orderStateList[2].name = this.$t('options').A2_hours
 				
+				this.samplesList[0].name = this.$t('options').All_s
+				this.samplesList[1].name = this.$t('options').Send_samples
+				this.samplesList[2].name = this.$t('options').No_sample
+				this.sampleState = this.samplesList[this.sindex].name
+				
+				
+				this.cbList[0].name = this.$t('options').All_a
+				this.cbList[1].name = this.$t('options').Cross_border
+				this.cbList[2].name = this.$t('options').mainland
+				console.log(this.cbList[this.cbindex])
+				this.cbState = this.cbList[this.cbindex].name
+				
 				this.prepareState = this.orderStateList[this.kindex].name
 				this.orderState = this.orderStateList[this.kindex].name
 			},
@@ -402,6 +407,8 @@
 							sort: this.sort,
 							page: this.page,
 							limit: this.limit,
+							is_samples: this.samplesList[this.sindex].id,
+							cb: this.cbList[this.cbindex].id
 						}
 					})
 					.then(res => {
@@ -459,6 +466,14 @@
 				this.product_lists = []
 				this.getHttpLists("one")
 			},
+			toggleA(type) {
+				// open 方法传入参数 等同在 uni-popup 组件上绑定 type属性
+				this.$refs.popup_samples.open(type)
+			},
+			toggleB(type) {
+				// open 方法传入参数 等同在 uni-popup 组件上绑定 type属性
+				this.$refs.popup_cb.open(type)
+			},
 			toggle(type) {
 				// 获取选项索引
 				for (let i in this.orderStateList) {
@@ -493,6 +508,30 @@
 
 					this.$refs.popup.close()
 				}
+			},
+			getSampleState(index, name) {
+				if(this.sindex == index) return
+				this.sindex = index
+				this.sampleState = name
+				
+				this.page = 1
+				this.product_lists = []
+				this.getHttpLists("one")
+				this.$refs.popup_samples.close()
+			},
+			getCbState(index, name) {
+				if(this.cbindex == index) return
+				this.cbindex = index
+				this.cbState = name
+				
+				this.page = 1
+				this.product_lists = []
+				this.getHttpLists("one")
+				this.$refs.popup_cb.close()
+			},
+			cancel() {
+				this.$refs.popup_samples.close()
+				this.$refs.popup_cb.close()
 			},
 			confirmed() {
 				// 销售选择关闭
@@ -900,7 +939,13 @@
 		-webkit-line-clamp: 2;
 		overflow: hidden;
 	}
-
+	
+	.region{
+		text-align: right;
+		color: #0B0B0B;
+		font-size: 24rpx;
+	}
+	
 	.productMsgBottom {
 		width: 100%;
 	}

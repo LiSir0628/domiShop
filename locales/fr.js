@@ -157,7 +157,13 @@ export const lang = {
 		"Price": "Prix",
 		"High_Commission": "Haut Commissaire",
 		"Earned": "C'est gagné.",
-		"no_more": "Plus maintenant."
+		"no_more": "Plus maintenant.",
+		"Cross_border": "Transboundary",
+		"mainland": "Continent",
+		"Send_samples": "Envoyer un échantillon",
+		"No_sample": "Aucun échantillon",
+		"All_s": "Tous/échantillons",
+		"All_a": "Tous/portée",
 	},
 	"user": {
 		"Freesample_collection": "Prélèvement gratuit d'échantillons",

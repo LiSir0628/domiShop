@@ -157,7 +157,13 @@ export const lang = {
 		"Price": "価格",
 		"High_Commission": "高等委員会",
 		"Earned": "獲得",
-		"no_more": "これ以上"
+		"no_more": "これ以上",
+		"Cross_border": "国境",
+		"mainland": "本土",
+		"Send_samples": "サンプルを送る",
+		"No_sample": "サンプル無し",
+		"All_s": "すべて/サンプル",
+		"All_a": "すべて/範囲",
 	},
 	"user": {
 		"Freesample_collection": "無料サンプルコレクション",

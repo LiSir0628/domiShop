@@ -157,7 +157,13 @@ export const lang = {
 		"Price": "цена",
 		"High_Commission": "много комиссар",
 		"Earned": "заработать",
-		"no_more": "переставать"
+		"no_more": "переставать",
+		"Cross_border": "трансграничный",
+		"mainland": "материк",
+		"Send_samples": "отправка образцов",
+		"No_sample": "без выборки",
+		"All_s": "весь/образец",
+		"All_a": "весь/Сфера применения",
 	},
 	"user": {
 		"Freesample_collection": "бесплатный сбор образцов",

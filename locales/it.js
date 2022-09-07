@@ -157,7 +157,13 @@ export const lang = {
 		"Price": "Prezzo",
 		"High_Commission": "Alta Commissione",
 		"Earned": "Guadagnato",
-		"no_more": "non più"
+		"no_more": "non più",
+		"Cross_border": "Transfrontaliero",
+		"mainland": "terraferma",
+		"Send_samples": "Invia campioni",
+		"No_sample": "Nessun campione",
+		"All_s": "Tutto/campione",
+		"All_a": "Tutto/intervallo",
 	},
 	"user": {
 		"Freesample_collection": "Raccolta gratuita di campioni",

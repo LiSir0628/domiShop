@@ -157,7 +157,13 @@ export const lang = {
 		"Price": "Preis",
 		"High_Commission": "Hohe Kommission",
 		"Earned": "Verdienste",
-		"no_more": "nicht mehr"
+		"no_more": "nicht mehr",
+		"Cross_border": "Grenzüberschreitend",
+		"mainland": "Festland",
+		"Send_samples": "Muster senden",
+		"No_sample": "Keine Probe",
+		"All_s": "Alle/Stichprobe",
+		"All_a": "Alle/Bereich",
 	},
 	"user": {
 		"Freesample_collection": "Kostenlose Probenentnahme",

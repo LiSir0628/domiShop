@@ -16,11 +16,17 @@
 
 		<view class="priceTemplate">
 			<view class="price_modular">
-				<view class="price">
-					<text class="priceSpan">$</text>{{unit_price}}
+				<view class="modular">
+					<view class="price">
+						<text class="priceSpan">$</text>{{unit_price}}
+					</view>
+					<view v-if="is_samples == 1" class="is_sample">
+						{{ $t('pro_detail.Collectable_sample') }}
+					</view>
 				</view>
-				<view v-if="is_samples == 1" class="is_sample">
-					{{ $t('pro_detail.Collectable_sample') }}
+				<view class="isCb">
+					<view v-if="Cb == 1">{{ $t('options.Cross_border') }}</view>
+					<view v-else-if="Cb == 2">{{ $t('options.mainland') }}</view>
 				</view>
 			</view>
 			<view class="profit">
@@ -305,6 +311,7 @@
 				//info: ["../../static/images/detail/icon08.png","../../static/images/detail/icon08.png","../../static/images/detail/icon08.png"],
 				banner: [{url: "" ,content: ""}],
 				is_samples: "",
+				Cb: "",
 				stock: 1000,
 				is_collection: false,
 				left_icon: "货币图标-左边",
@@ -332,19 +339,6 @@
 				cindex: 0,
 				kindex: 0,
 				userList: [],
-				// userList:[{
-				// 	id: 1,
-				// 	photo: '../../static/images/home/photo.png',
-				// 	name: 'zhanghaomingcheng',
-				// 	fans: 450,
-				// 	praise_nums: 56263
-				// },{
-				// 	id: 2,
-				// 	photo: '../../static/images/home/photo.png',
-				// 	name: 'zhanghaomingcheng',
-				// 	fans: 450,
-				// 	praise_nums: 56263
-				// }],
 				
 				current: 0,
 				mode: 'default',
@@ -360,27 +354,6 @@
 					'height': '720rpx'
 				},
 				list: [],
-				// list:[{
-				// 	id: 1,
-				// 	name: 'name',
-				// 	tel: 12563622222,
-				// 	country_id: 1,
-				// 	country_name: "中国",
-				// 	city_id: 2,
-				// 	city_name: "福州市",
-				// 	detail: "dizhineirongdizhineirongdizhineirongdizhineirongdizhineirongdizhineirong",
-				// 	is_default: 1
-				// },{
-				// 	id: 2,
-				// 	name: 'name',
-				// 	tel: 12563622222,
-				// 	country_id: 1,
-				// 	country_name: "中国",
-				// 	city_id: 2,
-				// 	city_name: "福州市",
-				// 	detail: "中文中文中文中文中文中文中文中文",
-				// 	is_default: 0,
-				// }],
 				
 				scrollHeight: 0,  //地址
 				scrollHeightAdd: 0,  //tiktok账号
@@ -548,6 +521,7 @@
 							this.banner = arr // 轮播图数据处理
 							//console.log(this.banner)
 							this.is_samples = obj.is_samples
+							this.Cb = obj.Cb
 							this.stock = obj.stock
 							this.is_collection = obj.is_collection == 1 ? true : false
 							//console.log(this.is_collection)
@@ -902,6 +876,13 @@
 	.price_modular{
 		display: flex;
 		align-items: center;
+		padding-right: 30rpx;
+		justify-content: space-between;
+	}
+	
+	.modular{
+		display: flex;
+		align-items: center;
 	}
 	
 	.price {
@@ -932,7 +913,12 @@
 		color: #FF7436;
 		margin-left: 20rpx;
 	}
-
+	
+	.isCb{
+		font-size: 20rpx;
+		color: #0B0B0B;
+	}
+	
 	.profit {
 		width: max-content;
 		padding: 0 18rpx;
