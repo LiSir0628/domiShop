@@ -6,6 +6,7 @@
 				<input class="searchText" v-model="searchText" @confirm="search"
 					:placeholder="$t('options.Search')" />
 			</view>
+			<image class="area" src="../../static/images/product/icon24.png" @click="areaChange"></image>
 			<image class="model" src="../../static/images/product/icon20.png" @click="langChange"></image>
 		</view>
 		<view class="navbar">
@@ -154,11 +155,13 @@
 		</view>
 		
 		<new-lang ref="newLang" @langSwitch="langSwitch"></new-lang>
+		<go-area ref="goArea" areaSwitch="areaSwitch"></go-area>
 	</view>
 </template>
 
 <script>
 	import newLang from "../common/language.vue"
+	import goArea from "../common/goArea.vue"
 	export default {
 		data() {
 			return {
@@ -263,7 +266,8 @@
 			}
 		},
 		components: {
-			newLang
+			newLang,
+			goArea
 		},
 		onLoad(option) {
 			
@@ -287,8 +291,8 @@
 
 		},
 		onShow() {
-			if(localStorage.getItem('language')){
-				this.langText = localStorage.getItem('language')
+			if(uni.getStorageSync('language')){
+				this.langText = uni.getStorageSync('language')
 			}
 			this.switchText()
 		},
@@ -317,6 +321,18 @@
 				this.switchText()
 				this.$forceUpdate()
 			},
+			
+			areaChange() {
+				this.$refs.goArea.areaOpen()
+			},
+			
+			areaSwitch(name){
+				//切换国家名称
+				// this.langText = name
+				// this.switchText()
+				// this.$forceUpdate()
+			},
+			
 			
 			switchText() {
 				this.category_lists[0].name = this.$t('options').All
@@ -647,7 +663,7 @@
 		top: 0;
 		left: 0;
 		background: #FFFFFF;
-		z-index: 101;
+		z-index: 10;
 		padding: 17rpx 0 20rpx 0;
 		display: flex;
 		align-items: center;
@@ -655,7 +671,7 @@
 	}
 
 	.search {
-		width: 622rpx;
+		width: 559rpx;
 		height: 80rpx;
 		background: #F7F7F7;
 		border-radius: 40rpx;
@@ -672,13 +688,19 @@
 	}
 
 	.searchText {
-		width: 510rpx;
+		width: 447rpx;
 		height: 80rpx;
 		font-size: 26rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #666666;
 		line-height: 80rpx;
+	}
+	
+	.area {
+		width: 40rpx;
+		height: 48rpx;
+		margin-right: 20rpx;
 	}
 	
 	.model {
@@ -791,7 +813,7 @@
 	.tabHeight {
 		position: fixed;
 		top: 112rpx;
-		z-index: 100;
+		z-index: 10;
 	}
 
 	.scroll-view-item_Tab {

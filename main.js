@@ -20,7 +20,7 @@ const i18n = new VueI18n({
 	locale: plus.storage.getItem('languageIso') || 'en', //初始化,保证刷新页面也保留
 	// #endif
 	// #ifdef H5
-	locale: localStorage.getItem('languageIso') || 'en', //初始化,保证刷新页面也保留
+	locale: uni.getStorageSync('languageIso') || 'en', //初始化,保证刷新页面也保留
 	// #endif
 	// 加载语言文件的内容
 	messages: {

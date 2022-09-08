@@ -521,7 +521,7 @@
 							this.banner = arr // 轮播图数据处理
 							//console.log(this.banner)
 							this.is_samples = obj.is_samples
-							this.Cb = obj.Cb
+							this.Cb = obj.cb
 							this.stock = obj.stock
 							this.is_collection = obj.is_collection == 1 ? true : false
 							//console.log(this.is_collection)

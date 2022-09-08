@@ -133,8 +133,8 @@
 			this.nickname = this.$store.state.nickname
 			this.getHttpLists()
 			
-			if(localStorage.getItem('language')){
-				this.langText = localStorage.getItem('language')
+			if(uni.getStorageSync('language')){
+				this.langText = uni.getStorageSync('language')
 			}
 			this.switchText()
 		},

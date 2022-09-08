@@ -8,7 +8,7 @@
 						{{item.name}}
 					</view>
 				</view>
-				<view class="confirmedLang" @click="confirmedLang">Cancels</view>
+				<view class="confirmedLang" @click="confirmedLang">{{ $t('options.Cancels') }}</view>
 			</view>
 		</uni-popup>
 	</view>
@@ -76,9 +76,9 @@
 					this.getLangList("one")
 				}
 
-				if (localStorage.getItem('language')) {
+				if (uni.getStorageSync('language')) {
 					for (let i in this.langList) {
-						if (this.langList[i].name == localStorage.getItem('language')) {
+						if (this.langList[i].name == uni.getStorageSync('language')) {
 							this.langIndex = i
 							break
 						}
