@@ -32,7 +32,8 @@ const i18n = new VueI18n({
 		'fr': require('./locales/fr.js').lang,
 		'de': require('./locales/de.js').lang,
 		'ru': require('./locales/ru.js').lang,
-		'ms': require('./locales/ms.js').lang
+		'ms': require('./locales/ms.js').lang,
+		'tl': require('./locales/tl.js').lang
 	}
 })
 Vue.prototype._i18n = i18n
