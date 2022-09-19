@@ -59,18 +59,18 @@
 					<view class="merRankTop">
 						<view class="spTitle ellip">{{item.title}}</view>
 						<view class="profit">
-							<view class="price">{{ $t('rank.Unit_Price') }}: ${{item.unit_price}}</view>
+							<view class="price">{{ $t('rank.Unit_Price') }}: {{item.left_icon}} {{item.unit_price}}</view>
 							<view class="ratio">{{ $t('rank.Commission_ratio') }}: {{(item.commission_ratio*100).toFixed()}}%</view>
 						</view>
 					</view>
 					<view class="merRankBottom">
 						<view class="sales">
 							<image class="salesLogo" src="../../static/images/rank/icon08.png"></image>
-							<view>{{ $t('rank.Cumulative_sales') }}:<text class="weight">${{item.cumulative_sales}}</text></view>
+							<view>{{ $t('rank.Cumulative_sales') }}:<text class="weight">{{item.left_icon}} {{item.cumulative_sales}}</text></view>
 						</view>
 						<view class="commission">
 							<image class="commissionLogo" src="../../static/images/rank/icon06.png"></image>
-							<view>{{ $t('rank.Accumulated_Commission') }}:<text class="weight">${{item.accumulated_commission}}</text>
+							<view>{{ $t('rank.Accumulated_Commission') }}:<text class="weight">{{item.left_icon}} {{item.accumulated_commission || '0.00'}}</text>
 							</view>
 						</view>
 					</view>

@@ -18,7 +18,7 @@
 			<view class="price_modular">
 				<view class="modular">
 					<view class="price">
-						<text class="priceSpan">$</text>{{unit_price}}
+						<text class="priceSpan">{{left_icon}} </text>{{unit_price}}
 					</view>
 					<view v-if="is_samples == 1" class="is_sample">
 						{{ $t('pro_detail.Collectable_sample') }}
@@ -31,14 +31,14 @@
 			</view>
 			<view class="profit">
 				{{ $t('pro_detail.unit') }}:
-				<text class="profitPrice">${{commission}}</text>
+				<text class="profitPrice">{{left_icon}} {{commission || '0.00'}}</text>
 			</view>
 			<view class="rate">
 				<image class="hotLogo" src="../../static/images/detail/icon02.png"></image>
 				{{ $t('pro_detail.Commission_rate') }}: <text class="rateNum">{{(commission_ratio*100).toFixed()}}%</text>
 			</view>
 			<view class="totalSales">
-				<view>{{ $t('pro_detail.Total_sales') }}: {{cumulative_sales}}</view>
+				<view>{{ $t('pro_detail.Total_sales') }}: {{cumulative_sales || 0}}</view>
 				<view class="logoSubject">
 					<image class="linkLogo" src="../../static/images/detail/icon03.png" @click="copy(product_link)">
 					</image>
@@ -314,7 +314,7 @@
 				Cb: "",
 				stock: 1000,
 				is_collection: false,
-				left_icon: "货币图标-左边",
+				left_icon: "$",
 				right_icon: "货币图标-右边",
 				unit_price: "0.00",
 				commission: "0.00",

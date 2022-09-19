@@ -4,7 +4,7 @@
 			<view class="popup-content-area">
 				<view class="areaListContent">
 					<view class="popupChooseArea" v-for="item,index in areaList"
-						:class="{'activePopupChooseArea': areaIndex == index}" @click="areaState(index,item.name)">
+						:class="{'activePopupChooseArea': areaIndex == index}" @click="areaState(index,item.region)">
 						{{item.name}}
 					</view>
 				</view>
@@ -18,21 +18,42 @@
 	export default {
 		data() {
 			return {
-				areaList: [{
-					id: 1,
-					name: 'English'
-				}, {
-					id: 9,
-					name: 'Malay'
-				}],
+				langList: [],
+				areaList: [],
+				all: {
+					language_id: 0,
+					name: this.$t('options').All,
+					region: ""
+				},
+				// areaList: [{
+				// 	id: 1,
+				// 	name: 'English',
+				// 	region: 'en'
+				// }, {
+				// 	id: 9,
+				// 	name: 'Malay',
+				// 	region: 'ms'
+				// }],
 				areaIndex: 0
 			}
 		},
 		methods: {	
 			areaOpen() {
+				this.all.name = this.$t('options').All
+				if (uni.getStorageSync('langList')) {
+					this.langList = uni.getStorageSync('langList')
+					for(let i in this.langList){
+						if(this.langList[i].name == uni.getStorageSync('language')){
+							this.areaList = this.langList[i].regions
+							this.areaList.unshift(this.all)
+							break
+						}
+					}
+				}
+				
 				if (uni.getStorageSync('areaName')) {
 					for (let i in this.areaList) {
-						if (this.areaList[i].name == uni.getStorageSync('areaName')) {
+						if (this.areaList[i].region == uni.getStorageSync('areaName')) {
 							this.areaIndex = i
 							break
 						}
@@ -62,7 +83,7 @@
 	/* 下拉框弹窗 */
 	.popup-content-area {
 		width: 750rpx;
-		height: 330rpx;
+		height: 490rpx;
 		/* display: flex;
 		align-items: center;
 		justify-content: center; */
@@ -73,11 +94,11 @@
 		z-index: 10000;
 	}
 
-/* 	.areaListContent {
-		height: 310rpx;
+	.areaListContent {
+		height: 330rpx;
 		overflow: hidden;
 		overflow-y: auto;
-	} */
+	}
 
 	::-webkit-scrollbar {
 		display: none;

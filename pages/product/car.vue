@@ -25,7 +25,7 @@
 					<!-- <view class="windowSales">Window sales≥ 1000</view> -->
 				</view>
 			</view>
-			<view class="salesPrice">$ <text class="price">{{unit_price}}</text></view>
+			<view class="salesPrice">{{left_icon}} <text class="price">{{unit_price}}</text></view>
 			<view class="commission">{{ $t('car.High_Commission') }}: {{(commission_ratio*100).toFixed()}}%</view>
 			<view class="tikTok">
 				<view class="tikTokLeft">{{ $t('car.Account') }}</view>
@@ -123,7 +123,7 @@
 				banner:[],
 				spLogo: "",
 				
-				left_icon: "货币图标-左边",
+				left_icon: "$",
 				right_icon: "货币图标-右边",
 				unit_price: "0.00",
 				commission: "0.00",

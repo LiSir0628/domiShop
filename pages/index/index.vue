@@ -201,7 +201,7 @@
 				<view class="spMiddle">
 					<view class="spData">
 						<view class="dataTitle">{{ $t('index.Price') }}</view>
-						<view class="dataNum">${{item.unit_price}}</view>
+						<view class="dataNum">{{item.left_icon}} {{item.unit_price}}</view>
 					</view>
 					<view class="spData">
 						<view class="dataTitle">{{ $t('index.Commission_ratio') }}</view>
@@ -209,7 +209,7 @@
 					</view>
 					<view class="spData">
 						<view class="dataTitle">{{ $t('index.Commission') }}</view>
-						<view class="dataNum">${{item.commission}}</view>
+						<view class="dataNum">{{item.left_icon}} {{item.commission || '0.00'}}</view>
 					</view>
 				</view>
 			</view>
@@ -1024,7 +1024,7 @@
 		width: 710rpx;
 		/* 推荐达人模块隐藏，高度减少104rpx */
 		/* height: 400rpx; */
-		height: 296rpx;
+		min-height: 296rpx;
 		border-radius: 8rpx;
 		background: #262626;
 		margin-bottom: 20rpx;
@@ -1133,18 +1133,20 @@
 
 	.spMiddle {
 		width: 710rpx;
-		height: 109rpx;
+		min-height: 109rpx;
 		background: #333333;
 		border-radius: 2rpx 2rpx 8rpx 8rpx;
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
-		padding: 20rpx 54rpx;
+		padding: 20rpx 54rpx 10rpx;
 		box-sizing: border-box;
 	}
 
 	.spData {
 		text-align: center;
+		padding-bottom: 10rpx;
 	}
 
 	.dataTitle {

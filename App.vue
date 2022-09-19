@@ -15,6 +15,14 @@
 					//请求语法接口
 					console.log(res.data.data)
 					uni.setStorageSync('langList', res.data.data);
+					
+					if(!uni.getStorageSync('language')){
+						this.$i18n.locale = res.data.data[0].iso;
+						this.$store.commit('editLanguage', res.data.data[0].name)
+						uni.setStorageSync('language', res.data.data[0].name)
+						uni.setStorageSync('languageIso', res.data.data[0].iso)
+						this.$emit('langSwitch', res.data.data[0].name);
+					}
 				}
 			})
 			.catch(err => {

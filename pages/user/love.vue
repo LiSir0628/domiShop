@@ -11,7 +11,7 @@
 						<view class="spMsg">
 							<view class="spDes">{{item.title}}</view>
 							<view class="spOperation">
-								<view class="price">$ {{item.unit_price}}</view>
+								<view class="price">{{item.left_icon}} {{item.unit_price}}</view>
 								<view class="favorite">
 									<view class="commission">{{ $t('love.High_Commission') }}: {{(item.commission_ratio*100).toFixed()}}%</view>
 									<image class="love" src="../../static/images/detail/icon16.png" @click.stop="remove(index)"></image>

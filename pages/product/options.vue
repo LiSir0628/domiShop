@@ -70,8 +70,8 @@
 					<view class="region" v-else-if="item.cb == 2">{{ $t('options.mainland') }}</view>
 					<view class="productMsgBottom">
 						<view class="pricePlan">
-							<view>{{ $t('options.Sales') }}: <text class="sales">{{item.cumulative_sales}}</text></view>
-							<view>{{ $t('options.Price') }}: <text class="price">$<text
+							<view class="pricePlanA">{{ $t('options.Sales') }}: <text class="sales">{{item.cumulative_sales}}</text></view>
+							<view class="pricePlanB">{{ $t('options.Price') }}: <text class="price">{{item.left_icon}} <text
 										style="margin-left: 4rpx;">{{item.unit_price}}</text></text></view>
 						</view>
 						<view class="commission">{{ $t('options.High_Commission') }}: 
@@ -82,7 +82,7 @@
 						<view class="earnedMsg">
 							<!-- <image class="priceLogo" src="../../static/images/product/icon06.png"></image> -->
 							<text class="earned">{{ $t('options.Earned') }}:
-								<text style="margin-left: 4rpx;word-break: break-all;font-size: 32rpx;font-weight: bold;">${{item.commission}}</text>
+								<text style="margin-left: 4rpx;word-break: break-all;font-size: 32rpx;font-weight: bold;">{{item.left_icon}} {{item.commission || '0.00'}}</text>
 							</text>
 						</view>
 					</view>
@@ -155,7 +155,7 @@
 		</view>
 		
 		<new-lang ref="newLang" @langSwitch="langSwitch"></new-lang>
-		<go-area ref="goArea" areaSwitch="areaSwitch"></go-area>
+		<go-area ref="goArea" @areaSwitch="areaSwitch"></go-area>
 	</view>
 </template>
 
@@ -263,6 +263,7 @@
 				product_lists: [],
 				
 				langText: "English", //语法展示，缓存中获取English
+				countryName: "",
 			}
 		},
 		components: {
@@ -293,6 +294,9 @@
 		onShow() {
 			if(uni.getStorageSync('language')){
 				this.langText = uni.getStorageSync('language')
+			}
+			if(uni.getStorageSync('areaName')){
+				this.countryName = uni.getStorageSync('areaName')
 			}
 			this.switchText()
 		},
@@ -327,6 +331,12 @@
 			},
 			
 			areaSwitch(name){
+				console.log(name)
+				
+				this.countryName = name
+				this.page = 1
+				this.product_lists = []
+				this.getHttpLists("one")
 				//切换国家名称
 				// this.langText = name
 				// this.switchText()
@@ -424,7 +434,8 @@
 							page: this.page,
 							limit: this.limit,
 							is_samples: this.samplesList[this.sindex].id,
-							cb: this.cbList[this.cbindex].id
+							cb: this.cbList[this.cbindex].id,
+							region: this.countryName
 						}
 					})
 					.then(res => {
@@ -985,6 +996,14 @@
 		margin-top: 16rpx;
 	}
 
+	.pricePlanA{
+		padding-bottom: 10rpx;
+	}
+
+	.pricePlanB{
+		padding-bottom: 10rpx;
+	}
+
 	.sales {
 		color: #0B0B0B;
 		font-weight: bold;
@@ -1011,7 +1030,7 @@
 		font-weight: 400;
 		color: #C57700;
 		text-align: center;
-		margin-top: 19rpx;
+		margin-top: 10rpx;
 		
 /* 		width: 280px;
 		height: 48px;

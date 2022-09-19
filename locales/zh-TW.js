@@ -26,7 +26,7 @@ export const lang = {
 		"fill_password": "請填寫密碼"
 	},
 	"index": {
-		"Order_board": "“訂單板",
+		"Order_board": "訂單板",
 		"All": "全部",
 		"Today": "今天",
 		"Yesterday": "昨天",

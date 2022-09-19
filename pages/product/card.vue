@@ -8,8 +8,9 @@
 				<view class="spModular">
 					<view class="spTitle">{{title}}</view>
 					<view class="priceModular">
-						<view class="discountPrice">{{ $t('card.Closing_Price') }}: <!-- $562 -->{{commission}}</view>
-						<view class="originalPrice">{{ $t('card.Original_Price') }}:<!-- $8569 -->{{unit_price}}</view>
+						<!-- <view class="discountPrice">{{ $t('card.Closing_Price') }}: {{commission}}</view>
+						<view class="originalPrice">{{ $t('card.Original_Price') }}: {{unit_price}}</view> -->
+						<view class="discountPrice">{{ $t('card.Closing_Price') }}:{{left_icon}} {{unit_price}}</view>
 					</view>
 				</view>
 			</view>
@@ -122,7 +123,7 @@
 				banner:[],
 				spLogo: "",
 				
-				left_icon: "货币图标-左边",
+				left_icon: "$",
 				right_icon: "货币图标-右边",
 				unit_price: "",
 				commission: "",
