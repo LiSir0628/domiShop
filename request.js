@@ -30,6 +30,7 @@ function myRequest(options){
 					res(data)
 				} else if(data.data.code==401){
 					//需要权限验证, token未传或错误
+					uni.setStorageSync('areaName', "");
 					uni.setStorageSync('token', "");
 					uni.setStorageSync('index_is_refresh', "1");
 					uni.redirectTo({url:'/pages/register/login'});

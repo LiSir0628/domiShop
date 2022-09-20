@@ -221,8 +221,9 @@
 				// id是3 客服，id是4 退出登錄。
 				if(this.lists[index].id == 4){
 					//退出登录，清空token值，跳转登录页
-					uni.setStorageSync('index_is_refresh', "1");
+					uni.setStorageSync('areaName', "");
 					uni.setStorageSync('token', "");
+					uni.setStorageSync('index_is_refresh', "1");
 					uni.navigateTo({
 						url: '/pages/register/login'
 					});

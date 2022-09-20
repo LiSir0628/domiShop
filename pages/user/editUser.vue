@@ -103,8 +103,9 @@
 				});
 			},
 			goBack() {
-				uni.setStorageSync('index_is_refresh', "1");
+				uni.setStorageSync('areaName', "");
 				uni.setStorageSync('token', "");
+				uni.setStorageSync('index_is_refresh', "1");
 				uni.navigateTo({
 					url: '/pages/register/login'
 				});
