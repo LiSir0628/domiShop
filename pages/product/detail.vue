@@ -378,7 +378,7 @@
 								</view>
 							</view>
 							<view class="dotted"></view>
-							<view v-if="item.is_received == 1" @click="downRow(item.video_url , item.title)" class="receiveState">
+							<view v-if="item.is_received == 1" @click="downRow(item.full_video_url , item.title)" class="receiveState">
 								{{ $t('pro_detail_account.already') }}
 								<br/> 
 								{{ $t('pro_detail_account.download') }}
@@ -409,7 +409,7 @@
 								</view>
 							</view>
 							<view class="dotted"></view>
-							<view @click="downRow(item.video.video_url , item.video.title)" class="receiveState">
+							<view @click="downRow(item.video.full_video_url , item.video.title)" class="receiveState">
 								{{ $t('pro_detail_account.already') }}
 								<br/> 
 								{{ $t('pro_detail_account.download') }}
@@ -885,7 +885,7 @@
 			goDownload(item,index) {
 				console.log("领取原视频")
 				console.log(item.id)
-				console.log(item.video_url)
+				console.log(item.full_video_url)
 				
 				uni.showLoading({
 					title: this.$t('common').loading + '...',
@@ -903,7 +903,7 @@
 					uni.hideLoading();
 					if (res.data.code == 200) {
 						console.log(res.data)
-						this.downRow(item.video_url , item.title)
+						this.downRow(item.full_video_url , item.title)
 						this.videoLists[index].is_received = 1
 						this.$forceUpdate()
 					} else {
@@ -949,7 +949,7 @@
 					uni.hideLoading();
 					if (res.data.code == 200) {
 						console.log(res.data)
-						this.downRow(res.data.data.video_url , res.data.data.title)
+						this.downRow(res.data.data.full_video_url , res.data.data.title)
 						this.received_clip_num = 1
 						this.$forceUpdate()
 					} else {
