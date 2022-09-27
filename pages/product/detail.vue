@@ -335,7 +335,7 @@
 						
 						<view v-else class="receiveState" @click="goDownRow">{{ $t('pro_detail_account.received') }}</view>
 					</view>
-					<view class="receiveList finished" v-if="clip_video_num > 0">
+					<view class="receiveList finished" v-if="clip_video_num > 0 || received_clip_num > 0">
 						<view class="receiveNav">
 							<view class="receiveLeft">
 								{{ $t('pro_detail_account.finished_materials') }}
