@@ -977,9 +977,14 @@
 				//点击剪辑视频领取，随机领取一个剪辑视频
 			},
 			downRow(data,name) {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
 				//this.downRow("http://192.168.0.25:8080/static/images/user/movie02.mp4","movie02.mp4")
-				// data = "http://192.168.0.25:8080/static/images/user/movie02.mp4"
+				//data = "http://192.168.0.25:8080/static/images/user/movie02.mp4"
 				console.log(data,name + '.mp4')
+				
 				let ajax= new XMLHttpRequest();
 				ajax.open('GET', data, true);
 				ajax.responseType = 'blob';
@@ -994,6 +999,7 @@
 					document.body.appendChild(a);
 					a.click();
 					document.body.removeChild(a);
+					uni.hideLoading();
 				};
 				ajax.send();		
 			},
