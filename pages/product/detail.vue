@@ -145,9 +145,15 @@
 		</view> -->
 
 		<view class="bottomCar">
-			<view class="copyLine" @click="copy(product_link)">
-				<image class="copyLogo" src="../../static/images/detail/icon03.png"></image>
-				<view class="copy">{{ $t('pro_detail.Copy_the_link') }}</view>
+			<view class="copyList">
+				<view class="copyLine" @click="copy(product_link)">
+					<image class="copyLogo" src="../../static/images/detail/icon18.png"></image>
+					<view class="copy">{{ $t('pro_detail.Copy_the_link') }}</view>
+				</view>
+				<view class="copyLine" @click="download">
+					<image class="copyLogo" src="../../static/images/detail/icon19.png"></image>
+					<view class="copy copyMaterial">{{ $t('pro_detail.material') }}</view>
+				</view>
 			</view>
 			<!-- <view class="add" @click="openAdd">Add a window</view> -->
 			<view class="add" @click="openAdd">{{ $t('pro_detail.administration') }}</view>
@@ -276,6 +282,7 @@
 			</uni-popup>
 		</view>
 		
+		<!-- 普通弹窗3 -->
 		<uni-popup ref="requestPopup" background-color="#fff" type="bottom" @maskClick="requestClose">
 			<view class="request-popup-content">
 				<view class="requestCard">
@@ -289,6 +296,123 @@
 					<view class="salesDay">
 						<!-- 2.Window sales in recent 30 days :  {{show_window}} -->
 					</view>
+				</view>
+			</view>
+		</uni-popup>
+		
+		<!-- 领取视频 弹窗4 -->
+		<uni-popup ref="receive" background-color="#fff" type="bottom" @maskClick="receiveClose">
+			<view class="receive-content">
+				<view class="receiveCard">
+					<view class="receiveCardTitle">
+						<view class="receiveCardTip">{{ $t('pro_detail_account.material_download') }}</view>
+						<image class="receiveClose" src="../../static/images/detail/icon13.png" @click="receiveClose">
+						</image>
+					</view>
+					<view class="receiveList" v-if="original_video_num > 0">
+						<view class="receiveNav">
+							<view class="receiveLeft">
+								<image class="receiveLogo" src="../../static/images/detail/icon20.png"></image>
+								{{ $t('pro_detail_account.raw_materials') }}
+							</view>
+							<view class="receiveTip">{{ $t('pro_detail_account.one_time') }}</view>
+						</view>
+						<view class="dotted"></view>
+						<!-- <view class="receiveState">{{ $t('pro_detail_account.already') }} <br/> {{ $t('pro_detail_account.received') }}</view> -->
+						<!-- 判断原视频 是否全部领取-->
+						<view v-if="received_original_num > 0 && received_original_num == original_video_num" class="receiveState" @click="goDownRow">
+							{{ $t('pro_detail_account.already') }} 
+							<br/> 
+							{{ $t('pro_detail_account.received') }}
+						</view>
+						
+						<view v-else class="receiveState" @click="goDownRow">{{ $t('pro_detail_account.received') }}</view>
+					</view>
+					<view class="receiveList finished" v-if="clip_video_num > 0">
+						<view class="receiveNav">
+							<view class="receiveLeft">
+								{{ $t('pro_detail_account.finished_materials') }}
+							</view>
+							<view class="receiveTip">{{ $t('pro_detail_account.random_collection') }}</view>
+						</view>
+						<view class="dotted"></view>
+						<!-- 判断剪辑视频是否领取，判断今日是否还可以领取剪辑视频 -->
+						<view v-if="received_clip_num > 0" class="receiveState" @click="goVideoHistory">
+							{{ $t('pro_detail_account.already') }} 
+							<br/> 
+							{{ $t('pro_detail_account.received') }}
+						</view>
+						
+						<view v-else-if="today_clip_status == 1" class="receiveState" @click="goDownAlready">{{ $t('pro_detail_account.received') }}</view>
+						
+						<view v-else class="receiveState" @click="goVideoHistory">
+							{{ $t('pro_detail_account.not') }}
+							<br/> 
+							{{ $t('pro_detail_account.received') }}
+						</view>
+					</view>
+					<view class="receiveBtn" @click="receiveClose">{{ $t('options.Cancels') }}</view>
+				</view>
+			</view>
+		</uni-popup>
+		
+		<!-- 领取视频 弹窗5 -->
+		<uni-popup ref="videoList" background-color="#fff" type="bottom" @maskClick="videoListClose">
+			<view class="receive-content">
+				<view class="videoListCard">
+					<view class="receiveCardTitle">
+						<view class="receiveCardTip">{{ $t('pro_detail_account.download') }} ({{original_video_num}})</view>
+						<image class="receiveClose" src="../../static/images/detail/icon13.png" @click="videoListClose">
+						</image>
+					</view>
+					<view class="videoLists">
+						<view class="receiveList" v-for="item,index in videoLists">
+							<view class="receiveNav">
+								<view class="receiveLeft">
+									<image class="receiveLogo" src="../../static/images/detail/icon20.png"></image>
+									<view class="videoName">{{item.title}}</view>
+								</view>
+							</view>
+							<view class="dotted"></view>
+							<view v-if="item.is_received == 1" @click="downRow(item.video_url , item.title)" class="receiveState">
+								{{ $t('pro_detail_account.already') }}
+								<br/> 
+								{{ $t('pro_detail_account.download') }}
+							</view>
+							<view v-else @click="goDownload(item,index)" class="receiveState">{{ $t('pro_detail_account.download') }}</view>
+						</view>
+					</view>
+					<view class="receiveBtn" @click="videoListClose">{{ $t('options.Cancels') }}</view>
+				</view>
+			</view>
+		</uni-popup>	
+		
+		<!-- 领取剪辑视频 弹窗6 -->
+		<uni-popup ref="videoClipList" background-color="#fff" type="bottom" @maskClick="videoClipListClose">
+			<view class="receive-content">
+				<view class="videoListCard">
+					<view class="receiveCardTitle">
+						<view class="receiveCardTip">{{ $t('pro_detail_account.history') }}</view>
+						<image class="receiveClose" src="../../static/images/detail/icon13.png" @click="videoClipListClose">
+						</image>
+					</view>
+					<view class="videoLists">
+						<view class="receiveList" v-for="item,index in videoHistoryLists">
+							<view class="receiveNav">
+								<view class="receiveLeft">
+									<image class="receiveLogo" src="../../static/images/detail/icon20.png"></image>
+									<view class="videoName">{{item.video.title}}</view>
+								</view>
+							</view>
+							<view class="dotted"></view>
+							<view @click="downRow(item.video.video_url , item.video.title)" class="receiveState">
+								{{ $t('pro_detail_account.already') }}
+								<br/> 
+								{{ $t('pro_detail_account.download') }}
+							</view>
+						</view>
+					</view>
+					<view class="receiveBtn" @click="videoClipListClose">{{ $t('options.Cancels') }}</view>
 				</view>
 			</view>
 		</uni-popup>
@@ -357,6 +481,16 @@
 				
 				scrollHeight: 0,  //地址
 				scrollHeightAdd: 0,  //tiktok账号
+				
+				original_video_num: "", //原始视频数量
+				clip_video_num: "", //剪辑视频数量
+				received_original_num: "", //已领取原始视频数量
+				received_clip_num: "", //已领取剪辑视频数量
+				today_original_status: "", //今日可领取原始视频状态 0:不可领取 1:可领取
+				today_clip_status: "", //今日可领取剪辑视频状态 0:不可领取 1:可领取
+				
+				videoLists:[],
+				videoHistoryLists: [],
 
 			}
 		},
@@ -375,6 +509,10 @@
 			this.getUserLists()
 			this.getHttpAddress()
 		},
+		created() {
+			this.getCheck()
+			this.getVideoLists()
+		},
 		mounted() {
 			//this.isShowLove = this.is_collection
 			//console.log(this.isShowLove)
@@ -384,10 +522,129 @@
 			fatherMethod() {
 				// this.kindex = 0
 				// this.cindex = 0
-				//this.getUserLists("two")
-				
+				//this.getUserLists("two")			
 				this.scrollHeightAdd = 0
 				this.getUserLists()
+			},
+			getCheck() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: 'api/tiktok/product/video/check',
+					data: {
+						pid: this.id
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data.data)
+						this.original_video_num = res.data.data.original_video_num
+						this.clip_video_num = res.data.data.clip_video_num
+						this.received_original_num = res.data.data.received_original_num
+						this.received_clip_num = res.data.data.received_clip_num
+						this.today_original_status = res.data.data.today_original_status
+						this.today_clip_status = res.data.data.today_clip_status
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			getVideoLists() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: 'api/tiktok/product/video/original',
+					data: {
+						pid: this.id
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data.data)
+						this.videoLists = res.data.data
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			getHistoryLists() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: 'api/tiktok/product/video/receivedList',
+					data: {
+						pid: this.id,
+						type: "clip",
+						page: 1,
+						limit: 50
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data.data)
+						this.videoHistoryLists = res.data.data.lists
+						console.log(this.videoHistoryLists)
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
 			},
 			getHttpAddress() {
 				// this.list = []
@@ -612,6 +869,128 @@
 				})
 				// #endif
 			},
+			download() {
+				// https://www.runoob.com/try/demo_source/movie.mp4
+				this.$refs.receive.open()
+				console.log("下载")
+			},
+			goDownRow() {
+				//跳转页面，或者在出个弹窗展示-原视频领取
+				this.$refs.videoList.open()
+			},
+			goDownload(item,index) {
+				console.log("领取原视频")
+				console.log(item.id)
+				console.log(item.video_url)
+				
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: 'api/tiktok/product/video/receiveOriginal',
+					data: {
+						pid: this.id,
+						vid: item.id,
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data)
+						this.downRow(item.video_url , item.title)
+						this.videoLists[index].is_received = 1
+						this.$forceUpdate()
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			goVideoHistory() {
+				//查看已经领取过的 剪辑视频列表
+				console.log("打开历史列表")
+				this.$refs.videoClipList.open()
+				this.getHistoryLists()
+			},
+			goDownAlready() {
+				console.log("领取剪辑视频")
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: 'api/tiktok/product/video/receiveClip',
+					data: {
+						pid: this.id
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data)
+						this.downRow(res.data.data.video_url , res.data.data.title)
+						this.received_clip_num = 1
+						this.$forceUpdate()
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+				//点击剪辑视频领取，随机领取一个剪辑视频
+			},
+			downRow(data,name) {
+				//this.downRow("http://192.168.0.25:8080/static/images/user/movie02.mp4","movie02.mp4")
+				// data = "http://192.168.0.25:8080/static/images/user/movie02.mp4"
+				console.log(data,name + '.mp4')
+				let ajax= new XMLHttpRequest();
+				ajax.open('GET', data, true);
+				ajax.responseType = 'blob';
+				ajax.withCredentials = true; //如果跨域
+				ajax.onload = function (oEvent) {
+					let content = ajax.response;
+					let a = document.createElement('a');
+					a.download = name + '.mp4';
+					a.style.display = 'none';
+					let blob = new Blob([content]);
+					a.href = URL.createObjectURL(blob);
+					document.body.appendChild(a);
+					a.click();
+					document.body.removeChild(a);
+				};
+				ajax.send();		
+			},
+			
 			goLove(type) {
 				this.isShowLove = !this.isShowLove
 				//console.log(this.isShowLove)
@@ -671,6 +1050,22 @@
 			requestClose() {
 				this.$refs.requestPopup.close()
 			},
+			receiveClose() {
+				// 关闭领取页面
+				console.log("关闭领取页面")
+				this.$refs.receive.close()
+			},
+			videoListClose() {
+				// 关闭视频领取页面
+				console.log("关闭视频领取页面")
+				this.$refs.videoList.close()
+			},
+			videoClipListClose() {
+				// 关闭视频剪辑领取页面
+				console.log("关闭视频剪辑领取页面")
+				this.$refs.videoClipList.close()
+			},
+			
 			chooseTiktok(index){
 				if(this.cindex == index) return
 				this.cindex = index
@@ -1195,22 +1590,41 @@
 		align-items: center;
 	}
 	
+	.copyList{
+		width: 180rpx;
+		display: flex;
+		justify-content: space-between;
+		padding: 0 10rpx 0 10rpx;
+		box-sizing: border-box;
+	}
 	.copyLine{
 		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		justify-content: center;
 		align-items: center;
 	}
 	
 	.copyLogo {
-		width: 26rpx;
-		height: 26rpx;
+		width: 42rpx;
+		height: 42rpx;
 	}
 
 	.copy {
-		font-size: 26rpx;
+		min-width: 60rpx;
+		font-size: 24rpx;
+		line-height: 24rpx;
 		font-family: Arial;
 		font-weight: 400;
 		color: #0B0B0B;
-		margin-left: 7rpx;
+		margin-top: 12rpx;
+		text-align: center;
+		/* margin-top: 16rpx; */
+		/* margin-left: 7rpx; */
+	}
+
+	.copyMaterial{
+		min-width: 80rpx;
 	}
 
 	.add {
@@ -1587,5 +2001,130 @@
 		width: 24rpx;
 		height: 24rpx;
 		margin: 55rpx 0;
+	}
+	
+	/* 区域4*/
+	.receiveCard {
+		width: 750rpx;
+		height: 685rpx;
+		background: #FFFFFF;
+	
+		margin: 0 auto;
+		text-align: center;
+		line-height: normal;
+		padding: 30rpx;
+		box-sizing: border-box;
+		position: relative;
+	}
+	.receiveCardTitle {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	
+	.receiveCardTip {
+		font-size: 28rpx;
+		font-family: Arial;
+		font-weight: bold;
+		color: #0B0B0B;
+	}
+	
+	.receiveClose {
+		width: 24rpx;
+		height: 24rpx;
+		display: block;
+	}
+	
+	
+	.receiveList{
+		color: #e83e3b;
+		background: rgba(233, 62, 59, 0.1);
+		display: flex;
+		align-items: center;
+		padding: 10rpx 0rpx 10rpx 30rpx;
+		margin-top: 40rpx;
+		border-radius: 20rpx;
+	}
+	
+	.finished{
+		margin-top: 30rpx;
+	}
+		.receiveNav{
+		/* width: 460rpx; */
+		width: 440rpx;
+		padding: 20rpx 0;
+	}	.receiveLeft{
+		font-size: 30rpx;
+		line-height: 30rpx;
+		font-weight: bold;
+		display: flex;
+		align-items: center;
+	}	.receiveLogo{
+		width: 37rpx;
+		height: 24rpx;
+		margin-right: 10rpx;
+	}	.receiveTip{
+		font-size: 28rpx;
+		line-height: 30rpx;
+		margin-top: 16rpx;
+		text-align: left;
+	}	.dotted{
+		width: 2rpx;
+		height: 110rpx;
+		margin-left: 20rpx;
+		/* margin-right: 20rpx; */
+		border-left: 2rpx dashed #ac342e;
+	}	.receiveState{
+		width: 192rpx;
+		font-size: 30rpx;
+		text-align: center;
+		/* font-weight: bold; */
+	}
+	
+	.receiveBtn {
+		width: 690rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		background: #FF7436;
+		border-radius: 8rpx;
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #FFFFFF;
+		position: absolute;
+		bottom: 40rpx;
+	}
+	/* 遮罩5 */
+	.videoListCard {
+		width: 750rpx;
+		height: 980rpx;
+		background: #FFFFFF;
+	
+		margin: 0 auto;
+		text-align: center;
+		line-height: normal;
+		padding: 30rpx;
+		box-sizing: border-box;
+		position: relative;
+	}
+	.videoLists{
+		width: 100%;
+		margin-top: 40rpx;
+		height: 690rpx;
+		overflow: hidden;
+		overflow-y: auto;
+	}
+	.videoLists .receiveList{
+		margin-top: 0;
+		margin-bottom: 40rpx;
+	}
+	.videoName{
+		width: 392rpx;
+		text-align: left;
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
 	}
 </style>
