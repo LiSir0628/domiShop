@@ -309,6 +309,10 @@
 						<image class="receiveClose" src="../../static/images/detail/icon13.png" @click="receiveClose">
 						</image>
 					</view>
+					<view class="noData" v-if="original_video_num <= 0 && clip_video_num <= 0">
+						<image class="noDataLogo" src="../../static/images/common/icon01.png"></image>
+						<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
+					</view>
 					<view class="receiveList" v-if="original_video_num > 0">
 						<view class="receiveNav">
 							<view class="receiveLeft">
@@ -482,12 +486,12 @@
 				scrollHeight: 0,  //地址
 				scrollHeightAdd: 0,  //tiktok账号
 				
-				original_video_num: "", //原始视频数量
-				clip_video_num: "", //剪辑视频数量
-				received_original_num: "", //已领取原始视频数量
-				received_clip_num: "", //已领取剪辑视频数量
-				today_original_status: "", //今日可领取原始视频状态 0:不可领取 1:可领取
-				today_clip_status: "", //今日可领取剪辑视频状态 0:不可领取 1:可领取
+				original_video_num: 0, //原始视频数量
+				clip_video_num: 0, //剪辑视频数量
+				received_original_num: 0, //已领取原始视频数量
+				received_clip_num: 0, //已领取剪辑视频数量
+				today_original_status: 0, //今日可领取原始视频状态 0:不可领取 1:可领取
+				today_clip_status: 0, //今日可领取剪辑视频状态 0:不可领取 1:可领取
 				
 				videoLists:[],
 				videoHistoryLists: [],
@@ -2126,5 +2130,25 @@
 		word-wrap: normal;
 		text-overflow: ellipsis;
 		-o-text-overflow: ellipsis;
+	}
+	
+	/* 无数据展示 */
+	.noData {
+		text-align: center;
+		margin: 150rpx auto 0;
+	}
+	
+	.noDataLogo {
+		width: 128rpx;
+		height: 108rpx;
+	}
+	
+	.noDataText {
+		font-size: 24rpx;
+		font-family: Arial;
+		font-weight: 400;
+		color: #999999;
+		line-height: 24rpx;
+		margin-top: 12rpx;
 	}
 </style>
