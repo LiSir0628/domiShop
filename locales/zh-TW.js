@@ -133,6 +133,7 @@ export const lang = {
 		"one_time": "你需要自己剪輯",
 		"finished_materials": "剪輯素材",
 		"random_collection": "隨機領取",
+		"Please": "請使用手機自帶瀏覽器下載"
 	},
 	"pro_detail_address": {
 		"Select_Address": "選擇收穫地址",

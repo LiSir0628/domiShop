@@ -134,6 +134,7 @@ export const lang = {
 		"one_time": "自分で編集する必要があります",
 		"finished_materials": "クリップ素材",
 		"random_collection": "無作為に受け取る",
+		"Please": "携帯電話のブラウザを使ってダウンロードしてください"
 	},
 	"pro_detail_address": {
 		"Select_Address": "ハーベストアドレス",

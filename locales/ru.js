@@ -134,6 +134,7 @@ export const lang = {
 		"one_time": "Тебе нужно самому отремонтировать",
 		"finished_materials": "монтажный материал",
 		"random_collection": "случайный получение",
+		"Please": "Пожалуйста, используйте мобильный браузер"
 	},
 	"pro_detail_address": {
 		"Select_Address": "Выбор адреса сбора",

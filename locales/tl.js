@@ -135,6 +135,7 @@ export const lang = {
 		"one_time": "Kailangan mong i-edit ito sa sarili mo",
 		"finished_materials": "Pag-edit ng mga materyales",
 		"random_collection": "Random collection",
+		"Please": "Pakiusap gamitin ang mobile browser upang i-download"
 	},
 	"pro_detail_address": {
 		"Select_Address": "Piliin ang Harvest Address",

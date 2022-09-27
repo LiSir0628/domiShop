@@ -134,6 +134,7 @@ export const lang = {
 		"one_time": "Devi modificarlo da solo.",
 		"finished_materials": "Materiali di modifica",
 		"random_collection": "Raccolta casuale",
+		"Please": "Si prega di utilizzare il browser mobile per scaricare"
 	},
 	"pro_detail_address": {
 		"Select_Address": "Seleziona indirizzo di raccolta",

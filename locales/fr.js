@@ -134,6 +134,7 @@ export const lang = {
 		"one_time": "Tu dois le faire toi - même.",
 		"finished_materials": "Matériel de montage",
 		"random_collection": "Recevoir au hasard",
+		"Please": "Veuillez Télécharger avec votre navigateur"
 	},
 	"pro_detail_address": {
 		"Select_Address": "Sélectionner l'adresse de récolte",

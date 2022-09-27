@@ -134,6 +134,7 @@ export const lang = {
 		"one_time": "Sie müssen es selbst bearbeiten",
 		"finished_materials": "Bearbeitung von Materialien",
 		"random_collection": "Zufällige Sammlung",
+		"Please": "Bitte verwenden Sie den mobilen Browser zum Download"
 	},
 	"pro_detail_address": {
 		"Select_Address": "Ernteadresse auswählen",

@@ -134,6 +134,7 @@ export const lang = {
 		"one_time": "Anda perlu menyuntingnya sendiri",
 		"finished_materials": "Menyunting bahan",
 		"random_collection": "Koleksi Rawak",
+		"Please": "Sila guna pelayar bimbit untuk muat turun"
 	},
 	"pro_detail_address": {
 		"Select_Address": "Pilih Alamat Harvest",

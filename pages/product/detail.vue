@@ -309,6 +309,9 @@
 						<image class="receiveClose" src="../../static/images/detail/icon13.png" @click="receiveClose">
 						</image>
 					</view>
+					<view class="receiveNewTip">
+						({{ $t('pro_detail_account.Please') }})
+					</view>
 					<view class="noData" v-if="original_video_num <= 0 && clip_video_num <= 0">
 						<image class="noDataLogo" src="../../static/images/common/icon01.png"></image>
 						<view class="noDataText">{{ $t('common.It’s_empty') }}</view>
@@ -2025,7 +2028,10 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-	
+	.receiveNewTip{
+		font-size: 20rpx;
+		text-align: left;
+	}
 	.receiveCardTip {
 		font-size: 28rpx;
 		font-family: Arial;
