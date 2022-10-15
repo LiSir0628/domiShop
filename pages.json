@@ -16,6 +16,22 @@
 			}
 		}
 	},{
+		"path": "pages/register/service",
+		"style": {
+			// "navigationBarTitleText": "服务协议",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
+		"path": "pages/register/privacy",
+		"style": {
+			// "navigationBarTitleText": "隐私协议",
+			"app-plus": {
+				"titleNView": false
+			}
+		}
+	},{
 		"path": "pages/register/login",
 		"style": {
 			// "navigationBarTitleText": "登入",
@@ -175,7 +191,7 @@
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "domefish",
+		"navigationBarTitleText": "DomeFish",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"app-plus": {
