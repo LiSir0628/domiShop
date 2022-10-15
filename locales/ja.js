@@ -11,6 +11,7 @@ export const lang = {
 		"log_in": "ログイン時に"
 	},
 	"register": {
+		"read": "私は読んだ",
 		"Hello": "こんにちは",
 		"Registration": "登録",
 		"account_number": "アカウント番号を入力してください",

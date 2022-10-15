@@ -11,6 +11,7 @@ export const lang = {
 		"log_in": "登录"
 	},
 	"register": {
+		"read": "我已阅读",
 		"Hello": "你好",
 		"Registration": "注册",
 		"account_number": "请输入您的账号",

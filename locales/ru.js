@@ -11,6 +11,7 @@ export const lang = {
 		"log_in": "вход"
 	},
 	"register": {
+		"read": "Я читал",
 		"Hello": "Здравствыйте",
 		"Registration": "регистрация",
 		"account_number": "Введите номер вашего счёта",

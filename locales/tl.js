@@ -11,6 +11,7 @@ export const lang = {
 		"log_in": "log in"
 	},
 	"register": {
+		"read": "Nabasa ko na",
 		"Hello": "Hello",
 		"Registration": "Reġistrasyon",
 		"account_number": "Paki-enter ang numero ng iyong account",

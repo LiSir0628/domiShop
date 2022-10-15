@@ -11,6 +11,7 @@ export const lang = {
 		"log_in": "log in"
 	},
 	"register": {
+		"read": "I have read",
 		"Hello": "Hello",
 		"Registration": "Registration",
 		"account_number": "Please enter your account number",
