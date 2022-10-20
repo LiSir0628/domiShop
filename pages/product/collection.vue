@@ -261,7 +261,7 @@
 							let arr = dataList.lists
 							for(let i in arr){
 								if(arr[i].addtime){
-									arr[i].addtime = this.$transformTime(arr[i].addtime*1000,'yyyy-mm-dd hh:mm:ss')
+									//arr[i].addtime = this.$transformTime(arr[i].addtime*1000,'yyyy-mm-dd hh:mm:ss')
 								}
 							}
 							this.current_page = this.page
